@@ -1,3 +1,6 @@
+import ReviewBox from "./ReviewBox";
+
+
 export default function AddReview(){
     return(
         <div className="w-[75%] px-10 bg-slate-100 h-screen">
@@ -11,7 +14,7 @@ export default function AddReview(){
             </div>
             <div className="pt-[50px]">
                 <h4 className="text-[#1E1E1E] italic ml-[20%] mb-[10px]">How’s your experience? Please review. Your opinion always matter!</h4>
-                <div className="h-[250px] w-[65%] rounded-xl mx-auto bg-black">hello</div>
+                <ReviewBox/>
             </div>
         </div>
     );

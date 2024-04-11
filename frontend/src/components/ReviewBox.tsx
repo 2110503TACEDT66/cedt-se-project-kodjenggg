@@ -30,21 +30,19 @@ export default function ReviewBox(){
                     <ReviewTags tagsName="Worthiness" value={worthiness} isUse={setWorthiness}/>
                 </div>
                 <div className="h-[80%]">
-                <div className="relative bg-gray-200 w-full h-[25%] top-4 flex items-center justify-start rounded-md">
+                <div className="relative bg-gray-200 w-full h-[25%] top-4 flex items-center justify-start rounded-md hover:shadow-md">
                     <input
-                        type="text"
                         placeholder="add a title..."
-                        className="relative bg-gray-200 rounded-md w-[90%] left-2 placeholder:text-[#4D4C7D]"
+                        className="relative bg-gray-200 rounded-md w-[90%] left-2 placeholder:text-[#4D4C7D]
+                        focus:outline-none focus:ring-0 border border-transparent focus:border-gray-200 text-[#363062] font-bold overflow-"
                     />
                     </div>
-                    <hr className="border-solid border-[#F99417] w-full mt-6 border-[1px]" />
-                    <div className="relative bg-gray-200 w-full h-[60%] flex items-start justify-start rounded-md top-2">
-                    <input
-                        type="text"
+                    <hr className="border-solid border-[#F99417] w-full mt-6 border-[1.5px]" />
+                    <textarea
                         placeholder="add a comment..."
-                        className="relative bg-gray-200 rounded-md w-[90%] left-2 placeholder:text-[#4D4C7D]"
+                        className="relative bg-gray-200 rounded-md w-full h-[60%] top-2 placeholder:text-[#4D4C7D] minRows={3}
+                        focus:outline-none focus:ring-0 border border-transparent focus:border-gray-200 text-[#363062] pl-2 pt-1"
                     />
-                    </div>
                 </div>
             </div>
             <div className="w-fit mx-auto">

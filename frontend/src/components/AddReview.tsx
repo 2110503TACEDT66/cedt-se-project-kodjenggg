@@ -3,7 +3,7 @@ import ReviewBox from "./ReviewBox";
 
 export default function AddReview(){
     return(
-        <div className="w-[75%] px-10 bg-slate-100 h-screen">
+        <div className="w-[75%] bg-slate-100 h-screen">
             <div className="items-center">
                 <h1 className="text-[#F99417] text-3xl font-light text-center pt-20 mb-5">hotel's name</h1>
                 <h1 className="text-[#363062] text-3xl font-semibold text-center mb-5">Thank you for choosing us!</h1>

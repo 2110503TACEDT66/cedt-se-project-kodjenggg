@@ -51,3 +51,23 @@ export interface HotelItem {
     __v: number,
     id: string
 }
+
+export interface ReviewItem {
+    _id: string,
+    hotelid : string,
+    stars: number,
+    comment :string,
+    title:string,
+    userid:string,
+    report:number,
+    service:boolean,
+    food:boolean,
+    convinience:boolean,
+    cleanliness:boolean,
+    worthiness:boolean
+    reply: {
+        userreply:string,
+        reply:string,
+        date:Date
+    }
+}

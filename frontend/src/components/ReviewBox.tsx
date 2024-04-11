@@ -5,7 +5,7 @@ import ReviewTags from "@/components/ReviewTags";
 import { RatingStar } from "./RatingStar";
 import { Rating } from '@mui/material';
 
-export default function ReviewBox(){
+export default function ReviewBox({name}:{name:string}){
 
     const [cleanliness,setCleanliness] = useState(false);
     const [convinience,setConvinience] = useState(false);
@@ -18,16 +18,20 @@ export default function ReviewBox(){
     return(
         <main className="h-fit w-[100%] bg-slate-100">
             <div className="h-[250px] w-[80%] rounded-xl mx-auto bg-white shadow-sm relative p-5 mb-[20px]"> 
-                <Rating className="w-full h-[10%]" value={(rating==undefined)? 0:rating}
-                onChange={(e,newValue)=>{if(newValue!=null) setRating(newValue)}}/>
-
-                <div className="flex flex-row-reverse w-[65%] absolute top-5 right-5">
-                    <ReviewTags tagsName="Cleanliness" value={cleanliness} isUse={setCleanliness}/>
-                    <ReviewTags tagsName="Convinience" value={convinience} isUse={setConvinience}/>
-                    <ReviewTags tagsName="Facility" value={facility} isUse={setFacility}/>
-                    <ReviewTags tagsName="Food" value={food} isUse={setFood}/>
-                    <ReviewTags tagsName="Service" value={service} isUse={setService}/>
-                    <ReviewTags tagsName="Worthiness" value={worthiness} isUse={setWorthiness}/>
+                <div className="h-[20%]">
+                    <div>
+                        <div className="text-[#4D4C7D] text-lg italic">{name}</div>
+                        <Rating className="w-full h-[10%]" value={(rating==undefined)? 0:rating}
+                        onChange={(e,newValue)=>{if(newValue!=null) setRating(newValue)}}/>
+                    </div>
+                    <div className="flex flex-row-reverse w-[65%] absolute top-5 right-5">
+                        <ReviewTags tagsName="Cleanliness" value={cleanliness} isUse={setCleanliness}/>
+                        <ReviewTags tagsName="Convinience" value={convinience} isUse={setConvinience}/>
+                        <ReviewTags tagsName="Facility" value={facility} isUse={setFacility}/>
+                        <ReviewTags tagsName="Food" value={food} isUse={setFood}/>
+                        <ReviewTags tagsName="Service" value={service} isUse={setService}/>
+                        <ReviewTags tagsName="Worthiness" value={worthiness} isUse={setWorthiness}/>
+                    </div>
                 </div>
                 <div className="h-[80%]">
                 <div className="relative bg-gray-200 w-full h-[25%] top-4 flex items-center justify-start rounded-md hover:shadow-md">

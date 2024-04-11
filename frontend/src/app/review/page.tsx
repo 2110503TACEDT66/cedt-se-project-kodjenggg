@@ -6,14 +6,17 @@ import { getServerSession } from "next-auth";
 import { Suspense } from "react"
 import { LinearProgress } from "@mui/material"
 import AddReview from "@/components/AddReview";
+import getUserProfile from "@/libs/getUserProfile"
 
 export default async function review(){
-    const sessionReady = await getServerSession(authOptions) ;
-    if ( !sessionReady || !sessionReady.user.token) return null
+    const session = await getServerSession(authOptions) ;
+    if ( !session || !session.user.token) return null
+    
+    const profile = await getUserProfile(session.user.token);
 
     return(
         <main >
-            <AddReview/>
+            <AddReview name={profile.data.name}/>
             <User/>
         </main>
     )

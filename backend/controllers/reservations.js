@@ -7,41 +7,23 @@ const Hotel = require("../models/Hotel");
 exports.getReservations = async (req, res, next) => {
   let query;
   //General users can see only their reservations!
-  if (req.user.role !== "admin") {
-    query = Reservation.find({ user: req.user.id }).populate(
-      {
-        path: "user",
-        select: "name",
-      },
-    ).populate(
-    {
+  if (req.user.role !== "hotelmanager") {
+    query = Reservation.find({ user: req.user.id }).populate({
       path: "hotel",
-      select: "name province tel picture",
+      select: "name province tel",
     });
   } else {
     if (req.params.hotelId) {
       console.log(req.params.hotelId);
-      query = Reservation.find({ hotel: req.params.hotelId }).populate(
-        {
-          path: "user",
-          select: "name",
-        },
-      ).populate(
-        {
-          path: "hotel",
-          select: "name province tel picture",
-        });
+      query = Reservation.find({ hotel: req.params.hotelId }).populate({
+        path: "hotel",
+        select: "name province tel",
+      });
     } else {
-      query = Reservation.find().populate(
-        {
-          path: "user",
-          select: "name",
-        },
-      ).populate(
-        {
-          path: "hotel",
-          select: "name province tel picture",
-        });
+      query = Reservation.find().populate({
+        path: "hotel",
+        select: "name province tel",
+      });
     }
   }
 

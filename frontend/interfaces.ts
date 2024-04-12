@@ -63,10 +63,21 @@ export interface ReviewItem {
     food:boolean,
     convinience:boolean,
     cleanliness:boolean,
+    facility:boolean,
     worthiness:boolean
     reply: {
         userreply:string,
         reply:string,
         date:Date
     }
+}
+
+export interface Tags {
+    service:boolean,
+    food:boolean,
+    convinience:boolean,
+    cleanliness:boolean,
+    facility:boolean,
+    worthiness:boolean,
+    stars:number|null
 }

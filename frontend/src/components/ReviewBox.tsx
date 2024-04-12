@@ -22,12 +22,13 @@ export default function ReviewBox(){
     const [ rating, setRating ] = useState(0);
     const [title, setTitle] = useState("");
     const [comment, setComment] = useState("");
+    var tagCheck:Boolean|undefined = cleanliness||convinience||facility||food||service||worthiness;
 
 
     async function createReview(){
         console.log({cleanliness,convinience,facility,food,service,worthiness,rating,title,comment});
         console.log(session?.user._id);
-        if(session){
+        if(session && title && comment){
             const item:ReviewItem = {
                 hotelid: "6600e809f52ff909aed4c203",
                 stars: rating,
@@ -52,6 +53,7 @@ export default function ReviewBox(){
 
     return(
         <main className="h-fit w-[100%] bg-slate-100">
+            <form action="">
             <div className="h-[250px] w-[80%] rounded-xl mx-auto bg-white shadow-sm relative p-5 mb-[20px]"> 
                 <div className="h-[20%]">
                     <div>
@@ -69,27 +71,37 @@ export default function ReviewBox(){
                     </div>
                 </div>
                 <div className="h-[80%]">
-                <div className="relative bg-gray-200 w-full h-[25%] top-4 flex items-center justify-start rounded-md hover:shadow-md">
+                <div className="relative bg-gray-200 w-full h-[25%] top-4 flex items-center justify-start rounded-md hover:shadow">
                     <input
                         placeholder="add a title..."
                         className="relative bg-gray-200 rounded-md w-[90%] left-2 placeholder:text-[#4D4C7D]
                         focus:outline-none focus:ring-0 border border-transparent focus:border-gray-200 text-[#363062] font-bold overflow-"
                         onChange={(data) => setTitle(data.target.value)}
+                        required
                     />
                     </div>
                     <hr className="border-solid border-[#F99417] w-full mt-6 border-[1.5px]" />
                     <textarea
                         placeholder="add a comment..."
-                        className="relative bg-gray-200 rounded-md w-full h-[60%] top-2 placeholder:text-[#4D4C7D] minRows={3}
+                        className="relative bg-gray-200 rounded-md w-full h-[60%] top-2 placeholder:text-[#4D4C7D] minRows={3} hover:shadow
                         focus:outline-none focus:ring-0 border border-transparent focus:border-gray-200 text-[#363062] pl-2 pt-1"
                         onChange={(data) => setComment(data.target.value)}
+                        required
                     />
                 </div>
             </div>
-            <div className="w-fit mx-auto">
-                <button className="bg-[#363062] px-3 py-1 text-white text-md rounded-lg"
-                onClick={()=>createReview()}>Submit</button>
+            
+            <div className="w-fit ml-[83%]">
+                <button className="bg-[#363062] px-3 py-1 text-white text-md rounded-lg
+                hover:bg-[#4D4C7D]
+                disabled:bg-slate-300 disabled:text-slate-500 disabled:shadow-none
+                shadow-md shadow-indigo-500/50"
+                disabled={!(cleanliness||convinience||facility||food||service||worthiness) || !rating || !title || !comment}
+                onClick={()=>createReview()
+                }>Submit</button>
             </div>
+            </form>
+            
         </main>
     );
 }

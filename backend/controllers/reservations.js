@@ -7,7 +7,7 @@ const Hotel = require("../models/Hotel");
 exports.getReservations = async (req, res, next) => {
   let query;
   //General users can see only their reservations!
-  if (req.user.role !== "hotelmanager") {
+  if (req.user.role === "user" ) {
     query = Reservation.find({ user: req.user.id }).populate([
     {
       path: "hotel",
@@ -18,7 +18,7 @@ exports.getReservations = async (req, res, next) => {
       select: "name tel"
     }
   ]);
-  } else {
+  } else if (req.user.role === "admin") {
     if (req.params.hotelId) {
       console.log(req.params.hotelId);
       query = Reservation.find({ hotel: req.params.hotelId }).populate([
@@ -33,6 +33,23 @@ exports.getReservations = async (req, res, next) => {
       ]);
     } else {
       query = Reservation.find().populate([
+        {
+          path: "hotel",
+          select: "name province tel picture",
+        },
+        {
+          path: "user",
+          select: "name tel"
+        }
+      ]);
+    }
+  } else if (req.user.role === "hotelmanager"){
+    if (req.params.hotelId && req.params.hotelId != req.user.hotel) {
+      return res
+      .status(400)
+      .json({ success: false, message: "You are not authorize to see the other hotel reservation" });
+    } else {
+      query = Reservation.find({ hotel: req.user.hotel }).populate([
         {
           path: "hotel",
           select: "name province tel picture",

@@ -1,7 +1,7 @@
 import ReviewBox from "./ReviewBox";
 
 
-export default function AddReview({name}:{name:string}){
+export default function AddReview(){
     return(
         <div className="w-[75%] bg-slate-100 h-screen">
             <div className="items-center">
@@ -13,8 +13,8 @@ export default function AddReview({name}:{name:string}){
                 <p className="block text-[#4D4C7D] text-xl text-center">we're committed to providing exceptional products and services in return.</p>
             </div>
             <div className="pt-[50px]">
-                <h4 className="text-[#1E1E1E] italic ml-[20%] mb-[10px]">How’s your experience? Please review. Your opinion always matter!</h4>
-                <ReviewBox name = {name}/>
+                <h4 className="text-[#1E1E1E] italic ml-[12%] mb-[10px]">How’s your experience? Please review. Your opinion always matter!</h4>
+                <ReviewBox/>
             </div>
         </div>
     );

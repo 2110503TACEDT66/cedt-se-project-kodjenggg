@@ -31,7 +31,7 @@ export default function BookingList ({session}:{session:any}) {
             data()
         }
     }
-
+    
     return (
         <div>
             <div className="text-[#363062] flex flex-col items-center justify-center my-10 mr-[20%]">

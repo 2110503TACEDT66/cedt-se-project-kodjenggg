@@ -11,12 +11,10 @@ import getUserProfile from "@/libs/getUserProfile"
 export default async function review(){
     const session = await getServerSession(authOptions) ;
     if ( !session || !session.user.token) return null
-    
-    const profile = await getUserProfile(session.user.token);
 
     return(
         <main >
-            <AddReview name={profile.data.name}/>
+            <AddReview/>
             <User/>
         </main>
     )

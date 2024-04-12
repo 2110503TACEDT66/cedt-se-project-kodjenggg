@@ -1,5 +1,6 @@
 const { query } = require("express");
 const Review = require('../models/Review.js') ;
+const Hotel = require("../models/Hotel");
 
 // @desc    Get all reviews
 // @route   Get /api/v1/reviews
@@ -145,5 +146,24 @@ exports.updateReport = async (req, res, next) => {
         res.status(500).json({ success: false, message: 'Server Error' });
     }
 };
+
+exports.addReview = async (req,res,next) => {
+  try{
+    const hotel = await Hotel.findById(req.body.hotelid);
+    if(!hotel){
+      return res.status(404).json({
+        success: false,
+        message: `No hotel with the id of ${req.body.hotelid}`,
+      });
+    }
+
+    const review = await Review.create(req.body);
+    res.status(200).json({success:true, data:review});
+    
+  }catch(err){
+    console.error(err.message);
+    res.status(500).json({ success: false, message: 'Server Error' });
+  }
+}
 
 

@@ -53,7 +53,6 @@ export interface HotelItem {
 }
 
 export interface ReviewItem {
-    _id: string,
     hotelid : string,
     stars: number,
     comment :string,

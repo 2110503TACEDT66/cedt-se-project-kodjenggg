@@ -4,7 +4,8 @@ const {
   getReviews ,
   updateReview ,
   updateReport ,
-  updateReply
+  updateReply,
+  addReview
 } = require("../controllers/reviews");
 
 //Include other resource routers
@@ -15,6 +16,7 @@ const { protect, authorize } = require("../middleware/auth");
 router
   .route("/")
   .get(getReviews)
+  .post(protect, authorize("admin", "user"), addReview);
 
 router
     .route("/:id")

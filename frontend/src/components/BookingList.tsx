@@ -80,10 +80,10 @@ export default function BookingList ({session}:{session:any}) {
                             {reserve.status === 'complete'&&(
                                 <div className="text-[#339CFC] text-md absolute right-8  top-2">
                                 <CircleIcon sx={{ fontSize: 8 }} className="mx-1"/>
-                                completed
+                                completed1
                                 </div>
                             )}
-                            {reserve.status === 'complete'&&(
+                            {reserve.status === 'completed'&&(
                                 <Link href={`/review?hid=${reserve.hotel.id}&name=${reserve.hotel.name}`}>
                                 <button className="px-3 py-1 text-white shadow-sm rounded-xl bg-[#339CFC] absolute h-[40px] w-[80px] right-4 bottom-3"
                                 >Review</button>

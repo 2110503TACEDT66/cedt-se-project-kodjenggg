@@ -3,10 +3,10 @@ import { ReviewItem, ReviewJson, Tags } from "interfaces";
 import getReviews from "@/libs/getReview";
 import { useEffect, useState } from "react";
 
-export default function ReviewComponent({tags}:{tags:Tags}){
+export default function ReviewComponent({tags,hid}:{tags:Tags,hid:string}){
     async function data() {
         await new Promise((resolve) => setTimeout(resolve,500))
-        const reviewsJson:Promise<ReviewJson> = getReviews(tags);
+        const reviewsJson:Promise<ReviewJson> = getReviews(tags,hid);
         const reviewsReady:ReviewJson = await reviewsJson;
         setReviews(reviewsReady)
     }

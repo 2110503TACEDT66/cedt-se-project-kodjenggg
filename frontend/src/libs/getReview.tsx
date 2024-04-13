@@ -3,18 +3,20 @@ import { Tags } from "interfaces"
 export default async function getReviews(tags:Tags) {
     let query="";
     for (const [key, value] of Object.entries(tags)) {
-        //console.log(`key=${key} value=${value} `)
+        console.log(`key=${key} value=${value} `)
         if(query==="" && value){
-            query = query + `${key}=true`
+            if(key=="stars"){ if(value!==null){ query = query + `&${key}=${value} ` }}
+            else{ query = query + `${key}=true`}    
         }
         else if(key=="stars"){
-            if(value!=null) query = query + `&${key}=${value}`
+            if(value!==null){query = query + `&${key}=${value}`}
         }
         else if(value){
             query = query + `&${key}=true`
         }
+        console.log(query)
     }
-    //console.log(query)
+    console.log(query)
 
     const response = await fetch (`${process.env.BACKEND_URL}/api/v1/reviews?${query}`,{
         cache: 'no-store',

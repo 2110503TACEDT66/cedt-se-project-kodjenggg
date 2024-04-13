@@ -14,6 +14,7 @@ export default function ReviewComponent({tags}:{tags:Tags}){
     const [reviews, setReviews] = useState<ReviewJson>()
     
     useEffect(() => {
+        console.log(tags)
         data()
     }, [tags]);
 

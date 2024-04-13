@@ -2,29 +2,13 @@
 
 import { useEffect, useState } from "react"
 import ReviewTags from "@/components/ReviewTags";
+import SearchTags from "@/components/SearchTags";
 import User from "@/components/User";
 import ReviewComponent from "@/components/ReviewComponent";
 import { Tags } from "interfaces";
+import { Select, MenuItem } from "@mui/material";
 
 export default function testComponent(){
-    // const mockTags:Tags = {
-    //     service:false,
-    //     food:false,
-    //     convenience:false,
-    //     cleanliness:false,
-    //     facility:false,
-    //     worthiness:false,
-    //     stars: null
-    // }
-    // const reviews = getReviews(mockTags)
-    // const reviewsReady = await reviews
-    // console.log(reviewsReady)
-
-    // return (
-    //     <main>
-    //         hello
-    //     </main>
-    // )
 
     const [cleanliness,setCleanliness] = useState(false);
     const [convenience,setConvenience] = useState(false);
@@ -32,6 +16,7 @@ export default function testComponent(){
     const [food,setFood] = useState(false);
     const [service,setService] = useState(false);
     const [worthiness,setWorthiness] = useState(false);
+    const [stars,setStars] = useState<string>("0")
 
     const reviewTags:Tags = {
         service:service,
@@ -40,21 +25,33 @@ export default function testComponent(){
         cleanliness:cleanliness,
         facility:facility,
         worthiness:worthiness,
-        stars: null
+        stars: stars==="0"? null : parseInt(stars)
     }
 
     return(
         <main>
             <div>
-            <div className="flex flex-row-reverse w-1/2 ">
-                <ReviewTags tagsName="Cleanliness" value={cleanliness} isUse={setCleanliness}/>
-                <ReviewTags tagsName="Convenience" value={convenience} isUse={setConvenience}/>
-                <ReviewTags tagsName="Facility" value={facility} isUse={setFacility}/>
-                <ReviewTags tagsName="Food" value={food} isUse={setFood}/>
-                <ReviewTags tagsName="Service" value={service} isUse={setService}/>
-                <ReviewTags tagsName="Worthiness" value={worthiness} isUse={setWorthiness}/>
+            <div className="flex flex-row flex-wrap w-full justify-center">
+                <SearchTags tagsName="Cleanliness" value={cleanliness} isUse={setCleanliness}/>
+                <SearchTags tagsName="Convenience" value={convenience} isUse={setConvenience}/>
+                <SearchTags tagsName="Facility" value={facility} isUse={setFacility}/>
+                <SearchTags tagsName="Food" value={food} isUse={setFood}/>
+                <SearchTags tagsName="Service" value={service} isUse={setService}/>
+                <SearchTags tagsName="Worthiness" value={worthiness} isUse={setWorthiness}/>
+                
             </div>
-            <div className="flex flex-row-reverse">
+            <div className="text-md text-center flex flex-row space-x-4 items-center justify-center h-[50px]">
+                    <Select name="stars" id="stars" className="h-[2em] w-3/4 text-[#F99417] border"
+                    value={stars} onChange={(e)=>{setStars(e.target.value)}}>
+                        <MenuItem value="0">All stars</MenuItem>
+                        <MenuItem value="5">5 Stars</MenuItem>
+                        <MenuItem value="4">4 Stars</MenuItem>
+                        <MenuItem value="3">3 Stars</MenuItem>
+                        <MenuItem value="2">2 Stars</MenuItem>
+                        <MenuItem value="1">1 Stars</MenuItem>
+                    </Select>
+                </div>
+            <div >
                 <h1 className="text-black"> {`${worthiness} ${service} ${food} ${facility} ${convenience} ${cleanliness}` }</h1>
             </div>
             <ReviewComponent tags={reviewTags} />

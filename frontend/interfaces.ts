@@ -42,6 +42,7 @@ export interface Reservation{
         picture: string,
         id: string
     },
+    status: string,
     createdAt: Date,
     __v: number
 }

@@ -1,11 +1,17 @@
+'use client'
+import { useSearchParams } from "next/navigation";
 import ReviewBox from "./ReviewBox";
 
 
 export default function AddReview(){
+
+    const urlParams = useSearchParams();
+    const name = urlParams.get('name')
+
     return(
         <div className="w-[75%] bg-slate-100 h-screen">
             <div className="items-center">
-                <h1 className="text-[#F99417] text-3xl font-light text-center pt-20 mb-5">hotel's name</h1>
+                <h1 className="text-[#F99417] text-3xl font-light text-center pt-20 mb-5">{name}</h1>
                 <h1 className="text-[#363062] text-3xl font-semibold text-center mb-5">Thank you for choosing us!</h1>
                 <p className="block text-[#4D4C7D] text-xl text-center">We're grateful for your support and the opportunity to serve you as a</p>
                 <p className="block text-[#4D4C7D] text-xl text-center">valued client. Thank you for choosing us and for giving us the chance to</p>

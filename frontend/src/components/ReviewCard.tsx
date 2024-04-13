@@ -1,5 +1,5 @@
 'use client'
-import { ReviewJson, ReviewItem, Reservation } from "interfaces";
+import { ReviewJson, ShowReviewItem, Reservation } from "interfaces";
 import { useEffect, useState } from "react"
 import getReviews from "@/libs/getReview";
 import { Tags } from "interfaces";
@@ -24,9 +24,10 @@ export default function ReviewCard({tags,hid}:{tags:Tags,hid:string}){
     return(
         <main>
             <div>
-        {reviews && reviews.data.map((review: ReviewItem) => (
-            <div className="h-[250px] w-[70%] rounded-2xl mx-auto bg-white shadow-lg relative p-10 mb-[20px] my-10">
-            <div className="bg-[#FFFFFF] text-[#F99417]">
+        {reviews && reviews.data.map((review: ShowReviewItem) => (
+            <div className="h-fit w-[70%] rounded-2xl mx-auto bg-white shadow-lg relative p-10 mb-[20px] my-10">
+            <div className="bg-[#FFFFFF] text-[#F99417] p-1">
+                <p className="text-md text-[#F99417] italic">{`${review.userid.name}`}</p>
                 <Rating name="read-only" value={review.stars} readOnly />
                 <div className = "flex flex-row-reverse absolute top-3 right-3">
                 {review.service && (
@@ -66,15 +67,17 @@ export default function ReviewCard({tags,hid}:{tags:Tags,hid:string}){
                 )}
                 </div>
 
-            <div className="text-[#363062] font-semibold text-4xl">
+            <div className="text-[#363062] font-semibold text-4xl text-wrap">
             {review.title}
             </div>
 
             <div className="flex justify-center items-center my-2">
-            <hr className="flex justify-center items-center border-solid border-[#F99417] w-[95%] border-[1.0px]" />
+            <hr className="flex justify-center items-center border-solid border-[#F99417] w-[100%] border-[1.0px]" />
             </div>
-
-            {review.comment}
+            <div className="text-[#363062] text-lg text-wrap">
+                {review.comment}
+            </div>
+            
                 
             </div>
             </div>

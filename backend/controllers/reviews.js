@@ -27,7 +27,12 @@ exports.getReviews = async ( req, res , next ) => {
     (match) => `$${match}`
   );
   //finding resource
-  query = Review.find(JSON.parse(queryStr))
+  query = Review.find(JSON.parse(queryStr)).populate([
+    {
+      path: "userid",
+      select: "name"
+    }
+  ]);
 
   //Select Fields
   if (req.query.select) {

@@ -22,7 +22,7 @@ export interface ReviewJson {
     success: boolean,
     count: number,
     pagination: Object,
-    data: ReviewItem[]
+    data: ShowReviewItem[]
 }
 
 
@@ -66,6 +66,29 @@ export interface ReviewItem {
     comment :string,
     title:string,
     userid:string,
+    report:number,
+    service:boolean,
+    food:boolean,
+    convenience:boolean,
+    cleanliness:boolean,
+    facility:boolean,
+    worthiness:boolean
+    reply: {
+        userreply:string,
+        reply:string,
+        date:Date
+    }
+}
+
+export interface ShowReviewItem {
+    hotelid : string,
+    stars: number,
+    comment :string,
+    title:string,
+    userid:{
+        id: string,
+        name: string
+    },
     report:number,
     service:boolean,
     food:boolean,

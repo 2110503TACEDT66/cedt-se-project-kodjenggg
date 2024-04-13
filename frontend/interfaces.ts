@@ -25,6 +25,13 @@ export interface ReviewJson {
     data: ShowReviewItem[]
 }
 
+export interface RoomJson {
+    success: boolean,
+    count: number,
+    pagination: Object,
+    data: Room[]
+}
+
 
 export interface Reservation{
     _id: string,
@@ -111,4 +118,14 @@ export interface Tags {
     facility:boolean,
     worthiness:boolean,
     stars:number|null
+}
+
+export interface Room{
+    _id: string,
+    hotel_id: string,
+    price: number,
+    roomtype: string,
+    bedtype: string,
+    picture: string,
+    roomcap: number
 }

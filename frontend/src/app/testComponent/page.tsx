@@ -9,6 +9,7 @@ import { Tags } from "interfaces";
 import { Select, MenuItem, colors } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
+import ReviewCard from "@/components/ReviewCard";
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
     color: 'white',
@@ -72,6 +73,8 @@ export default function testComponent(){
             </div>
             <ReviewComponent tags={reviewTags} />
             </div>  
+
+            <ReviewCard tags={reviewTags}/>
             
         </main>
         

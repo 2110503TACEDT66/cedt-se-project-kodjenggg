@@ -80,7 +80,7 @@ export default function BookingList ({session}:{session:any}) {
                             {reserve.status === 'complete'&&(
                                 <div className="text-[#339CFC] text-md absolute right-8  top-2">
                                 <CircleIcon sx={{ fontSize: 8 }} className="mx-1"/>
-                                complete
+                                completed
                                 </div>
                             )}
                             {reserve.status === 'complete'&&(

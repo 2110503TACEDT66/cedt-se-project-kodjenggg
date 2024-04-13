@@ -74,7 +74,7 @@ export default function testComponent(){
             
             </div>  
 
-            <ReviewCard tags={reviewTags}/>
+            
             
         </main>
         

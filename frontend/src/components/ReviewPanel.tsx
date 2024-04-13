@@ -7,6 +7,7 @@ import { Tags } from "interfaces";
 import { Select, MenuItem, colors } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
+import ReviewCard from "./ReviewCard";
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
     color: 'white',
@@ -43,7 +44,7 @@ export default function ReviewPanel({hid}:{hid:string}){
 
     return(
         <main>
-            <div className="w-full bg-[#4D4C7D]">
+            <div className="w-full bg-[#4D4C7D] p-5">
             <h1 className="text-4xl font-medium relative text-center text-white pt-20 pb-10 italic">Reviews</h1>
             <div className="flex flex-row flex-wrap w-full justify-center">
                 <SearchTags tagsName="Cleanliness" value={cleanliness} isUse={setCleanliness}/>
@@ -66,10 +67,10 @@ export default function ReviewPanel({hid}:{hid:string}){
                         <MenuItem value="1">1 Stars</MenuItem>
                     </Select>
                 </div>
-                <div >
+                {/* <div >
                     <h1 className="text-black"> {`${worthiness} ${service} ${food} ${facility} ${convenience} ${cleanliness}` }</h1>
-                </div>
-                <ReviewComponent tags={reviewTags} hid={hid}/>
+                </div> */}
+                <ReviewCard tags={reviewTags} hid={hid}/>
             </div>  
             
         </main>

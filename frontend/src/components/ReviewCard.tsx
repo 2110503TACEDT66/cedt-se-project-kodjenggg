@@ -1,22 +1,16 @@
 'use client'
-import Image from "next/image";
-import Link from "next/link";
-import { ReserveJson,ReviewJson, ReviewItem, Reservation } from "interfaces";
-import dayjs, { Dayjs } from "dayjs";
-import getReservation from "@/libs/getReservation";
-import ReviewTags from "./ReviewTags";
+import { ReviewJson, ReviewItem, Reservation } from "interfaces";
 import { useEffect, useState } from "react"
-import User from "@/components/User";
 import getReviews from "@/libs/getReview";
-import ReviewComponent from "@/components/ReviewComponent";
 import { Tags } from "interfaces";
+import { Rating } from "@mui/material";
 
 
-export default function ReviewCard({tags}:{tags:Tags}){
+export default function ReviewCard({tags,hid}:{tags:Tags,hid:string}){
 
     async function data() {
         await new Promise((resolve) => setTimeout(resolve,500))
-        const reviewsJson:Promise<ReviewJson> = getReviews(tags);
+        const reviewsJson:Promise<ReviewJson> = getReviews(tags,hid);
         const reviewsReady:ReviewJson = await reviewsJson;
         setReviews(reviewsReady)
     }
@@ -31,11 +25,9 @@ export default function ReviewCard({tags}:{tags:Tags}){
         <main>
             <div>
         {reviews && reviews.data.map((review: ReviewItem) => (
-            <div className="h-[250px] w-[80%] rounded-2xl mx-auto bg-white shadow-lg relative p-5 mb-[20px] my-10">
+            <div className="h-[250px] w-[70%] rounded-2xl mx-auto bg-white shadow-lg relative p-5 mb-[20px] my-10">
             <div className="bg-[#FFFFFF] text-[#F99417]">
-                {`stars: ${review.stars}`}
-
-
+                <Rating name="read-only" value={review.stars} readOnly />
                 <div className = "flex flex-row-reverse absolute top-3 right-3">
                 {review.service && (
                     <button className="px-3 py-1 text-sm text-[#F99417] rounded-lg bg-[white] h-[30px] border-2 border-[#F99417] w-fit text-center mx-1 ">

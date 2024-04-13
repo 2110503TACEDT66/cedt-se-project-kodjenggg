@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import SearchTags from "@/components/SearchTags";
-import ReviewComponent from "@/components/ReviewComponent";
+
 import { Tags } from "interfaces";
 import { Select, MenuItem, colors } from "@mui/material";
 import { styled } from '@mui/material/styles';

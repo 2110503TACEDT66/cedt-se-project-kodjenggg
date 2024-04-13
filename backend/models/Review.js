@@ -25,9 +25,9 @@ const ReviewSchema = new mongoose.Schema({
         ref : "User" ,
         require : true 
     } ,
-    
     report : {
-        type : Number 
+        type : Number ,
+        default: 0
     },
 
     service : {

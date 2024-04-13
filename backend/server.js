@@ -50,6 +50,7 @@ const hotels = require("./routes/hotels");
 const auth = require("./routes/auth");
 const reservations = require("./routes/reservations");
 const reviews = require('./routes/reviews')
+
 //Mount routers
 app.use("/api/v1/hotels", hotels);
 app.use("/api/v1/auth", auth);

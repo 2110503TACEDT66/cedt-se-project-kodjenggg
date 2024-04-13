@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 
 const RoomSchema = new mongoose.Schema({
-
     price : {
         type : Number ,
         require : true 

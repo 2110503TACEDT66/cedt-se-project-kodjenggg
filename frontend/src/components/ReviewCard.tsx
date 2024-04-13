@@ -25,7 +25,7 @@ export default function ReviewCard({tags,hid}:{tags:Tags,hid:string}){
         <main>
             <div>
         {reviews && reviews.data.map((review: ReviewItem) => (
-            <div className="h-[250px] w-[70%] rounded-2xl mx-auto bg-white shadow-lg relative p-5 mb-[20px] my-10">
+            <div className="h-[250px] w-[70%] rounded-2xl mx-auto bg-white shadow-lg relative p-10 mb-[20px] my-10">
             <div className="bg-[#FFFFFF] text-[#F99417]">
                 <Rating name="read-only" value={review.stars} readOnly />
                 <div className = "flex flex-row-reverse absolute top-3 right-3">
@@ -71,7 +71,7 @@ export default function ReviewCard({tags,hid}:{tags:Tags,hid:string}){
             </div>
 
             <div className="flex justify-center items-center my-2">
-            <hr className="flex justify-center items-center border-solid border-[#F99417] w-[90%] border-[1.0px]" />
+            <hr className="flex justify-center items-center border-solid border-[#F99417] w-[95%] border-[1.0px]" />
             </div>
 
             {review.comment}

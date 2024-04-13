@@ -38,8 +38,9 @@ export default function ReviewBox(){
                 report: 0,
                 service: service,
                 food: food,
-                convinience: convinience,
+                convenience: convinience,
                 cleanliness: cleanliness,
+                facility: facility,
                 worthiness: worthiness,
                 reply:{
                     userreply:"",

@@ -18,6 +18,14 @@ export interface ReserveJson {
     data: Reservation[]
 }
 
+export interface ReviewJson {
+    success: boolean,
+    count: number,
+    pagination: Object,
+    data: ReviewItem[]
+}
+
+
 export interface Reservation{
     _id: string,
     revDate : Date,
@@ -61,7 +69,7 @@ export interface ReviewItem {
     report:number,
     service:boolean,
     food:boolean,
-    convinience:boolean,
+    convenience:boolean,
     cleanliness:boolean,
     facility:boolean,
     worthiness:boolean
@@ -75,7 +83,7 @@ export interface ReviewItem {
 export interface Tags {
     service:boolean,
     food:boolean,
-    convinience:boolean,
+    convenience:boolean,
     cleanliness:boolean,
     facility:boolean,
     worthiness:boolean,

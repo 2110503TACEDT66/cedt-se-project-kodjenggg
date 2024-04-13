@@ -23,7 +23,7 @@ export default function BookingList ({session}:{session:any}) {
     
     useEffect(() => {
         data()
-      }, []);
+    }, []);
 
     async function deleteReservations(token:string, rid:string){
         if(token && rid){

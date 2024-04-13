@@ -6,7 +6,22 @@ import SearchTags from "@/components/SearchTags";
 import User from "@/components/User";
 import ReviewComponent from "@/components/ReviewComponent";
 import { Tags } from "interfaces";
-import { Select, MenuItem } from "@mui/material";
+import { Select, MenuItem, colors } from "@mui/material";
+import { styled } from '@mui/material/styles';
+import InputBase from '@mui/material/InputBase';
+
+const BootstrapInput = styled(InputBase)(({ theme }) => ({
+    color: 'white',
+    background: '#F99417',
+    '& .MuiInputBase-input': {
+      borderRadius: 4,
+      border: '2px solid #F99417',
+    '&:focus': {
+        borderRadius: 4,
+        borderColor: '#F99417',
+      },
+    },
+}));
 
 export default function testComponent(){
 
@@ -41,7 +56,8 @@ export default function testComponent(){
                 
             </div>
             <div className="text-md text-center flex flex-row space-x-4 items-center justify-center h-[50px]">
-                    <Select name="stars" id="stars" className="h-[2em] w-3/4 text-[#F99417] border"
+                    <Select name="stars" id="stars" className="h-[2em] w-3/4 text-[#F99417] border-[#F99417]"
+                    input={<BootstrapInput />}
                     value={stars} onChange={(e)=>{setStars(e.target.value)}}>
                         <MenuItem value="0">All stars</MenuItem>
                         <MenuItem value="5">5 Stars</MenuItem>

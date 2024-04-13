@@ -5,6 +5,7 @@ import ReviewTags from "@/components/ReviewTags";
 import User from "@/components/User";
 import ReviewComponent from "@/components/ReviewComponent";
 import { Tags } from "interfaces";
+import ReviewTagsPurple from "@/components/ReviewTagsPurple";
 
 export default function testComponent(){
     // const mockTags:Tags = {
@@ -46,14 +47,24 @@ export default function testComponent(){
     return(
         <main>
             <div>
-            <div className="flex flex-row-reverse w-1/2 ">
-                <ReviewTags tagsName="Cleanliness" value={cleanliness} isUse={setCleanliness}/>
-                <ReviewTags tagsName="Convenience" value={convenience} isUse={setConvenience}/>
-                <ReviewTags tagsName="Facility" value={facility} isUse={setFacility}/>
-                <ReviewTags tagsName="Food" value={food} isUse={setFood}/>
-                <ReviewTags tagsName="Service" value={service} isUse={setService}/>
-                <ReviewTags tagsName="Worthiness" value={worthiness} isUse={setWorthiness}/>
+            <div className="font-thin text-sm text-slate-200 ml-[12%] ">View reviews by :</div>
+            <div className="flex justify-center w-full my-5">
+            <div className="flex justify-center flex-row-reverse w-1/2 my-2">
+                <ReviewTagsPurple tagsName="Food" value={food} isUse={setFood}/>
+                <ReviewTagsPurple tagsName="Service" value={service} isUse={setService}/>
+                <ReviewTagsPurple tagsName="Worthiness" value={worthiness} isUse={setWorthiness}/>
             </div>
+            </div>
+
+
+            <div className="flex justify-center w-full my-2">
+            <div className="flex justify-center flex-row-reverse w-1/2">
+            <ReviewTagsPurple tagsName="Cleanliness" value={cleanliness} isUse={setCleanliness}/>
+                <ReviewTagsPurple tagsName="Convenience" value={convenience} isUse={setConvenience}/>
+                <ReviewTagsPurple tagsName="Facility" value={facility} isUse={setFacility}/>
+            </div>
+            </div>
+
             <div className="flex flex-row-reverse">
                 <h1 className="text-black"> {`${worthiness} ${service} ${food} ${facility} ${convenience} ${cleanliness}` }</h1>
             </div>

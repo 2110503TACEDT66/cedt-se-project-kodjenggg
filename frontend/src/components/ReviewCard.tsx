@@ -29,7 +29,7 @@ export default function ReviewCard({tags,hid}:{tags:Tags,hid:string}){
             <div className="h-[250px] w-[70%] rounded-2xl mx-auto bg-white shadow-lg relative p-10 mb-[20px] my-10">
                 <div className="bg-[#FFFFFF] text-[#F99417]">
                     <Rating name="read-only" value={review.stars} readOnly />
-                    <div className = "flex flex-row-reverse absolute top-5 right-10">
+                    <div className = "flex flex-row-reverse absolute top-5 right-[50px]">
                         {review.service && (
                             <button className="px-3 py-1 text-sm text-[#F99417] rounded-lg bg-[white] h-[30px] border-2 border-[#F99417] w-fit text-center mx-1 ">
                                 service
@@ -73,7 +73,8 @@ export default function ReviewCard({tags,hid}:{tags:Tags,hid:string}){
                 </div>
                 {review.comment}
                 </div>
-                <MoreOption/>
+                {}
+                <MoreOption userid={review.userid}/>
             </div>
 
         ))}

@@ -4,7 +4,6 @@ import { useEffect, useState } from "react"
 import ReviewTags from "@/components/ReviewTags";
 import SearchTags from "@/components/SearchTags";
 import User from "@/components/User";
-import ReviewComponent from "@/components/ReviewComponent";
 import { Tags } from "interfaces";
 import { Select, MenuItem, colors } from "@mui/material";
 import { styled } from '@mui/material/styles';

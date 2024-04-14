@@ -23,9 +23,11 @@ export default function ReviewCard({tags,hid}:{tags:Tags,hid:string}){
 
     return(
         <main>
-            <div>
+            <div className="flex flex-col justify-around">
         {reviews && reviews.data.map((review: ShowReviewItem) => (
-            <div className="h-fit w-[70%] rounded-2xl mx-auto bg-white shadow-lg relative p-10 mb-[20px] my-10">
+            <div className="mb-[0px]">
+            
+            <div className="h-fit w-[70%] rounded-2xl mx-auto bg-white shadow-lg relative p-10 mb-[0px] my-10">
             <div className="bg-[#FFFFFF] text-[#F99417] p-1">
                 <p className="text-md text-[#F99417] italic">{`${review.userid.name}`}</p>
                 <Rating name="read-only" value={review.stars} readOnly />
@@ -77,11 +79,33 @@ export default function ReviewCard({tags,hid}:{tags:Tags,hid:string}){
             <div className="text-[#363062] text-lg text-wrap">
                 {review.comment}
             </div>
+            </div>
+        </div>
+        
+        <div className="h-fit w-full bg-[#4D4C7D] flex justify-center mb-0">
+            <div className="h-fit w-[70%] relative">
+                <div className="absolute top-2 left-2">
+                    <h1 style={{ fontSize: '3vw' }}>↳</h1>
+                </div>
+                <div className="ml-10 my-1">
+                    <h1 className="text-white text-sm italic font-extralight">
+                        Reply to {review.userid.name}
+                    </h1>
+                </div>
+                <div className="h-fit w-[92%] rounded-xl absolute right-0 bg-gray shadow-sm p-5 bg-[#D9D9D9] text-wrap">
+                    <h1 className="text-black text-sm italic font-extralight">
+                    Hotelname
+                    </h1>
+                    <h1 className="text-[#363062] text-lg">
+                    {review.comment}nf vnfu yghj vgjggg ggjhhvvh klho ooo oooo oovh vhdn
+                    </h1>  
+                </div>
+            </div>
+        </div>
             
-                
-            </div>
-            </div>
+     
 
+        </div>
         ))}
         
 

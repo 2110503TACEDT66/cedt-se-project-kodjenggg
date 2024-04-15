@@ -27,7 +27,7 @@ export default function MoreOption({userid} : {userid:string}){
     }
 
 
-    if(userid === session?.user._id || session?.user.role === 'admin')
+    if(userid == session?.user._id || session?.user.role == 'admin')
     return(
         <div className="text-slate-400 w-fit absolute top-[22px] right-5">
             <button onClick={toggleOptions}><MoreVertIcon/></button>

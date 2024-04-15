@@ -2,9 +2,12 @@ import Image from "next/image"
 import getHotel from "@/libs/getHotel"
 import Link from "next/link";
 import ReviewPanel from "@/components/ReviewPanel";
+import getRooms from "@/libs/getRooms";
+import RoomCatalog from "@/components/RoomCatalog";
 export default async function HospitalDetailPage({params}:{params:{hid:string}}){
 
     const hosDetail = await getHotel(params.hid)
+    const roomDetail = await getRooms(params.hid)
 
     return(
         <main>
@@ -42,6 +45,9 @@ export default async function HospitalDetailPage({params}:{params:{hid:string}})
                     </span>
                 </div>
                 </div>
+            </div>
+            <div className="flex justify-center">
+            <RoomCatalog roomJson={roomDetail}/>
             </div>
             <div className="text-center">
                 <Link href={`/reservations?id=${params.hid}&name=${hosDetail.data.name}`}>

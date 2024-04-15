@@ -1,6 +1,6 @@
 'use client'
-import { ReviewJson, ReviewItem, Reservation } from "interfaces";
-import { useEffect, useRef, useState } from "react"
+import { ReviewJson, ShowReviewItem, Reservation } from "interfaces";
+import { useEffect, useState } from "react"
 import getReviews from "@/libs/getReview";
 import { Tags } from "interfaces";
 import { Rating } from "@mui/material";
@@ -24,12 +24,13 @@ export default function ReviewCard({tags,hid}:{tags:Tags,hid:string}){
 
     return(
         <main>
-        <div>
-        {reviews && reviews.data.map((review: ReviewItem) => (
-            <div className="h-[250px] w-[70%] rounded-2xl mx-auto bg-white shadow-lg relative p-10 mb-[20px] my-10">
-                <div className="bg-[#FFFFFF] text-[#F99417]">
-                    <Rating name="read-only" value={review.stars} readOnly />
-                    <div className = "flex flex-row-reverse absolute top-5 right-[50px]">
+            <div>
+        {reviews && reviews.data.map((review: ShowReviewItem) => (
+            <div className="h-fit w-[70%] rounded-2xl mx-auto bg-white shadow-lg relative p-10 mb-[20px] my-10">
+            <div className="bg-[#FFFFFF] text-[#F99417] p-1">
+                <p className="text-md text-[#F99417] italic">{`${review.userid.name}`}</p>
+                <Rating name="read-only" value={review.stars} readOnly />
+                <div className = "flex flex-row-reverse absolute top-5 right-[50px]">
                         {review.service && (
                             <button className="px-3 py-1 text-sm text-[#F99417] rounded-lg bg-[white] h-[30px] border-2 border-[#F99417] w-fit text-center mx-1 ">
                                 service
@@ -66,16 +67,19 @@ export default function ReviewCard({tags,hid}:{tags:Tags,hid:string}){
                             </button>
                         )}
                 </div>
+
                 <div className="text-[#363062] font-semibold text-4xl">{review.title}</div>
 
                 <div className="flex justify-center items-center my-2">
-                    <hr className="flex justify-center items-center border-solid border-[#F99417] w-[95%] border-[1.0px]" />
+                <hr className="flex justify-center items-center border-solid border-[#F99417] w-[100%] border-[1.0px]" />
                 </div>
+                <div className="text-[#363062] text-lg text-wrap">
                 {review.comment}
                 </div>
+                </div>
                 {}
-                <MoreOption userid={review.userid}/>
-            </div>
+                <MoreOption userid={review.userid.id}/>
+                </div>
 
         ))}
         

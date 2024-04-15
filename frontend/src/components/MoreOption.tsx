@@ -15,6 +15,7 @@ export default function MoreOption({userid} : {userid:string}){
     };
 
     const handleEdit = () => {
+        //toggleOptions();
         setVisible(!isVisible);
         console.log('Edit clicked');
     };
@@ -34,7 +35,7 @@ export default function MoreOption({userid} : {userid:string}){
         <div>
         {isVisible ?(
         <div>
-        <EditReplyPopup uid={userid}></EditReplyPopup>
+        <EditReplyPopup uid={userid} cancel={setVisible}></EditReplyPopup>
         </div>
         ):null}
         <div className="text-slate-400 w-fit absolute top-[22px] right-5">

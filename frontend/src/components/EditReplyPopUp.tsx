@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import { Rating } from '@mui/material';
 import ReviewTags from "@/components/ReviewTags";
 
-export default function EditReplyPopup({uid}:{uid:string}) {
+export default function EditReplyPopup({uid, cancel}:{uid:string, cancel:Function}) {
 
     const { data: session } = useSession();
 
@@ -38,10 +38,9 @@ export default function EditReplyPopup({uid}:{uid:string}) {
   };
 
   return (
-    <>
-    
-      <div className="fixed top-[20%] left-[10%] right-[10%] h-fit w-[80%] z-30">
-      <form action="">
+    <div className="fixed top-0 right-0 left-0 z-30 w-full h-full bg-slate-800/50 ">
+      
+      <div className="fixed top-[20%] left-[10%] right-[10%] h-fit w-[80%] z-40 overscroll-y-none">
       <div className="h-[100%] w-[100%] rounded-xl mx-auto bg-white shadow-sm relative p-5 mb-[20px]"> 
           <div className="h-[20%]">
               <div>
@@ -77,21 +76,24 @@ export default function EditReplyPopup({uid}:{uid:string}) {
                   required
               />
           </div>
-          <div className="w-[100%] flex justify-end left-0 mt-4">
+          <div className="w-[100%] flex justify-end left-0 mt-4 ">
           <button className="bg-[#363062] px-3 py-1 text-white text-md rounded-lg
           hover:bg-[#4D4C7D]
-          disabled:bg-slate-300 disabled:text-slate-500 disabled:shadow-none
-          shadow-md shadow-indigo-500/50"
+          disabled:bg-slate-300 disabled:text-slate-500 disabled:shadow-none"
+          onChange={()=>{cancel(false)}}
+          >Cancel</button>
+          <button className="bg-[#363062] px-3 py-1 ml-2 text-white text-md rounded-lg
+          hover:bg-[#4D4C7D]
+          disabled:bg-slate-300 disabled:text-slate-500 disabled:shadow-none"
           disabled={!(cleanliness||convinience||facility||food||service||worthiness) || !rating || !title || !comment}
-          >Submit</button>
+          >Edit</button>
+          
         </div>
       </div>
       
-
-      </form>
       
     </div>
   
-    </>
+    </div>
   );
 }

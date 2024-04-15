@@ -56,7 +56,7 @@ const ReviewSchema = new mongoose.Schema({
     },
     reply : {
         userreply : mongoose.Schema.ObjectId ,
-        reply : String ,
+        reply : {type:String, default: ""} ,
     }
 })
 

@@ -93,7 +93,7 @@ export interface ShowReviewItem {
     comment :string,
     title:string,
     userid:{
-        id: string,
+        _id: string,
         name: string
     },
     report:number,

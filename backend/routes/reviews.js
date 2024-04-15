@@ -5,7 +5,8 @@ const {
   updateReview ,
   updateReport ,
   updateReply,
-  addReview
+  addReview,
+  deleteReview
 } = require("../controllers/reviews");
 
 //Include other resource routers
@@ -20,8 +21,11 @@ router
 
 router
     .route("/:id")
-    .put(protect , authorize("user") ,updateReview)
-    .put(protect, authorize('hotelmanager' , updateReply))
+    .put(protect , authorize("user","admin") ,updateReview)
+    .delete(protect, authorize("admin", "user"), deleteReview);
+router
+    .route("/reply/:id")
+    .put(protect, authorize("hotelmanager"), updateReply)
 router
     .route("/report/:id")
     .put(protect , authorize("user") , updateReport)

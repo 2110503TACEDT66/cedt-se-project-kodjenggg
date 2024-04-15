@@ -52,7 +52,8 @@ export default function EditReplyPopup({rClean, rConvin, rFaci, rFood, rService,
             const response = await updateReview(session?.user?.token, rid, item)
             console.log(response)
             visible(false);
-            router.push(`/hotels/${hid}`)
+            // router.push(`/hotels/${hid}`)
+            window.location.reload();
         }
     }
 

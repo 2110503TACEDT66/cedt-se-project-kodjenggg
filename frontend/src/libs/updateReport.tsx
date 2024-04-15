@@ -2,7 +2,7 @@
 require('dotenv').config();
 
 export default async function updateReport(token: string, reviewid:string) {
-    const response = await fetch(`${process.env.BACKEND_URL}/api/v1/reviews/report/${reviewid}`,{
+    const response = await fetch(`http://localhost:5000/api/v1/reviews/report/${reviewid}`,{
         method : "PUT",
         headers: {
             authorization : `Bearer ${token}`,

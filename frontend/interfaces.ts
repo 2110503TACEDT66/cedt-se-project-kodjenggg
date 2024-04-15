@@ -22,7 +22,14 @@ export interface ReviewJson {
     success: boolean,
     count: number,
     pagination: Object,
-    data: ReviewItem[]
+    data: ShowReviewItem[]
+}
+
+export interface RoomJson {
+    success: boolean,
+    count: number,
+    pagination: Object,
+    data: Room[]
 }
 
 
@@ -81,6 +88,30 @@ export interface ReviewItem {
     }
 }
 
+export interface ShowReviewItem {
+    _id : string,
+    hotelid : string,
+    stars: number,
+    comment :string,
+    title:string,
+    userid:{
+        _id: string,
+        name: string
+    },
+    report:number,
+    service:boolean,
+    food:boolean,
+    convenience:boolean,
+    cleanliness:boolean,
+    facility:boolean,
+    worthiness:boolean
+    reply: {
+        userreply:string,
+        reply:string,
+        date:Date
+    }
+}
+
 export interface Tags {
     service:boolean,
     food:boolean,
@@ -89,4 +120,14 @@ export interface Tags {
     facility:boolean,
     worthiness:boolean,
     stars:number|null
+}
+
+export interface Room{
+    _id: string,
+    hotel_id: string,
+    price: number,
+    roomtype: string,
+    bedtype: string,
+    picture: string,
+    roomcap: number
 }

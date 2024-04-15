@@ -22,8 +22,10 @@ router
 router
     .route("/:id")
     .put(protect , authorize("user","admin") ,updateReview)
-    .put(protect, authorize('hotelmanager' , updateReply))
     .delete(protect, authorize("admin", "user"), deleteReview);
+router
+    .route("/reply/:id")
+    .put(protect, authorize("hotelmanager"), updateReply)
 router
     .route("/report/:id")
     .put(protect , authorize("user") , updateReport)

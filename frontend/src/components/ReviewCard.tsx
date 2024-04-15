@@ -11,6 +11,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 import { profile } from "console";
 import { useSession } from "next-auth/react";
 import MoreOption from "./MoreOption";
+import MoreOptionReply from "./MoreOptionReply";
 
 
 export default function ReviewCard({tags,hid}:{tags:Tags,hid:string}){
@@ -103,7 +104,7 @@ export default function ReviewCard({tags,hid}:{tags:Tags,hid:string}){
                 {review.comment}
             </div>
             
-            { profile?.data.role=='hotelmanager' && profile?.data.hotel.id==hid && (!review.reply.userreply || !review.reply.reply )?
+            { profile?.data.role=='hotelmanager' && profile?.data.hotel.id==hid && (!review.reply?.userreply || !review.reply?.reply )?
                 (<button className="px-7 py-1 mt-3 text-sm text-[#8F8F8F] rounded-lg bg-[white] h-[30px] border-2 border-[#8F8F8F] w-fit text-center mx-1 ">Reply</button>)
                 :null
             }
@@ -120,7 +121,7 @@ export default function ReviewCard({tags,hid}:{tags:Tags,hid:string}){
             </div>
         </div>
         
-        {review.reply.userreply && review.reply.reply ? 
+        {review.reply && review.reply.reply !== "" ? 
         (<div className="h-full w-full flex justify-center mt-2"> 
             <div className="w-[70%] relative">
                 <div className="absolute top-1 left-2">
@@ -131,21 +132,18 @@ export default function ReviewCard({tags,hid}:{tags:Tags,hid:string}){
                         Reply to {review.userid.name}
                     </h1>
                 </div>
-                <div className="w-[92%] ml-[8%] rounded-xl bg-[#E9E9E9] shadow-sm p-3 bg-[#D9D9D9] text-wrap">
+                <div className="w-[92%] ml-[8%] rounded-xl bg-[#E9E9E9] shadow-sm p-3 bg-[#D9D9D9] text-wrap relative">
                     <h1 className="text-[#4D4C7D] text-sm italic font-extralight">
                     {hotelDetail.data.name}
                     </h1>
                     <h1 className="text-[#363062] text-lg">
                     {review.reply.reply}
                     </h1>
+                    
                     { profile?.data.role=='hotelmanager' && profile?.data.hotel.id==hid ?
-                    (<div className="flex justify-end"> 
-                    <button className="text-center mr-2 p-[4px] text-white shadow-sm rounded-lg bg-[#F99417] h-[30px] w-[55px] text-xs" 
-                    >Edit</button>
-                    <button className="text-center p-[4px] text-white shadow-sm rounded-lg bg-red-600 h-[30px] w-[55px] text-xs"
-                    onClick={()=>{}}>Delete</button>
-                    </div>):null}
- 
+                    (<MoreOptionReply replyto={review.userid.name} userreply={review.reply.userreply} reply={review.reply.reply} rid={review._id} hid={review.hotelid}/>
+                    ):null}
+                    
                 </div>
                 
             </div>

@@ -110,11 +110,12 @@ exports.updateReview = async (req, res, next) => {
       }
       res.status(200).json({ success: true, data: review });
     } catch (err) {
+      console.log(err)
       res.status(400).json({ success: false });
     }
   };
 // @desc    Update reply
-// @route   PUT /api/v1/reviews/:id
+// @route   PUT /api/v1/reviews/reply/:id
 // @access  Private
 exports.updateReply= async (req, res, next) => {
     try {
@@ -127,6 +128,7 @@ exports.updateReply= async (req, res, next) => {
       }
       res.status(200).json({ success: true, data: review });
     } catch (err) {
+      console.log(err)
       res.status(400).json({ success: false });
     }
   };

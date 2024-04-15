@@ -10,10 +10,11 @@ import getUserProfile from "@/libs/getUserProfile"
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 import { profile } from "console";
 import { useSession } from "next-auth/react";
+import MoreOption from "./MoreOption";
 
 
 export default function ReviewCard({tags,hid}:{tags:Tags,hid:string}){
-
+    
     const [reviews, setReviews] = useState<ReviewJson>();
     const [hotelDetail, setHotelDetail] = useState<any>();
     const [profile, setProfile] = useState<any>();
@@ -22,16 +23,17 @@ export default function ReviewCard({tags,hid}:{tags:Tags,hid:string}){
     useEffect(() => {
       const fetchData = async () => {
         try {
-          if (!session || !session.user.token) return null;
-          const userProfile = await getUserProfile(session.user.token);
-          setProfile(userProfile);
-
+          if (session && session.user.token){
+            const userProfile = await getUserProfile(session.user.token);
+            setProfile(userProfile);
+          }
           const [reviewsJson, hotelDetailData] = await Promise.all([
             getReviews(tags, hid),
             getHotel(hid),
           ]);
           setReviews(reviewsJson);
           setHotelDetail(hotelDetailData);
+          
         } catch (error) {
           console.error("Error fetching data:", error);
         }
@@ -52,7 +54,7 @@ export default function ReviewCard({tags,hid}:{tags:Tags,hid:string}){
             <div className="bg-[#FFFFFF] text-[#F99417] p-1">
                 <p className="text-md text-[#F99417] italic">{`${review.userid.name}`}</p>
                 <Rating name="read-only" value={review.stars} readOnly />
-                <div className = "flex flex-row-reverse absolute top-3 right-3">
+                <div className = "flex flex-row-reverse absolute top-5 right-[50px]">
                 {review.service && (
                     <button className="px-3 py-1 text-sm text-[#F99417] rounded-lg bg-[white] h-[30px] border-2 border-[#F99417] w-fit text-center mx-1 ">
                         service
@@ -100,19 +102,17 @@ export default function ReviewCard({tags,hid}:{tags:Tags,hid:string}){
             <div className="text-[#363062] text-lg text-wrap">
                 {review.comment}
             </div>
-            { profile.data.role=='hotelmanager' && profile.data.hotel.id==hid && (!review.reply.userreply || !review.reply.reply )?
+            
+            { profile?.data.role=='hotelmanager' && profile?.data.hotel.id==hid && (!review.reply.userreply || !review.reply.reply )?
                 (<button className="px-7 py-1 mt-3 text-sm text-[#8F8F8F] rounded-lg bg-[white] h-[30px] border-2 border-[#8F8F8F] w-fit text-center mx-1 ">Reply</button>)
                 :null
             }
-            { profile.data._id == review.userid._id ? ( 
-                <div className="flex justify-end"> 
-                <button className="text-center mr-2 p-[4px] text-white shadow-sm rounded-lg bg-[#F99417] h-[30px] w-[55px] text-xs" 
-                >Edit</button>
-                <button className="text-center p-[4px] text-white shadow-sm rounded-lg bg-red-600 h-[30px] w-[55px] text-xs"
-                onClick={()=>{}}>Delete</button>
-                </div>
+
+            { profile?.data._id == review.userid._id ? ( 
+                <MoreOption userid={review.userid._id}/>
              ):null
             }
+             
             </div>
         </div>
         
@@ -134,7 +134,7 @@ export default function ReviewCard({tags,hid}:{tags:Tags,hid:string}){
                     <h1 className="text-[#363062] text-lg">
                     {review.reply.reply}
                     </h1>
-                    { profile.data.role=='hotelmanager' && profile.data.hotel.id==hid ?
+                    { profile?.data.role=='hotelmanager' && profile?.data.hotel.id==hid ?
                     (<div className="flex justify-end"> 
                     <button className="text-center mr-2 p-[4px] text-white shadow-sm rounded-lg bg-[#F99417] h-[30px] w-[55px] text-xs" 
                     >Edit</button>

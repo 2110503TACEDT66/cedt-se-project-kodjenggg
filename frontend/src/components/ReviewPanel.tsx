@@ -1,14 +1,13 @@
 'use client'
 
-import { useEffect, useState } from "react"
-import ReviewTags from "@/components/ReviewTags";
+import { useState } from "react"
 import SearchTags from "@/components/SearchTags";
-import User from "@/components/User";
+
 import { Tags } from "interfaces";
 import { Select, MenuItem, colors } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
-import ReviewCard from "@/components/ReviewCard";
+import ReviewCard from "./ReviewCard";
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
     color: 'white',
@@ -23,7 +22,7 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-export default function testComponent(){
+export default function ReviewPanel({hid}:{hid:string}){
 
     const [cleanliness,setCleanliness] = useState(false);
     const [convenience,setConvenience] = useState(false);
@@ -45,7 +44,8 @@ export default function testComponent(){
 
     return(
         <main>
-            <div>
+            <div className="w-full bg-[#4D4C7D] p-5">
+            <h1 className="text-4xl font-medium relative text-center text-white pt-20 pb-10 italic">Reviews</h1>
             <div className="flex flex-row flex-wrap w-full justify-center">
                 <SearchTags tagsName="Cleanliness" value={cleanliness} isUse={setCleanliness}/>
                 <SearchTags tagsName="Convenience" value={convenience} isUse={setConvenience}/>
@@ -67,13 +67,11 @@ export default function testComponent(){
                         <MenuItem value="1">1 Stars</MenuItem>
                     </Select>
                 </div>
-            <div >
-                <h1 className="text-black"> {`${worthiness} ${service} ${food} ${facility} ${convenience} ${cleanliness}` }</h1>
-            </div>
-            
+                {/* <div >
+                    <h1 className="text-black"> {`${worthiness} ${service} ${food} ${facility} ${convenience} ${cleanliness}` }</h1>
+                </div> */}
+                <ReviewCard tags={reviewTags} hid={hid}/>
             </div>  
-
-            
             
         </main>
         

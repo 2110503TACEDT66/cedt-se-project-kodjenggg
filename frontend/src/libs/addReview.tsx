@@ -16,7 +16,7 @@ export default async function addReview(token:string, reviewItem: ReviewItem){
             report: 0,
             service: reviewItem.service,
             food: reviewItem.food,
-            convinience: reviewItem.convinience,
+            convenience: reviewItem.convenience,
             cleanliness: reviewItem.cleanliness,
             worthiness: reviewItem.worthiness
         })

@@ -25,7 +25,7 @@ const ReservationSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ["unpaid", "pending" , "reserved", "complete" ],
+    enum: ["unpaid", "pending" , "reserved", "completed" ],
     default: "unpaid",
   }
 });

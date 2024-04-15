@@ -1,6 +1,7 @@
 import Image from "next/image"
 import getHotel from "@/libs/getHotel"
 import Link from "next/link";
+import ReviewPanel from "@/components/ReviewPanel";
 export default async function HospitalDetailPage({params}:{params:{hid:string}}){
 
     const hosDetail = await getHotel(params.hid)
@@ -48,6 +49,7 @@ export default async function HospitalDetailPage({params}:{params:{hid:string}})
                     Reserve this Hotel</button>
                 </Link>
             </div>
+            <ReviewPanel hid={params.hid}/>
         </main>
     );
 }

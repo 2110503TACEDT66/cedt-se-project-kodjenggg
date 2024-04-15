@@ -4,14 +4,19 @@ import { useState } from "react"
 import ReviewTags from "@/components/ReviewTags";
 import { RatingStar } from "./RatingStar";
 import { Rating } from '@mui/material';
-import { read } from "fs";
 import { ReviewItem } from "interfaces";
 import { useSession } from "next-auth/react";
 import addReview from "@/libs/addReview"
+import { useSearchParams } from "next/navigation";
+
 
 export default function ReviewBox(){
 
     const { data: session } = useSession();
+    const urlParams = useSearchParams();
+    const hid = urlParams.get('hid');
+    const name = urlParams.get('name')
+
 
     const [cleanliness,setCleanliness] = useState(false);
     const [convinience,setConvinience] = useState(false);
@@ -22,15 +27,15 @@ export default function ReviewBox(){
     const [ rating, setRating ] = useState(0);
     const [title, setTitle] = useState("");
     const [comment, setComment] = useState("");
-    var tagCheck:Boolean|undefined = cleanliness||convinience||facility||food||service||worthiness;
-
 
     async function createReview(){
-        console.log({cleanliness,convinience,facility,food,service,worthiness,rating,title,comment});
-        console.log(session?.user._id);
-        if(session && title && comment){
+        console.log(title);
+        console.log(comment);
+        console.log(session);
+        console.log(hid);
+        if(session && title && comment && hid){
             const item:ReviewItem = {
-                hotelid: "6600e809f52ff909aed4c203",
+                hotelid: hid,
                 stars: rating,
                 comment: comment,
                 title: title,
@@ -38,8 +43,9 @@ export default function ReviewBox(){
                 report: 0,
                 service: service,
                 food: food,
-                convinience: convinience,
+                convenience: convinience,
                 cleanliness: cleanliness,
+                facility: facility,
                 worthiness: worthiness,
                 reply:{
                     userreply:"",
@@ -48,12 +54,13 @@ export default function ReviewBox(){
                 }
             }
             const response = await addReview(session?.user?.token,item);
+            console.log(response);
+
         }
     }
 
     return(
         <main className="h-fit w-[100%] bg-slate-100">
-            <form action="">
             <div className="h-[250px] w-[80%] rounded-xl mx-auto bg-white shadow-sm relative p-5 mb-[20px]"> 
                 <div className="h-[20%]">
                     <div>
@@ -100,8 +107,6 @@ export default function ReviewBox(){
                 onClick={()=>createReview()
                 }>Submit</button>
             </div>
-            </form>
-            
         </main>
     );
 }

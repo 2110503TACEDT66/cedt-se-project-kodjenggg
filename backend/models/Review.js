@@ -57,7 +57,6 @@ const ReviewSchema = new mongoose.Schema({
     reply : {
         userreply : mongoose.Schema.ObjectId ,
         reply : String ,
-        date: { type: Date }
     }
 })
 

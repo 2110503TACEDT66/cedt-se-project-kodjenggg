@@ -108,8 +108,12 @@ export default function ReviewCard({tags,hid}:{tags:Tags,hid:string}){
                 :null
             }
 
-            { profile?.data._id == review.userid._id ? ( 
-                <MoreOption userid={review.userid._id}/>
+            { profile?.data._id == review.userid._id ? (
+                <MoreOption userid={review.userid._id} rClean={review.cleanliness}
+                rConvin={review.convenience} rFaci={review.facility} rFood={review.food}
+                rService={review.service} rWorth={review.worthiness} rRating={review.stars}
+                rTitle={review.title} rComment={review.comment} rid={review._id} hid={review.hotelid}
+                />
              ):null
             }
              

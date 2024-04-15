@@ -88,6 +88,7 @@ export interface ReviewItem {
 }
 
 export interface ShowReviewItem {
+    _id : string,
     hotelid : string,
     stars: number,
     comment :string,

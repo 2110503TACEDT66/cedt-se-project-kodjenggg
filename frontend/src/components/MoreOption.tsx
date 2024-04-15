@@ -3,8 +3,12 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useSession } from "next-auth/react";
 import FlagIcon from '@mui/icons-material/Flag';
 import EditReplyPopup from "./EditReplyPopUp";
+import { ShowReviewItem } from "interfaces";
 
-export default function MoreOption({userid} : {userid:string}){
+export default function MoreOption(
+    {userid, rClean, rConvin, rFaci, rFood, rService, rWorth, rRating, rTitle, rComment, rid, hid} 
+    : {userid:string,rClean:boolean, rConvin:boolean, rFaci:boolean, rFood:boolean, rService:boolean, rWorth:boolean, rRating:number, rTitle:string, rComment:string, rid:string, hid:string}){
+    
     const { data: session } = useSession();
     const [isVisible, setVisible] = useState(false);
 
@@ -34,7 +38,10 @@ export default function MoreOption({userid} : {userid:string}){
         <div>
         {isVisible ?(
         <div>
-        <EditReplyPopup uid={userid}></EditReplyPopup>
+        <EditReplyPopup rClean={rClean}
+                rConvin={rConvin} rFaci={rFaci} rFood={rFood}
+                rService={rService} rWorth={rWorth} rRating={rRating}
+                rTitle={rTitle} rComment={rComment} rid={rid} hid={hid}></EditReplyPopup>
         </div>
         ):null}
         <div className="text-slate-400 w-fit absolute top-[22px] right-5">

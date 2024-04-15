@@ -4,6 +4,8 @@ import { useSession } from "next-auth/react";
 import FlagIcon from '@mui/icons-material/Flag';
 import EditReplyPopup from "./EditReplyPopUp";
 import { ShowReviewItem } from "interfaces";
+import deleteReview from "@/libs/deleteReview";
+import { useRouter } from "next/navigation";
 
 export default function MoreOption(
     {userid, rClean, rConvin, rFaci, rFood, rService, rWorth, rRating, rTitle, rComment, rid, hid} 
@@ -11,7 +13,7 @@ export default function MoreOption(
     
     const { data: session } = useSession();
     const [isVisible, setVisible] = useState(false);
-
+    const router = useRouter()
     const [showOptions, setShowOptions] = useState(false);
 
     const toggleOptions = () => {
@@ -19,15 +21,21 @@ export default function MoreOption(
     };
 
     const handleEdit = () => {
-        toggleOptions();
+        toggleOptions()
         setVisible(!isVisible);
         console.log('Edit clicked');
     };
 
-    const handleDelete = () => {
-        // Handle delete action
-        console.log('Delete clicked');
-    };
+    
+    async function deletes(){
+        toggleOptions()
+        if(session?.user.token && rid){
+            console.log(rid)
+            console.log(session?.user.token)
+            await deleteReview(session?.user.token , rid)
+            window.location.reload()
+        }
+    }
     
     const handleReport = () => {
         console.log('Report clicked');
@@ -51,13 +59,13 @@ export default function MoreOption(
             {showOptions && (
                 <div className="flex flex-col absolute rounded-xl">
                 <button className="bg-white text-black text-sm hover:bg-slate-100 p-2 rounded-t-xl" onClick={handleEdit}>Edit</button>
-                <button className="bg-white text-black text-sm hover:bg-slate-100 p-2 rounded-b-xl" onClick={handleDelete}>Delete</button>
+                <button className="bg-white text-black text-sm hover:bg-slate-100 p-2 rounded-b-xl" onClick={()=>(deletes())}>Delete</button>
                 </div>
             )}
         </div>
         </div>
     );
-
+    
     return(
         <div className="text-red w-fit absolute top-[15px] right-4">
             <button className="bg-white text-slate-500 hover:text-red-500 rounded-xl" onClick={handleReport}><FlagIcon sx={{ fontSize: 35 }}/></button>

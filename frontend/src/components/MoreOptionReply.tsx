@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { ReviewJson, ReviewItem } from "interfaces";
 import updateReply from "@/libs/updateReply";
 
-export default function MoreOption(
+export default function MoreOptionReply(
     {replyto, userreply, reply, rid, hid} 
     : {replyto:string, userreply:string, reply:string, rid:string, hid:string}){
     

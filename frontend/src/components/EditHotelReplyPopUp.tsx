@@ -75,7 +75,7 @@ export default function EditReplyPopup(
            shadow-indigo-500/50"
           disabled={!replyHotel}
           onClick={editReply}
-          >Edit</button>
+          >Sumbit</button>
         </div>
         </div>
 

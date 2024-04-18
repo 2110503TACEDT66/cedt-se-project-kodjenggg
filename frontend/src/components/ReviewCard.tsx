@@ -12,7 +12,8 @@ import { profile } from "console";
 import { useSession } from "next-auth/react";
 import MoreOption from "./MoreOption";
 import MoreOptionReply from "./MoreOptionReply";
-
+import EditHotelReplyPopup from "./EditHotelReplyPopUp";
+import ReplyReviewButton from "./ReplyReviewButton";
 
 export default function ReviewCard({tags,hid}:{tags:Tags,hid:string}){
     
@@ -102,8 +103,8 @@ export default function ReviewCard({tags,hid}:{tags:Tags,hid:string}){
                 {review.comment}
             </div>
             
-            { profile?.data.role=='hotelmanager' && profile?.data.hotel.id==hid && (!review.reply?.userreply || !review.reply?.reply )?
-                (<button className="px-7 py-1 mt-3 text-sm text-[#8F8F8F] rounded-lg bg-[white] h-[30px] border-2 border-[#8F8F8F] w-fit text-center mx-1 ">Reply</button>)
+            { session && profile?.data.role=='hotelmanager' && profile?.data.hotel.id==hid && (!review.reply?.userreply || !review.reply?.reply )?
+                (<ReplyReviewButton replyto={review.userid.name} userreply={session.user._id} reply={""} rid={review._id} hid={review.hotelid}/>)
                 :null
             }
 
@@ -130,7 +131,7 @@ export default function ReviewCard({tags,hid}:{tags:Tags,hid:string}){
                         Reply to {review.userid.name}
                     </h1>
                 </div>
-                <div className="w-[92%] ml-[8%] rounded-xl bg-[#E9E9E9] shadow-sm p-3 bg-[#D9D9D9] text-wrap relative">
+                <div className="w-[92%] ml-[8%] rounded-xl bg-[#E9E9E9] shadow-sm p-3 text-wrap relative">
                     <h1 className="text-[#4D4C7D] text-sm italic font-extralight">
                     {hotelDetail.data.name}
                     </h1>
@@ -151,7 +152,6 @@ export default function ReviewCard({tags,hid}:{tags:Tags,hid:string}){
 
         </div>
         ))}
-        
 
     </div>
     

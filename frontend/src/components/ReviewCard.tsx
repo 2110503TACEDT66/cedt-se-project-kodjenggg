@@ -14,6 +14,7 @@ import MoreOption from "./MoreOption";
 import MoreOptionReply from "./MoreOptionReply";
 import EditHotelReplyPopup from "./EditHotelReplyPopUp";
 import ReplyReviewButton from "./ReplyReviewButton";
+import { useAppSelector } from "@/redux/store"
 
 export default function ReviewCard({tags,hid}:{tags:Tags,hid:string}){
     
@@ -21,6 +22,13 @@ export default function ReviewCard({tags,hid}:{tags:Tags,hid:string}){
     const [hotelDetail, setHotelDetail] = useState<any>();
     const [profile, setProfile] = useState<any>();
     const {data:session} = useSession();
+
+    function checkReport(ReportReview:ShowReviewItem){
+        if (session){
+            return ReportReview.report.includes(session.user._id);
+        }
+        return true
+    }
 
     useEffect(() => {
       const fetchData = async () => {
@@ -50,10 +58,15 @@ export default function ReviewCard({tags,hid}:{tags:Tags,hid:string}){
             
             <div className="flex flex-col justify-around">
         {reviews && reviews.data.map((review: ShowReviewItem) => (
+            ((review.report.length<10 && !checkReport(review)) || profile?.data.role=="admin" )? (
             <div className="mb-[0px]">
             
-            <div className="h-fit w-[70%] rounded-2xl mx-auto bg-white shadow-lg relative px-7 pt-10 pb-4 mt-10">
-            <div className="bg-[#FFFFFF] text-[#F99417] p-1">
+            <div className={(review.report.length>=10)? 
+            ("h-fit w-[70%] rounded-2xl mx-auto bg-slate-300 shadow-lg relative px-7 pt-10 pb-4 mt-10"):
+            ("h-fit w-[70%] rounded-2xl mx-auto bg-white shadow-lg relative px-7 pt-10 pb-4 mt-10")}>
+            <div className={(review.report.length>=10)?
+            ("bg-slate-300 text-[#F99417] p-1"):
+            ("bg-white text-[#F99417] p-1")}>
                 <p className="text-md text-[#F99417] italic">{`${review.userid.name}`}</p>
                 <Rating name="read-only" value={review.stars} readOnly />
                 <div className = "flex flex-row-reverse absolute top-5 right-[50px]">
@@ -108,14 +121,13 @@ export default function ReviewCard({tags,hid}:{tags:Tags,hid:string}){
                 :null
             }
 
-            { profile?.data._id == review.userid._id ? (
-                <MoreOption userid={review.userid._id} rClean={review.cleanliness}
+                {
+                    session && <MoreOption userid={review.userid._id} rClean={review.cleanliness}
                 rConvin={review.convenience} rFaci={review.facility} rFood={review.food}
                 rService={review.service} rWorth={review.worthiness} rRating={review.stars}
                 rTitle={review.title} rComment={review.comment} rid={review._id} hid={review.hotelid}
-                />
-             ):null
-            }
+                report={review.report.length>=10}/>
+                }
              
             </div>
         </div>
@@ -150,7 +162,7 @@ export default function ReviewCard({tags,hid}:{tags:Tags,hid:string}){
         :null}
      
 
-        </div>
+        </div>):null
         ))}
 
     </div>

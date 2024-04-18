@@ -123,7 +123,7 @@ export default function ReviewPanel({hid}:{hid:string}){
             
             <div className="flex justify-center">
                 <div className="text-md text-center flex flex-row space-x-4 w-[70%] items-center justify-items-center justify-center h-[50px]">
-                    <Select name="stars" id="stars" className="h-[2em] w-full text-[#F99417] border-[#F99417] justify-items-center"
+                    <Select name="stars" id="stars" className="h-[2em] w-full text-[#FFFFFF] border-[#F99417] justify-items-center"
                     input={<BootstrapInput />}
                     value={stars} onChange={(e)=>{setStars(e.target.value)}}>
                         <MenuItem value="0">All stars</MenuItem>

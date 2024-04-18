@@ -10,7 +10,6 @@ import { styled } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import ReviewCard from "./ReviewCard";
 import { useEffect } from "react";
-import { Promise } from "mongoose";
 import getReviews from "@/libs/getReview";
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
@@ -55,19 +54,22 @@ export default function ReviewPanel({hid}:{hid:string}){
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const data5 = await getReviews(reviewTags, hid, 5);
+                const [data1,data2,data3,data4,data5] = await Promise.all([
+                    getReviews(reviewTags,hid,1) ,
+                    getReviews(reviewTags,hid,2) ,
+                    getReviews(reviewTags,hid,3) ,
+                    getReviews(reviewTags,hid,4) ,
+                    getReviews(reviewTags,hid,5) 
+                ]);
+                
                 setReviewsJson5(data5);
                 
-                const data4 = await getReviews(reviewTags, hid, 4);
                 setReviewsJson4(data4);
                 
-                const data3 = await getReviews(reviewTags, hid, 3);
                 setReviewsJson3(data3);
                 
-                const data2 = await getReviews(reviewTags, hid, 2);
                 setReviewsJson2(data2);
                 
-                const data1 = await getReviews(reviewTags, hid, 1);
                 setReviewsJson1(data1);
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -86,7 +88,7 @@ export default function ReviewPanel({hid}:{hid:string}){
       ((reviewsJson4?.count ?? 0)) +
       ((reviewsJson3?.count ?? 0)) +
       ((reviewsJson2?.count ?? 0)) +
-      ((reviewsJson1?.count ?? 0)))
+      ((reviewsJson1?.count ?? 0))) || 0 ;
     ;
       return(
         <main>

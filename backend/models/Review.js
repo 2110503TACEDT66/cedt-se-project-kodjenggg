@@ -26,7 +26,7 @@ const ReviewSchema = new mongoose.Schema({
         require : true 
     } ,
     report : {
-        type : Array,
+        type : Array ,
         default: []
     },
 

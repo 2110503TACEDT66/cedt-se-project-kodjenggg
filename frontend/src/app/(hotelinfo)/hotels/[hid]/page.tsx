@@ -4,12 +4,14 @@ import Link from "next/link";
 import ReviewPanel from "@/components/ReviewPanel";
 import getRooms from "@/libs/getRooms";
 import RoomCatalog from "@/components/RoomCatalog";
+import ReduxProvider from "@/redux/ReduxProvider";
 export default async function HospitalDetailPage({params}:{params:{hid:string}}){
 
     const hosDetail = await getHotel(params.hid)
     const roomDetail = await getRooms(params.hid)
 
     return(
+        <ReduxProvider>
         <main>
             <div className="block p-5 m-0 width-screen h-[60vh] relative">
                 <Image src={hosDetail.data.picture} alt="hosImg" fill={true} objectFit="cover"/>
@@ -57,6 +59,7 @@ export default async function HospitalDetailPage({params}:{params:{hid:string}})
             </div>
             <ReviewPanel hid={params.hid}/>
         </main>
+        </ReduxProvider>
     );
 }
 

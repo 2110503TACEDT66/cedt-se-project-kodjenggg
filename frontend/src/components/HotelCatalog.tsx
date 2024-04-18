@@ -48,7 +48,7 @@ export default async function HotelCatalog({hotelJson}:{hotelJson:Promise<HotelJ
                         className="w-[100%] sm:w-[55%] md:w-[35%] lg:w-[30%]
                         p-2 sm:p-4 md:p-4 lg:p-8">
                         <ProductCard hotelName={hotelItem.name} region={hotelItem.region} 
-                        fav={/*(favItems.filter((obj:string)=> obj==hotelItem.name)).length>= 1 ? true :*/ false} 
+                        fav={(favItems.filter((obj:string)=> obj==hotelItem.name)).length>= 1 ? true : false} 
                         imgSrc={hotelItem.picture}/>
                         </Link>
                     ))

@@ -40,7 +40,7 @@ export default function MoreOptionReply(
                 comment: "",
                 title: "",
                 userid: "",
-                report: 0,
+                report: [],
                 service: true,
                 food: true,
                 convenience: true,

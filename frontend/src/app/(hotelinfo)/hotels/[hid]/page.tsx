@@ -4,6 +4,7 @@ import Link from "next/link";
 import ReviewPanel from "@/components/ReviewPanel";
 import getRooms from "@/libs/getRooms";
 import RoomCatalog from "@/components/RoomCatalog";
+import ReduxProvider from "@/redux/ReduxProvider";
 export default async function HospitalDetailPage({params}:{params:{hid:string}}){
 
     const hosDetail = await getHotel(params.hid)

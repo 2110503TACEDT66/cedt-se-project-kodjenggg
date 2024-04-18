@@ -62,7 +62,7 @@ export default function BookingList ({session}:{session:any}) {
                             <button className="px-3 py-1 text-white shadow-sm rounded-xl bg-red-600 absolute h-[40px] w-[80px] right-4 top-2"
                             onClick={()=>{deleteReservations(session.user.token, reserve._id)}}>Delete</button>)}
                             {reserve.status === 'unpaid'&& (
-                                <button className="px-3 py-1 text-[#645151] shadow-sm rounded-xl bg-green-600 absolute h-[40px] w-[80px] right-4 bottom-3"
+                                <button className="px-3 py-1 text-white shadow-sm rounded-xl bg-green-600 absolute h-[40px] w-[80px] right-4 bottom-3"
                                 onClick={() => { alert("GO PAY MOTHER FUCKER") }}>Pay</button>
                             )}
                             {reserve.status === 'pending'&& (

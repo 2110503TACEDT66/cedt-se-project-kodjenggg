@@ -25,6 +25,7 @@ export default async function getReviews(tags: Tags, hid: string, stars?: number
 
         return await response.json();
     } catch (error) {
+        console.log("PPP") ;
         console.error(error);
         throw new Error("Failed to fetch reviews. Please try again later.");
     }

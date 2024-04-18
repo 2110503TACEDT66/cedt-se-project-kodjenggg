@@ -1,12 +1,13 @@
 'use client'
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import updateReport from "@/libs/updateReport";
 import { useSession } from "next-auth/react";
 
-export default function ReportPopup({params}:{params:{rid:string}}) {
+export default function ReportPopup({rid}:{rid:string}) {
 
   const [isVisible, setIsVisible] = useState(true);
   const { data: session } = useSession();
+
 
   const editReport = async() => {
     const selectedRadio = document.querySelector('input[name="report"]:checked');
@@ -15,18 +16,18 @@ export default function ReportPopup({params}:{params:{rid:string}}) {
       return;
     }
     if(session?.user?.token){
-      const response = await updateReport(session?.user?.token,"6616b92d5c86f2516dd88099" );
+      const response = await updateReport(session?.user?.token,rid);
       console.log(response);
       setIsVisible(false);
-       // Hide the component
+      window.location.reload();
     }
   };
 
   return (
     <>
     {isVisible && (
-      <div>
-        <div className="text-[#363062] border border-gray-300 rounded-3xl shadow-xl px-3 py-6 mx-auto mt-20 w-[37%]">
+      <div className="fixed top-0 right-0 left-0 z-30 w-full h-full bg-slate-800/50">
+        <div className="text-[#363062] border border-gray-300 rounded-3xl shadow-xl px-3 py-6 mx-auto mt-20 w-[37%] bg-white">
           <h1 className="text-center mb-4 text-2xl" style={{ textDecoration: 'underline' }}>Report</h1>
           <div className="flex flex-col items-start justify-start relative top-6">
             <div className="radio-row p-[20px]">

@@ -8,6 +8,7 @@ import { ReviewItem } from "interfaces";
 import { useSession } from "next-auth/react";
 import addReview from "@/libs/addReview"
 import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 
 export default function ReviewBox(){
@@ -16,6 +17,7 @@ export default function ReviewBox(){
     const urlParams = useSearchParams();
     const hid = urlParams.get('hid');
     const name = urlParams.get('name')
+    const router = useRouter();
 
 
     const [cleanliness,setCleanliness] = useState(false);
@@ -40,7 +42,7 @@ export default function ReviewBox(){
                 comment: comment,
                 title: title,
                 userid: session?.user?._id,
-                report: 0,
+                report: [],
                 service: service,
                 food: food,
                 convenience: convinience,
@@ -55,7 +57,7 @@ export default function ReviewBox(){
             }
             const response = await addReview(session?.user?.token,item);
             console.log(response);
-
+            router.push(`/hotels/${hid}`)
         }
     }
 
@@ -65,7 +67,7 @@ export default function ReviewBox(){
                 <div className="h-[20%]">
                     <div>
                         <div className="text-[#4D4C7D] text-lg italic">{session?.user.name}</div>
-                        <Rating className="w-full h-[10%]" value={(rating==undefined)? 0:rating}
+                        <Rating className="h-[10%]" value={(rating==undefined)? 0:rating}
                         onChange={(e,newValue)=>{if(newValue!=null) setRating(newValue)}}/>
                     </div>
                     <div className="flex flex-row-reverse w-[65%] absolute top-5 right-5">

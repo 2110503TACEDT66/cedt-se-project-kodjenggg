@@ -1,7 +1,7 @@
 import { ReservationItem } from "interfaces"
 
 export default async function updateReservation(token: string, reserveId:string, reserveItem: ReservationItem) {
-    const response = await fetch(`http://localhost:5000/api/v1/reservations/${reserveId}`,{
+    const response = await fetch(`${process.env.BACKEND_URL}/api/v1/reservations/${reserveId}`,{
         method : "PUT",
         headers: {
             authorization : `Bearer ${token}`,

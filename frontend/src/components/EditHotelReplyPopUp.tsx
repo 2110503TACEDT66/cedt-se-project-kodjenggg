@@ -26,7 +26,7 @@ export default function EditReplyPopup(
                 comment: "",
                 title: "",
                 userid: "",
-                report: 0,
+                report: [],
                 service: true,
                 food: true,
                 convenience: true,

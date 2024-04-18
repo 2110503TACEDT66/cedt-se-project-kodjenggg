@@ -74,7 +74,7 @@ export interface ReviewItem {
     comment :string,
     title:string,
     userid:string,
-    report:number,
+    report:Array<string>,
     service:boolean,
     food:boolean,
     convenience:boolean,
@@ -98,7 +98,7 @@ export interface ShowReviewItem {
         _id: string,
         name: string
     },
-    report:number,
+    report:Array<string>,
     service:boolean,
     food:boolean,
     convenience:boolean,

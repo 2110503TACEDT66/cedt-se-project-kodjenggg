@@ -5,7 +5,19 @@ const User = require("../models/User");
 // @access  Public
 exports.register = async (req, res, next) => {
   try {
-    const { name, tel, email, password, role } = req.body;
+    const { name, tel, email, password, role, hotel } = req.body;
+
+    if(role==="hotelmanager"&&!hotel){
+      return res
+      .status(400)
+      .json({ success: false, msg: "Please enter the hotel's id you manage." });
+    }
+    else if(role==="user"&&hotel){
+      return res
+      .status(400)
+      .json({ success: false, msg: "User can't manage hotel." });
+    }
+
     //Create user
     const user = await User.create({
       name,
@@ -13,6 +25,7 @@ exports.register = async (req, res, next) => {
       email,
       password,
       role,
+      hotel
     });
 
     //Create token
@@ -94,11 +107,32 @@ const sendTokenResponse = (user, statusCode, res) => {
 // @route   POST /api/v1/auth/me
 // @access  Private
 exports.getMe = async (req, res, next) => {
-  const user = await User.findById(req.user.id);
-  res.status(200).json({
-    success: true,
-    data: user,
-  });
+  let query;
+  if(req.user.role==="hotelmanager"){
+    query = User.findById(req.user.id).populate([
+      {
+        path: "hotel",
+        select: "name tel",
+      }
+    ]);
+  }
+  else{
+    query = User.findById(req.user.id);
+  }
+
+  try {
+    const user = await query;
+
+    res.status(200).json({
+      success: true,
+      data: user,
+    });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ success: false, message: "Cannot find User" });
+  }
 };
 
 // @desc    Log user out / clear cookie 

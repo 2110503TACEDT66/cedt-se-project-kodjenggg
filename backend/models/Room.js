@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 
 const RoomSchema = new mongoose.Schema({
-
     price : {
         type : Number ,
         require : true 
@@ -30,6 +29,7 @@ const RoomSchema = new mongoose.Schema({
     } ,
     hotel_id : {
         type : mongoose.Schema.ObjectId ,
+        ref : "Hotel" , 
         require : true 
     } ,
     roomcap : {

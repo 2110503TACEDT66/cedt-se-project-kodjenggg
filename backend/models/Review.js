@@ -25,9 +25,9 @@ const ReviewSchema = new mongoose.Schema({
         ref : "User" ,
         require : true 
     } ,
-    
     report : {
-        type : Number 
+        type : Number ,
+        default: 0
     },
 
     service : {
@@ -57,7 +57,7 @@ const ReviewSchema = new mongoose.Schema({
     reply : {
         userreply : mongoose.Schema.ObjectId ,
         reply : String ,
-        date: { type: Date, default: Date.now }
+        date: { type: Date }
     }
 })
 

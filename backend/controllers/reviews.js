@@ -40,13 +40,13 @@ if (req.query.select) {
   query = query.select(fields);
 }
 
+query = query.sort("stars: -1");
 //Sort
 if (req.query.sort) {
   const sortBy = req.query.sort.split(",").join(" ");
   query = query.sort(sortBy);
-} else {
-  query = query.sort("stars: -1");
 }
+
 
 //Pagination
 const page = parseInt(req.query.page, 10) || 1;

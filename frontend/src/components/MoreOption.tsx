@@ -79,7 +79,7 @@ export default function MoreOption(
         <div className="text-slate-400 w-fit absolute top-[22px] right-5">
             <button onClick={toggleOptions}><MoreVertIcon/></button>
             {showOptions && (
-                <div className="flex flex-col absolute rounded-xl">
+                <div className="flex flex-col absolute shadow-md rounded-xl">
                 <button className="bg-white text-black text-sm hover:bg-slate-100 p-2 rounded-t-xl" onClick={handleEdit}>Edit</button>
                 <button className="bg-white text-black text-sm hover:bg-slate-100 p-2 rounded-b-xl" onClick={()=>(deletes())}>Delete</button>
                 </div>

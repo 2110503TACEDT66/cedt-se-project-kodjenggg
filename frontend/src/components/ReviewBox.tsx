@@ -65,7 +65,7 @@ export default function ReviewBox(){
                 <div className="h-[20%]">
                     <div>
                         <div className="text-[#4D4C7D] text-lg italic">{session?.user.name}</div>
-                        <Rating className="w-full h-[10%]" value={(rating==undefined)? 0:rating}
+                        <Rating className="h-[10%]" value={(rating==undefined)? 0:rating}
                         onChange={(e,newValue)=>{if(newValue!=null) setRating(newValue)}}/>
                     </div>
                     <div className="flex flex-row-reverse w-[65%] absolute top-5 right-5">

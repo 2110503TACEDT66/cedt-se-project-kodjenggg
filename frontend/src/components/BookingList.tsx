@@ -6,8 +6,10 @@ import dayjs, { Dayjs } from "dayjs";
 import getReservation from "@/libs/getReservation";
 import { useEffect } from "react";
 import { useState } from "react";
+import CircleIcon from '@mui/icons-material/Circle';
 
 import deleteReservation from "@/libs/deleteReservation";
+import { pink } from "@mui/material/colors";
 
 
 export default function BookingList ({session}:{session:any}) {
@@ -23,7 +25,7 @@ export default function BookingList ({session}:{session:any}) {
     
     useEffect(() => {
         data()
-      }, []);
+    }, []);
 
     async function deleteReservations(token:string, rid:string){
         if(token && rid){
@@ -31,7 +33,7 @@ export default function BookingList ({session}:{session:any}) {
             data()
         }
     }
-
+    
     return (
         <div>
             <div className="text-[#363062] flex flex-col items-center justify-center my-10 mr-[20%]">
@@ -40,7 +42,7 @@ export default function BookingList ({session}:{session:any}) {
             { (reservations && reservations.count > 0) ? 
             (
                 reservations.data.map((reserve:Reservation) => (
-                    <div className="bg-slate-200 mb-10 rounded-lg w-[77%] h-[150px] relative flex flex-row shadow-lg" key={reserve._id}>
+                    <div className="bg-white mb-10 rounded-lg w-[77%] h-[200px] relative flex flex-row shadow-lg" key={reserve._id}>
                             <div className="h-full w-[30%] relative rounded-lg">
                                 <Image src={reserve.hotel.picture} alt='hosImg' fill={true} className="object-cover rounded-l-lg"/>                   
                             </div>
@@ -52,13 +54,41 @@ export default function BookingList ({session}:{session:any}) {
                                     <div>Total Night: {reserve.nightNum}</div>
                                 </div>
                             </div>
+                            {reserve.status === 'unpaid'&& (
                             <Link  href={`/reservations/${reserve._id}?hid=${reserve.hotel.id}&name=${reserve.hotel.name}`}>
-                            <button className="px-3 py-1 text-white shadow-sm rounded-lg bg-[#F99417] absolute h-[40px] w-[80px] right-[14%] top-2" 
-                            >Edit</button></Link>
-                        
-                            <button className="px-3 py-1 text-white shadow-sm rounded-lg bg-red-600 absolute h-[40px] w-[80px] right-[2%] top-2"
-                            onClick={()=>{deleteReservations(session.user.token, reserve._id)}}>Delete</button>
-                            
+                            <button className="px-3 py-1 text-white shadow-sm rounded-xl bg-[#F99417] absolute h-[40px] w-[80px] right-[100px] top-2" 
+                            >Edit</button></Link> )}
+                            {reserve.status === 'unpaid'&& (
+                            <button className="px-3 py-1 text-white shadow-sm rounded-xl bg-red-600 absolute h-[40px] w-[80px] right-4 top-2"
+                            onClick={()=>{deleteReservations(session.user.token, reserve._id)}}>Delete</button>)}
+                            {reserve.status === 'unpaid'&& (
+                                <button className="px-3 py-1 text-[#645151] shadow-sm rounded-xl bg-green-600 absolute h-[40px] w-[80px] right-4 bottom-3"
+                                onClick={() => { alert("GO PAY MOTHER FUCKER") }}>Pay</button>
+                            )}
+                            {reserve.status === 'pending'&& (
+                                <div className="text-[#F99417] text-md absolute right-8 top-2">
+                                    <CircleIcon sx={{ fontSize: 8 }} className="mx-1"/>
+                                    pending...
+                                </div>
+                            )}
+                            {reserve.status === 'reserved'&&(
+                                <div className="text-[#1EB012] text-md absolute right-8  top-2">
+                                <CircleIcon sx={{ fontSize: 8 }} className="mx-1"/>
+                                reserved
+                                </div>
+                            )}
+                            {reserve.status === 'completed'&&(
+                                <div className="text-[#339CFC] text-md absolute right-8  top-2">
+                                <CircleIcon sx={{ fontSize: 8 }} className="mx-1"/>
+                                completed
+                                </div>
+                            )}
+                            {reserve.status === 'completed'&&(
+                                <Link href={`/review?hid=${reserve.hotel.id}&name=${reserve.hotel.name}`}>
+                                <button className="px-3 py-1 text-white shadow-sm rounded-xl bg-[#339CFC] absolute h-[40px] w-[80px] right-4 bottom-3"
+                                >Review</button>
+                                </Link>
+                            )}
                     </div>
                 ))
             )

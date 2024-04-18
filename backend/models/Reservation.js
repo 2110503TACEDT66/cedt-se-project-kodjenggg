@@ -23,6 +23,11 @@ const ReservationSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  status: {
+    type: String,
+    enum: ["unpaid", "pending" , "reserved", "completed" ],
+    default: "unpaid",
+  }
 });
 
 module.exports = mongoose.model("Reservation", ReservationSchema);

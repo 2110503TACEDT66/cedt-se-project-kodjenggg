@@ -11,7 +11,7 @@ export default async function HotelCatalog({hotelJson}:{hotelJson:Promise<HotelJ
     const [favourite,setFavourite] = useState(false);
     const favItems = useAppSelector((state)=>state.favSlice.favItems)
 
-    console.log(favItems)
+    //console.log(favItems)
     //console.log(carItems)
     //const dispatch = useDispatch<AppDispatch>()
 

@@ -26,6 +26,10 @@ const UserSchema = new mongoose.Schema({
     enum: ["user", "admin" , "hotelmanager" ],
     default: "user",
   },
+  hotel: {
+    type: mongoose.Schema.ObjectId,
+    ref: "Hotel",
+  },
   password: {
     type: String,
     required: [true, "Please add a password"],

@@ -7,7 +7,7 @@ import { AppDispatch } from "@/redux/store"
 import { useDispatch } from "react-redux"
 
 export default function ProductCard({hotelName, imgSrc, region, fav, onCompare}:{hotelName:string, imgSrc:string,region:string, fav:boolean, onCompare?:Function}){
-    console.log(imgSrc)
+    //console.log(imgSrc)
     const dispatch = useDispatch<AppDispatch>()
 
     return (

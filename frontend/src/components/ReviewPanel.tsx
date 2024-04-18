@@ -95,7 +95,7 @@ export default function ReviewPanel({hid}:{hid:string}){
             <div className="w-full bg-[#4D4C7D] p-5">
             <div className="text-[50px] font-medium relative text-center text-white pt-20 italic">Reviews</div>
             <div className="flex flex-row justify-center items-center h-fit">
-                <div className="text-[150px] mr-[2%] font-extrabold h-fit">{avg.toPrecision(2)}</div>
+                <div className="text-[150px] mr-[2%] font-extrabold italic h-fit">{avg.toPrecision(2)}</div>
                 <div className="flex flex-col ml-[2%]">
                     <div className="text-xl flex items-center"><Rating name="5stars" value={5} readOnly/>({reviewsJson5?.count ??0})</div>
                     <div className="text-xl flex items-center"><Rating name="4stars" value={4} readOnly/>({reviewsJson4?.count ??0})</div>

@@ -137,10 +137,15 @@ exports.updateReply= async (req, res, next) => {
 // @route   PUT /api/v1/reviews/report/:id
 // @access  Private
 exports.updateReport = async (req, res, next) => {
+
     try {
+        const userId = req.user.id;
+
         const review = await Review.findByIdAndUpdate(
             req.params.id,
-            { $inc: { report: 1 } }, // Increment the report field by 1
+            {
+              $addToSet: { report: userId } // Append user ID to reportedBy array
+            },
             { new: true, runValidators: true }
         );
 

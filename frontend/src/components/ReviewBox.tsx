@@ -40,7 +40,7 @@ export default function ReviewBox(){
                 comment: comment,
                 title: title,
                 userid: session?.user?._id,
-                report: 0,
+                report: [],
                 service: service,
                 food: food,
                 convenience: convinience,

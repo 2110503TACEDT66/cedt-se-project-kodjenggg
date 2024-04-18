@@ -40,8 +40,8 @@ if (req.query.select) {
   query = query.select(fields);
 }
 
-query = query.sort("stars: -1");
 //Sort
+query = query.sort({stars: -1});
 if (req.query.sort) {
   const sortBy = req.query.sort.split(",").join(" ");
   query = query.sort(sortBy);

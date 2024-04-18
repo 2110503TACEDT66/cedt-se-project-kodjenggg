@@ -2,12 +2,16 @@
 
 import { useState } from "react"
 import SearchTags from "@/components/SearchTags";
+import {Rating} from "@mui/material";
 
-import { Tags } from "interfaces";
+import { ReviewJson, Tags } from "interfaces";
 import { Select, MenuItem, colors } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import ReviewCard from "./ReviewCard";
+import { useEffect } from "react";
+import { Promise } from "mongoose";
+import getReviews from "@/libs/getReview";
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
     color: 'white',
@@ -30,23 +34,74 @@ export default function ReviewPanel({hid}:{hid:string}){
     const [food,setFood] = useState(false);
     const [service,setService] = useState(false);
     const [worthiness,setWorthiness] = useState(false);
-    const [stars,setStars] = useState<string>("0")
+    const [stars,setStars] = useState<string>("0");
 
+    const [reviewsJson5, setReviewsJson5] = useState<ReviewJson>();
+    const [reviewsJson4, setReviewsJson4] = useState<ReviewJson>();
+    const [reviewsJson3, setReviewsJson3] = useState<ReviewJson>();
+    const [reviewsJson2, setReviewsJson2] = useState<ReviewJson>();
+    const [reviewsJson1, setReviewsJson1] = useState<ReviewJson>();
+    
     const reviewTags:Tags = {
-        service:service,
-        food:food,
-        convenience:convenience,
-        cleanliness:cleanliness,
-        facility:facility,
-        worthiness:worthiness,
-        stars: stars==="0"? null : parseInt(stars)
+        service: service,
+        food: food,
+        convenience: convenience,
+        cleanliness: cleanliness,
+        facility: facility,
+        worthiness: worthiness,
+        stars: stars === "0" ? null : parseInt(stars)
     }
 
-    return(
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data5 = await getReviews(reviewTags, hid, 5);
+                setReviewsJson5(data5);
+                
+                const data4 = await getReviews(reviewTags, hid, 4);
+                setReviewsJson4(data4);
+                
+                const data3 = await getReviews(reviewTags, hid, 3);
+                setReviewsJson3(data3);
+                
+                const data2 = await getReviews(reviewTags, hid, 2);
+                setReviewsJson2(data2);
+                
+                const data1 = await getReviews(reviewTags, hid, 1);
+                setReviewsJson1(data1);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+    
+        fetchData();
+    }, []);
+
+    const avg =
+    (((reviewsJson5?.count ?? 0)*5) +
+      ((reviewsJson4?.count ?? 0)*4) +
+      ((reviewsJson3?.count ?? 0)*3) +
+      ((reviewsJson2?.count ?? 0)*2) +
+      ((reviewsJson1?.count ?? 0)*1)) / (((reviewsJson5?.count ?? 0)) +
+      ((reviewsJson4?.count ?? 0)) +
+      ((reviewsJson3?.count ?? 0)) +
+      ((reviewsJson2?.count ?? 0)) +
+      ((reviewsJson1?.count ?? 0)))
+    ;
+      return(
         <main>
             <div className="w-full bg-[#4D4C7D] p-5">
-            <h1 className="text-4xl font-medium relative text-center text-white pt-20 pb-10 italic">Reviews</h1>
-
+            <div className="text-[50px] font-medium relative text-center text-white pt-20 italic">Reviews</div>
+            <div className="flex flex-row justify-center items-center h-fit">
+                <div className="text-[150px] mr-[2%] font-extrabold h-fit">{avg.toPrecision(2)}</div>
+                <div className="flex flex-col ml-[2%]">
+                    <div className="text-xl flex items-center"><Rating name="5stars" value={5} readOnly/>({reviewsJson5?.count ??0})</div>
+                    <div className="text-xl flex items-center"><Rating name="4stars" value={4} readOnly/>({reviewsJson4?.count ??0})</div>
+                    <div className="text-xl flex items-center"><Rating name="3stars" value={3} readOnly/>({reviewsJson3?.count ??0})</div>
+                    <div className="text-xl flex items-center"><Rating name="2stars" value={2} readOnly/>({reviewsJson2?.count ??0})</div>
+                    <div className="text-xl flex items-center"><Rating name="1stars" value={1} readOnly/>({reviewsJson1?.count ??0})</div>
+                </div>
+            </div>
             <div className=" w-full flex flex-col justify-center self-center content-center items-center my-2">
                 <hr className="flex justify-center items-center w-[70%] border-solid border-[#908EA5] border-[0.5px]" />
                 <p className="ml-[15%] text-sm text-[#908EA5] self-start mt-2 p-1">View reviews by :</p>

@@ -27,7 +27,7 @@ export default function ReviewCard({tags,hid}:{tags:Tags,hid:string}){
         if (session){
             return ReportReview.report.includes(session.user._id);
         }
-        return true
+        return false
     }
 
     useEffect(() => {

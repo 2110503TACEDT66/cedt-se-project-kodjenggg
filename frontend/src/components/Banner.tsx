@@ -21,10 +21,10 @@ export default function Banner() {
             <div className="absolute inset-0 flex flex=col justify-center items-center">
                 <div className='text-center z-20 bg-[#363062] w-[100%] py-2 bg-opacity-30 text-white'>
                     <div className='text-4xl font-medium'>Stay With Us</div>
-                    <div className='text-xl font-serif'>Free Breakfast Free Wifi</div>
+                    <div className='text-xl font-serif'>Seize Your Stay with a Tap</div>
                 </div>
-                <button className='bg-[#F99417] text-white border border-[#F99417] font-semibold py-2 px-2 m-2 rounded z-30 absolute
-            hover:bg-white hover:text-[#F99417] hover:border-transparent top-[55%] w-[30%]'
+                <button className='bg-[#F99417] text-white border border-[#F99417] font-semibold py-2 px-2 m-2 rounded z-20 absolute
+            hover:bg-white hover:text-[#F99417] hover:border-transparent top-[57%] w-[30%]'
             onClick={(e) => { e.stopPropagation(); router.push('/hotels')}}>
                 View All Hotels
             </button>

@@ -16,7 +16,7 @@ export default async function User() {
         <div className="fixed h-full w-[25%] top-0 right-0 bottom-0 mt-[50px] border-l-2 border-[#f5f5f5]">
         <div className="w-full h-[15%]">
         <div className="h-[20%] bg-white-200 text-center">
-            <div className="underline text-[#F99417] my-5">{profile.data.role}'s details</div>
+            <div className="text-[#F99417] my-5">{profile.data.role}'s details</div>
             <div className="text-3xl font-semibold text-[#363062]">{profile.data.name}</div>
         </div>
         </div>

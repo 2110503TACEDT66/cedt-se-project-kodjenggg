@@ -9,7 +9,8 @@ export default async function createReservation(token: string,reserveItem: Reser
         },
         body: JSON.stringify({
             revDate: reserveItem.revDate,
-            nightNum: reserveItem.nightNum
+            nightNum: reserveItem.nightNum,
+            status: 'unpaid'
         }),
     })
 

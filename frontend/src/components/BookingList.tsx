@@ -10,6 +10,8 @@ import CircleIcon from '@mui/icons-material/Circle';
 import MoreOptionMyReservation from "./MoreOptionMyReservation";
 import { pink } from "@mui/material/colors";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import CancelRevPopUp from "./CancelRevPopUp";
+import { useSession } from "next-auth/react";
 
 
 export default function BookingList ({session}:{session:any}) {
@@ -74,6 +76,9 @@ export default function BookingList ({session}:{session:any}) {
                                 <CircleIcon sx={{ fontSize: 8 }} className="mx-1"/>
                                 reserved
                                 </div>
+                            )}
+                            {reserve.status === 'reserved'&&(
+                                <CancelRevPopUp rid={reserve._id} session={session}/>
                             )}
                             {reserve.status === 'completed'&&(
                                 <div className="text-[#339CFC] text-md absolute right-8  top-2">

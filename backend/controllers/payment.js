@@ -66,7 +66,7 @@ exports.cardPayment = async (req, res, next) => {
 
 exports.webhooks = async (req, res) => {
     console.log("In Webhook")
-    const sig = req.headers['stripe-signature'];
+    const sig = req.headers["stripe-signature"];
 
     let event;
 
@@ -90,8 +90,10 @@ exports.webhooks = async (req, res) => {
         if (!reservation) {
             return res.status(404).json({ success: false, message: "Reservation not found" });
         }
+
+        
   
-        reservation.status = session.status == "succeeded" ? "reserved" : "unpaid";
+        reservation.status = (session.status == "succeeded")? "reserved" : "unpaid";
   
         console.log("=== update result", reservation);
   
@@ -104,4 +106,4 @@ exports.webhooks = async (req, res) => {
   
     // Return a 200 response to acknowledge receipt of the event
     res.send();
-  };
+};

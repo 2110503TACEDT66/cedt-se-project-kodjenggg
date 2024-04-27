@@ -8,11 +8,12 @@ const {xss} = require('express-xss-sanitizer') ;
 const rateLimit = require('express-rate-limit') ;
 const hpp = require('hpp') ;
 const cors = require('cors') ;
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-
+require("dotenv").config();
 //Load env vars
 dotenv.config({ path: "./config/config.env" });
 
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const endpointSecret = "whsec_1bc1e8c6cdb4ffb49d967af0ce7be7cb2b8f7601c0ec99304218a81ebf3a6b1e";
 //Connect to database
 connectDB();
 
@@ -63,6 +64,48 @@ app.use("/api/v1/reservations", reservations);
 app.use("/api/v1/reviews", reviews);
 app.use("/api/v1/rooms", rooms);
 app.use("/api/v1/payment", payment);
+
+app.post("/webhook", express.raw({ type: "application/json" }), async (req, res) => {
+  console.log("In webhook");
+  
+  const sig = req.headers["stripe-signature"];
+
+  let event;
+
+  try {
+    event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+  } catch (err) {
+    res.status(400).send(`Webhook Error: ${err.message}`);
+    return;
+  }
+
+  // Handle the event
+  switch (event.type) {
+    case "checkout.session.completed":
+      const paymentSuccessData = event.data.object;
+      const sessionId = paymentSuccessData.id;
+
+      console.log(paymentSuccessData)
+
+      const reservation = await Reservation.findById(sessionId);
+        if (!reservation) {
+            return res.status(404).json({ success: false, message: "Reservation not found" });
+        }
+  
+      reservation.status = (session.status == "succeeded")? "reserved" : "unpaid";
+
+      console.log("=== update result", reservation);
+
+      // event.data.object.id = session.id
+      // event.data.object.customer_details คือข้อมูลลูกค้า
+      break;
+    default:
+      console.log(`Unhandled event type ${event.type}`);
+  }
+
+  // Return a 200 response to acknowledge receipt of the event
+  res.send();
+});
 
 const PORT = process.env.PORT || 5000;
 const server = app.listen(

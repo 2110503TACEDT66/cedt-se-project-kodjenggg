@@ -91,7 +91,7 @@ process.on("unhandledRejection", (err, promise) => {
 // Define storage for the images
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, 'public/img');
+      cb(null, '../frontend/public/img');
     },
     filename: function (req, file, cb) {
       const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)

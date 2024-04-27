@@ -83,10 +83,16 @@ exports.getReservations = async (req, res, next) => {
 // @access  Public
 exports.getReservation = async (req, res, next) => {
   try {
-    const reservation = await Reservation.findById(req.params.id).populate({
-      path: "hotel",
-      select: "name description tel",
-    });
+    const reservation = await Reservation.findById(req.params.id).populate([
+      {
+        path: "hotel",
+        select: "name province tel picture",
+      },
+      {
+        path: "user",
+        select: "name tel"
+      }
+    ]);
 
     if (!reservation) {
       return res.status(404).json({

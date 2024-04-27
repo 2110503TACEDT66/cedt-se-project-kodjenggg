@@ -5,7 +5,7 @@ const { v4: uuidv4 } = require('uuid'); // Import UUID
 const Reservation = require("../models/Reservation");
 
 // @desc    Make card payment
-// @route   PUT /api/v1/reservations/payment/:reserveId
+// @route   PUT /api/v1/reservations/payment/card/:reserveId
 // @access  Private
 exports.cardPayment = async (req, res, next) => {
     //const { product, information } = req.body;
@@ -19,6 +19,68 @@ exports.cardPayment = async (req, res, next) => {
         console.log(reservation)
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ["card"],
+            line_items: [
+                {
+                    price_data: {
+                        currency: "thb",
+                        product_data: {
+                            name: `Reservation ${reservation._id}`,
+                        },
+                        unit_amount: reservation.totalPrice * 100,
+                    },
+                    quantity: 1,
+                },
+            ],
+            mode: "payment",
+            success_url: `http://localhost:3000/mybooking`,
+            cancel_url: `http://localhost:3000/`,
+        });
+
+        // const data = {
+        //     // name: information.name,
+        //     // address: information.address,
+        //     session_id: session.id,
+        //     status: session.status,
+        //     // order_id: orderId,
+        // };
+
+        console.log("session", session);
+
+          // Update the reservation with payment session ID and status
+        //const updateReservation = await Reservation.findByIdAndUpdate(req.params.id, {sessionId: session.id})
+          //reservation.status = session.status == "succeeded" ? "reserves" : "unpaid"; // Update status as needed
+        reservation.sessionId = session.id;
+        await reservation.save();
+        
+        //const [result] = await conn.query("INSERT INTO orders SET ?", data); //update
+
+        res.json({
+            message: "Checkout success.",
+            id: session.id,
+            reservation,
+        });
+
+    } catch (error) {
+        console.error("Error creating user:", error.message);
+        res.status(400).json({ error: "Error payment" });
+    }
+};
+
+// @desc    Make card payment
+// @route   PUT /api/v1/reservations/payment/promtpay/:reserveId
+// @access  Private
+exports.promtpayPayment = async (req, res, next) => {
+    //const { product, information } = req.body;
+    try {
+        // Find the reservation in the database
+        const reservation = await Reservation.findById(req.params.id);
+        if (!reservation) {
+            return res.status(404).json({ success: false, message: "Reservation not found" });
+        }
+        // const reserveId = uuidv4();
+        console.log(reservation)
+        const session = await stripe.checkout.sessions.create({
+            payment_method_types: ["promptpay"],
             line_items: [
                 {
                     price_data: {

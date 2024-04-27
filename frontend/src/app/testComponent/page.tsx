@@ -10,6 +10,7 @@ import { styled } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import ReviewCard from "@/components/ReviewCard";
 import PromptpayCard from "@/components/PromptpayCard";
+import InsertSlipBox from "@/components/InsertSlipBox";
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
     color: 'white',
@@ -70,7 +71,8 @@ export default function testComponent(){
                 </div>
             <div >
                 <h1 className="text-black"> {`${worthiness} ${service} ${food} ${facility} ${convenience} ${cleanliness}` }</h1>
-                <PromptpayCard/>
+                {/* <PromptpayCard/> */}
+                <InsertSlipBox/>
             </div>
             
             </div>  

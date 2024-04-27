@@ -90,10 +90,10 @@ exports.webhooks = async (req, res) => {
         console.log(paymentSuccessData)
         console.log(sessionId)
 
-        const filter = { sessionId: sessionId };
-        const update = { status: paymentSuccessData.status === 'complete' ? 'reserved' : 'unpaid' };
+        // const filter = { sessionId: sessionId };
+        // const update = { status: paymentSuccessData.status === 'complete' ? 'reserved' : 'unpaid' };
   
-        const reservation = await Reservation.findOneAndUpdate(filter,update);
+        const reservation = await Reservation.findOne({sessionId:sessionId});
         if (!reservation) {
             console.log('reservation not found')
             return res.status(404).json({ success: false, message: "Reservation not found" });

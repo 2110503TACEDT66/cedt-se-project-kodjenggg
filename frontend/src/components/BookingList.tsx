@@ -33,8 +33,11 @@ export default function BookingList ({session}:{session:any}) {
             <div className="text-[#363062] flex flex-col items-center justify-center my-10 mr-[20%]">
             <div className="font-semibold text-5xl m-10">Your Reservations</div>
 
-            { (reservations && reservations.count > 0) ?
-            (
+            { (!reservations ) ?
+            (<div className="absolute inset-0 flex justify-center items-center text-gray-500 mr-[20%]">Loading...</div>)
+            : (reservations.data.length == 0) ?
+            (<div className="absolute inset-0 flex justify-center items-center text-gray-500 mr-[20%]">No reservation</div>)
+            :(
                 reservations.data.map((reserve:Reservation) => (
                     <div className="bg-white mb-10 rounded-lg w-[77%] h-[200px] relative flex flex-row shadow-lg" key={reserve._id}>
                             <div className="h-full w-[30%] relative rounded-lg">
@@ -90,7 +93,6 @@ export default function BookingList ({session}:{session:any}) {
                     </div>
                 ))
             )
-            :(<div className="absolute inset-0 flex justify-center items-center text-gray-500 mr-[20%]">No reservation</div>)
             }
             </div>
 

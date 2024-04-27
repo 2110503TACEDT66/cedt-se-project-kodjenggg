@@ -49,7 +49,7 @@ export default function BookingList ({session}:{session:any}) {
                                 </div>
                             </div>
                         
-                            <MoreOptionMyReservation reserve={reserve} session={session}/>
+                            
                             {/* {reserve.status === 'unpaid'&& (
                             <Link  href={`/reservations/${reserve._id}?hid=${reserve.hotel.id}&name=${reserve.hotel.name}`}>
                             <button className="px-3 py-1 text-white shadow-sm rounded-xl bg-[#F99417] absolute h-[40px] w-[80px] right-[100px] top-2"
@@ -60,8 +60,17 @@ export default function BookingList ({session}:{session:any}) {
                             */}
 
                             {reserve.status === 'unpaid'&& (
-                                <button className="px-3 py-1 text-white shadow-sm rounded-xl bg-green-600 absolute h-[40px] w-[80px] right-4 bottom-3"
-                                onClick={() => { alert("GO PAY") }}>Pay</button>
+                                <div>
+                                    <div className="text-[#CC382E] text-md absolute right-12 top-6">
+                                        <CircleIcon sx={{ fontSize: 8 }} className="mx-1"/>
+                                        unpaid
+                                    </div>
+                                    <MoreOptionMyReservation reserve={reserve} session={session}/>
+                                    <Link href={`/payment/${reserve._id}`}>
+                                    <button className="px-3 py-1 text-white shadow-sm rounded-xl bg-green-600 absolute h-[40px] w-[80px] right-4 bottom-3"
+                                    onClick={() => {}}>Pay</button>
+                                    </Link>
+                                </div>
                             )}
                             {reserve.status === 'pending'&& (
                                 <div className="text-[#F99417] text-md absolute right-8 top-2">
@@ -70,22 +79,26 @@ export default function BookingList ({session}:{session:any}) {
                                 </div>
                             )}
                             {reserve.status === 'reserved'&&(
+                                <div>
                                 <div className="text-[#1EB012] text-md absolute right-8  top-2">
                                 <CircleIcon sx={{ fontSize: 8 }} className="mx-1"/>
                                 reserved
                                 </div>
-                            )}
-                            {reserve.status === 'completed'&&(
-                                <div className="text-[#339CFC] text-md absolute right-8  top-2">
-                                <CircleIcon sx={{ fontSize: 8 }} className="mx-1"/>
-                                completed
+                                <button className="px-3 py-1 text-white shadow-sm rounded-xl bg-[#CC382E] absolute h-[40px] w-[80px] right-4 bottom-3"
+                                onClick={() => { alert("GO PAY") }}>Cancel</button>
                                 </div>
                             )}
                             {reserve.status === 'completed'&&(
-                                <Link href={`/review?hid=${reserve.hotel.id}&name=${reserve.hotel.name}`}>
-                                <button className="px-3 py-1 text-white shadow-sm rounded-xl bg-[#339CFC] absolute h-[40px] w-[80px] right-4 bottom-3"
-                                >Review</button>
-                                </Link>
+                                <div>
+                                    <div className="text-[#339CFC] text-md absolute right-8  top-2">
+                                    <CircleIcon sx={{ fontSize: 8 }} className="mx-1"/>
+                                    completed
+                                    </div>
+                                    <Link href={`/review?hid=${reserve.hotel.id}&name=${reserve.hotel.name}`}>
+                                    <button className="px-3 py-1 text-white shadow-sm rounded-xl bg-[#339CFC] absolute h-[40px] w-[80px] right-4 bottom-3"
+                                    >Review</button>
+                                    </Link>
+                                </div>
                             )}
                     </div>
                 ))

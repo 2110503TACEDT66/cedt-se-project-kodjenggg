@@ -1,5 +1,6 @@
 const Reservation = require("../models/Reservation");
 const Hotel = require("../models/Hotel");
+const Room = require("../models/Room");
 
 //@desc     Get all reservations
 //@route    GET /api/v1/reservations
@@ -12,6 +13,10 @@ exports.getReservations = async (req, res, next) => {
     {
       path: "hotel",
       select: "name province tel picture",
+    },
+    {
+      path: "room",
+      select: "roomtype bedtype roomcap"
     },
     {
       path: "user",
@@ -27,6 +32,10 @@ exports.getReservations = async (req, res, next) => {
           select: "name province tel picture",
         },
         {
+          path: "room",
+          select: "roomtype bedtype roomcap"
+        },
+        {
           path: "user",
           select: "name tel"
         }
@@ -36,6 +45,10 @@ exports.getReservations = async (req, res, next) => {
         {
           path: "hotel",
           select: "name province tel picture",
+        },
+        {
+          path: "room",
+          select: "roomtype bedtype roomcap"
         },
         {
           path: "user",
@@ -53,6 +66,10 @@ exports.getReservations = async (req, res, next) => {
         {
           path: "hotel",
           select: "name province tel picture",
+        },
+        {
+          path: "room",
+          select: "roomtype bedtype roomcap"
         },
         {
           path: "user",
@@ -116,6 +133,16 @@ exports.addReservation = async (req, res, next) => {
       return res.status(404).json({
         success: false,
         message: `No hotel with the id of ${req.params.hotelId}`,
+      });
+    }
+
+    //check room
+    const room = await Room.findById(req.body.room);
+
+    if (!room) {
+      return res.status(404).json({
+        success: false,
+        message: `No room with the id of ${req.body.room}`,
       });
     }
 

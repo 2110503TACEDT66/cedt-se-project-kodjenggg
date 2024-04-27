@@ -9,9 +9,10 @@ import Link from "next/link";
 import { Reservation } from "interfaces";
 import { useSession } from "next-auth/react";
 import SelectPayment from "@/components/SelectPayment";
+import PromptpayCard from "@/components/PromptpayCard";
 
-export default async function Payment({params}:{params:{reserveid:string}}){
-    return(  
-        <SelectPayment reserve={params.reserveid}/>
+export default async function MobileBanking(){
+    return (
+        <PromptpayCard/>
     )
 }

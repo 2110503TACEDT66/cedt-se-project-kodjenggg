@@ -7,9 +7,12 @@ import getUserProfile from "@/libs/getUserProfile";
 import { useEffect } from "react";
 import { useState } from "react";
 import { ReserveJson, Reservation } from "interfaces";
+import router from "next/router";
+import { useRouter } from "next/navigation";
 
 export default function SelectPayment({reserve}: {reserve:string}){
     
+    const router = useRouter();
     const { data:session } = useSession()
     const [profile, setProfile] = useState<any>();
     const [reserveDetail,setReserveDetails] = useState<any>();
@@ -81,7 +84,7 @@ export default function SelectPayment({reserve}: {reserve:string}){
             <button className="block bg-[#F99417] text-[#363062] text-xl font-bold border-2 border-[#F99417] px-6 py-2 mx-3 rounded hover:bg-white hover:text-[#F99417]"
             >Credit/Debit Card</button>
             <button className="block bg-[#F99417] text-[#363062] text-xl font-bold border-2 border-[#F99417] px-6 py-2 mx-3 rounded hover:bg-white hover:text-[#F99417]"
-            >Mobile Banking</button>
+            onClick={() => { router.push(`${reserveDetail.data._id}/mobilebanking`);}}>Mobile Banking</button>
             </div>
         </main>
     )

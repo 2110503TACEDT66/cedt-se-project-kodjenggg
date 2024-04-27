@@ -27,7 +27,7 @@ export default function Todsoft() {
           "Access-Control-Allow-Origin" : "*" ,
         },
         body : JSON.stringify({
-          reservid : "661ad32dc15463157a95156a" ,
+          reservid : "662ccb8c5b75a24a10d4fee6" ,
           image : image
         })
       }).then((res) => res.json()).then((data) => console.log(data))

@@ -1,7 +1,8 @@
 const express = require("express");
 
 const {
- createPayment
+ createPayment,
+ getPayment
 } = require("../controllers/payment");
 
 //Include other resource routers
@@ -15,4 +16,7 @@ router
     .route("/")
     .post(createPayment)
     
+router
+    .route("/:id")
+    .get(getPayment)
 module.exports = router;

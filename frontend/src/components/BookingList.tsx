@@ -119,7 +119,7 @@ export default function BookingList ({session}:{session:any}) {
                                     unpaid...
                                 </div>
                             )}
-                            {reserve.status === 'unpaid'&& (
+                            {(reserve.status === 'unpaid' && profile.data.role!=="hotelmanager")&& (
                                <Link href={`/payment/${reserve._id}`}>
                                <button className="px-3 py-1 text-white shadow-sm rounded-xl bg-green-600 absolute h-[40px] w-[80px] right-4 bottom-3"
                                onClick={() => {}}>Pay</button>

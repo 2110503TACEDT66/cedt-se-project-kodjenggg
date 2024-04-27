@@ -1,6 +1,14 @@
 const mongoose = require("mongoose");
+const uuid = require('node-uuid');
 
 const ReservationSchema = new mongoose.Schema({
+  sessionId:{
+    type: String,
+    default: function genUUID() {
+      return uuid.v1()
+    },
+    require: true,
+  },
   revDate: {
     type: Date,
     require: true,
@@ -19,16 +27,24 @@ const ReservationSchema = new mongoose.Schema({
     ref: "Hotel",
     required: true,
   },
+  room: {
+    type: mongoose.Schema.ObjectId,
+    ref: "Room",
+    required: true,
+  },
+  totalPrice: {
+    type: Number,
+    require: true,
+  },
   createdAt: {
     type: Date,
     default: Date.now,
   },
   status: {
     type: String,
-    enum: ["unpaid", "pending" , "reserved", "completed" ],
+    enum: ["unpaid", "pending", "disapprove", "reserved", "completed", "reviewed" ],
     default: "unpaid",
-  },
-
+  }
 });
 
 module.exports = mongoose.model("Reservation", ReservationSchema);

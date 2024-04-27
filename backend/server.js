@@ -8,6 +8,7 @@ const {xss} = require('express-xss-sanitizer') ;
 const rateLimit = require('express-rate-limit') ;
 const hpp = require('hpp') ;
 const cors = require('cors') ;
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 //Load env vars
 dotenv.config({ path: "./config/config.env" });
@@ -38,6 +39,8 @@ app.use(limiter) ;
 
 //Prevent http param pollutions 
 app.use(hpp()) ;
+
+//const endpointSecret = "whsec_1bc1e8c6cdb4ffb49d967af0ce7be7cb2b8f7601c0ec99304218a81ebf3a6b1e";
 
 //Enable CORS
 app.use(cors()) ;

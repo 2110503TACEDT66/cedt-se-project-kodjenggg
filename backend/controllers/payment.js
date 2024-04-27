@@ -1,16 +1,21 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY); // Import Stripe
 const { v4: uuidv4 } = require('uuid'); // Import UUID
-const conn = require('../db/connection'); // Import database connection
+//const conn = require('../db/connection'); // Import database connection
+const Reservation = require("../models/Reservation");
 
-exports.recordExpense = async (req, res, next) => {
-    const { product, information } = req.body;
+// @desc    Make card payment
+// @route   PUT /api/v1/reservations/payment/:reserveId
+// @access  Private
+exports.cardPayment = async (req, res, next) => {
+    //const { product, information } = req.body;
     try {
         // Find the reservation in the database
-        const reservation = await Reservation.findById(reservationId);
+        const reservation = await Reservation.findById(req.params.id);
         if (!reservation) {
             return res.status(404).json({ success: false, message: "Reservation not found" });
         }
         // const reserveId = uuidv4();
+        console.log(reservation)
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ["card"],
             line_items: [
@@ -26,21 +31,23 @@ exports.recordExpense = async (req, res, next) => {
                 },
             ],
             mode: "payment",
-            success_url: `http://localhost:3000/mybooking?id=${reservation._id}`,
-            cancel_url: `http://localhost:3000/mybooking?id=${reservation._id}`,
+            success_url: `http://localhost:3000/mybooking`,
+            cancel_url: `http://localhost:3000/`,
         });
 
-        const data = {
-            // name: information.name,
-            // address: information.address,
-            session_id: session.id,
-            status: session.status,
-            // order_id: orderId,
-        };
+        // const data = {
+        //     // name: information.name,
+        //     // address: information.address,
+        //     session_id: session.id,
+        //     status: session.status,
+        //     // order_id: orderId,
+        // };
+
+        console.log("session", session);
 
           // Update the reservation with payment session ID and status
           reservation.sessionId = session.id;
-          reservation.status = session.status; // Update status as needed
+          //reservation.status = session.status == "succeeded" ? "reserves" : "unpaid"; // Update status as needed
 
         
         //const [result] = await conn.query("INSERT INTO orders SET ?", data); //update
@@ -48,7 +55,7 @@ exports.recordExpense = async (req, res, next) => {
         res.json({
             message: "Checkout success.",
             id: session.id,
-            result,
+            reservation,
         });
 
     } catch (error) {
@@ -57,14 +64,14 @@ exports.recordExpense = async (req, res, next) => {
     }
 };
 
+exports.webhooks = async (req, res) => {
+    console.log("In Webhook")
+    const sig = req.headers['stripe-signature'];
 
-app.post("/webhook", express.raw({ type: "application/json" }), async (req, res) => {
-    const sig = req.headers["stripe-signature"];
-  
     let event;
-  
+
     try {
-      event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+      event = stripe.webhooks.constructEvent(req.body, sig, process.env.ENDPOINTSECRET);
     } catch (err) {
       res.status(400).send(`Webhook Error: ${err.message}`);
       return;
@@ -75,17 +82,18 @@ app.post("/webhook", express.raw({ type: "application/json" }), async (req, res)
       case "checkout.session.completed":
         const paymentSuccessData = event.data.object;
         const sessionId = paymentSuccessData.id;
+
+        console.log(paymentSuccessData)
+        console.log(sessionId)
   
-        const data = {
-          status: paymentSuccessData.status,
-        };
+        const reservation = await Reservation.findById(sessionId);
+        if (!reservation) {
+            return res.status(404).json({ success: false, message: "Reservation not found" });
+        }
   
-        const result = await conn.query("UPDATE orders SET ? WHERE session_id = ?", [
-          data,
-          sessionId,
-        ]);
+        reservation.status = session.status == "succeeded" ? "reserved" : "unpaid";
   
-        console.log("=== update result", result);
+        console.log("=== update result", reservation);
   
         // event.data.object.id = session.id
         // event.data.object.customer_details คือข้อมูลลูกค้า
@@ -96,23 +104,4 @@ app.post("/webhook", express.raw({ type: "application/json" }), async (req, res)
   
     // Return a 200 response to acknowledge receipt of the event
     res.send();
-  });
-
-
-
-app.get("/order/:id", async (req, res) => {
-  const orderId = req.params.id;
-  try {
-    const [result] = await conn.query("SELECT * from orders where order_id = ?", orderId);
-    const selectedOrder = result[0];
-    if (!selectedOrder) {
-      throw {
-        errorMessage: "Order not found",
-      };
-    }
-    res.json(selectedOrder);
-  } catch (error) {
-    console.log("error", error);
-    res.status(404).json({ error: error.errorMessage || "System error" });
-  }
-});
+  };

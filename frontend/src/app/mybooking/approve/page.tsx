@@ -4,10 +4,11 @@ import { getServerSession } from "next-auth";
 import { Suspense } from "react"
 import { LinearProgress } from "@mui/material"
 import RecieptApprove from "@/components/RecieptApprove";
-
+import getPayment from "@/libs/getPayment";
 export default async function ManageReservations(){
     const sessionReady = await getServerSession(authOptions) ;
     if ( !sessionReady || !sessionReady.user.token) return null
+
 
     return(
         <main>

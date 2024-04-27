@@ -133,3 +133,20 @@ export interface Room{
     roomcap: number
 }
 
+export interface Payment {
+    reservid: {
+        _id: string;
+        revDate: string;
+        nightNum: number;
+        user: string;
+        hotel: string;
+        room: string;
+        totalPrice: number;
+        status: string;
+        createdAt: string;
+        __v: number;
+        sessionId: string;
+        
+    },
+    image: string;
+}

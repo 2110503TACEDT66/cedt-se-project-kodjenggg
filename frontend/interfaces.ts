@@ -133,8 +133,3 @@ export interface Room{
     roomcap: number
 }
 
-export interface Payment {
-    _id : string ,
-    reserveid : string ,
-    picture : string 
-}

@@ -2,6 +2,8 @@ export interface ReservationItem {
     hotelId: string,
     revDate: string,
     nightNum: number,
+    room: string,
+    price: number
 }
 
 export interface HotelJson {

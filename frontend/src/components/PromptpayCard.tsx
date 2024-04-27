@@ -22,7 +22,7 @@ export default function PromptpayCard(){
 
         <div className="w-[100%] flex justify-center left-0 mt-10 ">
         <button className="bg-[#FFA940] py-1 mr-3 text-[#363062] text-lg font-semibold rounded-lg w-[10%] mr-12"
-        //  onClick={()=>{router.push(/payment/${hid})}}
+        //  onClick={()=>{router.push(/payment)}}
         >Back</button>
 
         <button className="bg-[#339CFC] py-1 mr-3 text-[#363062] font-semibold text-lg rounded-lg w-[10%] ml-12"

@@ -162,6 +162,7 @@ exports.addReservation = async (req, res, next) => {
 // @route   PUT /api/v1/reservations/:id
 // @access  Private
 exports.updateReservation = async (req, res, next) => {
+  
   try {
     let reservation = await Reservation.findById(req.params.id);
 

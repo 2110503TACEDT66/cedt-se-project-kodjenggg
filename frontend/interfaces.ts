@@ -2,6 +2,7 @@ export interface ReservationItem {
     hotelId: string,
     revDate: string,
     nightNum: number,
+    payment : string 
 }
 
 export interface HotelJson {
@@ -32,7 +33,7 @@ export interface RoomJson {
     data: Room[]
 }
 
-
+//dont forget to แก้
 export interface Reservation{
     _id: string,
     revDate : Date,
@@ -130,4 +131,10 @@ export interface Room{
     bedtype: string,
     picture: string,
     roomcap: number
+}
+
+export interface Payment {
+    _id : string ,
+    reserveid : string ,
+    picture : string 
 }

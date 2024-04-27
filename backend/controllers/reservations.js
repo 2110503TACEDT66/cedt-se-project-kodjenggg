@@ -85,7 +85,7 @@ exports.getReservation = async (req, res, next) => {
   try {
     const reservation = await Reservation.findById(req.params.id).populate({
       path: "hotel",
-      select: "name description tel",
+      select: "name description tel picture",
     });
 
     if (!reservation) {

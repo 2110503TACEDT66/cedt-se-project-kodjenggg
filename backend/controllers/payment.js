@@ -1,3 +1,4 @@
+//import { buffer } from "micro";
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY); // Import Stripe
 const { v4: uuidv4 } = require('uuid'); // Import UUID
 //const conn = require('../db/connection'); // Import database connection
@@ -46,9 +47,10 @@ exports.cardPayment = async (req, res, next) => {
         console.log("session", session);
 
           // Update the reservation with payment session ID and status
-          reservation.sessionId = session.id;
+        //const updateReservation = await Reservation.findByIdAndUpdate(req.params.id, {sessionId: session.id})
           //reservation.status = session.status == "succeeded" ? "reserves" : "unpaid"; // Update status as needed
-
+        reservation.sessionId = session.id;
+        await reservation.save();
         
         //const [result] = await conn.query("INSERT INTO orders SET ?", data); //update
 
@@ -66,13 +68,15 @@ exports.cardPayment = async (req, res, next) => {
 
 exports.webhooks = async (req, res) => {
     console.log("In Webhook")
+    //const buf = await buffer(req);
     const sig = req.headers["stripe-signature"];
 
     let event;
 
     try {
-      event = stripe.webhooks.constructEvent(req.body, sig, process.env.ENDPOINTSECRET);
+      event = stripe.webhooks.constructEvent(req.rawBody, sig, process.env.ENDPOINTSECRET);
     } catch (err) {
+      console.log(err.message)
       res.status(400).send(`Webhook Error: ${err.message}`);
       return;
     }
@@ -85,15 +89,25 @@ exports.webhooks = async (req, res) => {
 
         console.log(paymentSuccessData)
         console.log(sessionId)
-  
-        const reservation = await Reservation.findById(sessionId);
-        if (!reservation) {
-            return res.status(404).json({ success: false, message: "Reservation not found" });
-        }
 
-        
+        const filter = { sessionId: sessionId };
+        const update = { status: paymentSuccessData.status === 'complete' ? 'reserved' : 'unpaid' };
   
-        reservation.status = (session.status == "succeeded")? "reserved" : "unpaid";
+        const reservation = await Reservation.findOneAndUpdate(filter,update);
+        if (!reservation) {
+            console.log('reservation not found')
+            return res.status(404).json({ success: false, message: "Reservation not found" });
+        } 
+        console.log(reservation)
+        console.log(paymentSuccessData.status )
+
+        // const changeStatus = await Reservation.findByIdAndUpdate(, req.body, {
+        //     new: true,
+        //     runValidators: true,
+        //   })
+  
+        reservation.status = (paymentSuccessData.status == "complete")? "reserved" : "unpaid";
+        await reservation.save();
   
         console.log("=== update result", reservation);
   

@@ -175,12 +175,21 @@ exports.updateReservation = async (req, res, next) => {
     //Make sure user is the reservation owner
     if (
       reservation.user.toString() !== req.user.id &&
-      req.user.role !== "admin"
+      req.user.role !== "admin" && req.user.role!=='hotelmanager'
     ) {
       return res.status(401).json({
         success: false,
         message: `User ${req.user.id} is not authorized to update this reservation`,
       });
+    }
+
+    if (req.user.role==='hotelmanager'){
+      if(reservation.hotel._id!==req.user.hotel){
+        return res.status(401).json({
+          success: false,
+          message: `User ${req.user.id} is not authorized to update this reservation`,
+        });
+      }
     }
 
     //Checking nightNum

@@ -35,7 +35,7 @@ export interface RoomJson {
 
 export interface Reservation{
     _id: string,
-    revDate : Date,
+    revDate : string,
     nightNum: number,
     user: {
         _id: string,

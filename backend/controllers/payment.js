@@ -11,7 +11,7 @@ dotenv.config({ path: "./config/config.env" });
 // @access  Public
 exports.getPayment = async (req, res, next) => {
   try {
-    const payment = await Payment.findById(req.params.id)
+    const payment = await Payment.findOne({reservid : req.params.id})
       .populate({
         path: 'reservid',
         populate: [

@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react';
 
-export default function Todsoft() {
+export default function Todsoft({reservid : string}) {
     const [image , setImage ] = useState("") ;
 
     function convertToBase64(e) {
@@ -26,7 +26,7 @@ export default function Todsoft() {
           "Access-Control-Allow-Origin" : "*" ,
         },
         body : JSON.stringify({
-          reservid : "662ccb8c5b75a24a10d4fee6" ,
+          reservid : "662c70cf2806eeb2f4e59343" ,
           image : image
         })
       }).then((res) => res.json()).then((data) => console.log(data))

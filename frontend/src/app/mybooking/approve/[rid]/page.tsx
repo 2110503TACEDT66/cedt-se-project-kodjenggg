@@ -5,15 +5,17 @@ import { Suspense } from "react"
 import { LinearProgress } from "@mui/material"
 import RecieptApprove from "@/components/RecieptApprove";
 import getPayment from "@/libs/getPayment";
-export default async function ManageReservations(){
+export default async function ManageReservations({params}:{params:{rid:string}}){
     const sessionReady = await getServerSession(authOptions) ;
+    
+    const payment = await getPayment(params.rid) ;
     if ( !sessionReady || !sessionReady.user.token) return null
 
 
     return(
         <main>
             <Suspense fallback={<p>Loading...<LinearProgress/></p>}>
-            <RecieptApprove session={sessionReady}/>
+            <RecieptApprove session={sessionReady} payment={payment}/>
             </Suspense>
         </main>
     )

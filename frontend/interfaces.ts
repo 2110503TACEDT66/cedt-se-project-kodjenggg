@@ -36,7 +36,7 @@ export interface RoomJson {
 //dont forget to แก้
 export interface Reservation{
     _id: string,
-    revDate : Date,
+    revDate : string,
     nightNum: number,
     user: {
         _id: string,
@@ -134,45 +134,49 @@ export interface Room{
 }
 
 export interface Payment {
-    reservid: {
-        _id: string;
-        revDate: string;
-        nightNum: number;
-        user: {
+    data : {
+
+    
+        reservid: {
             _id: string;
-            name: string;
-            tel: string;
-            email: string;
-            role: string;
+            revDate: string;
+            nightNum: number;
+            user: {
+                _id: string;
+                name: string;
+                tel: string;
+                email: string;
+                role: string;
+            };
+            hotel: {
+                _id: string;
+                name: string;
+                address: string;
+                district: string;
+                province: string;
+                postalcode: string;
+                tel: string;
+                region: string;
+                picture: string;
+                id : string
+            };
+            room: {
+                _id: string;
+                hotel_id: string;
+                price: number;
+                roomtype: string;
+                bedtype: string;
+                picture: string;
+                roomcap: number;
+            };
+            totalPrice: number;
+            status: string;
+            createdAt: string;
+            __v: number;
+            sessionId: string;
         };
-        hotel: {
-            _id: string;
-            name: string;
-            address: string;
-            district: string;
-            province: string;
-            postalcode: string;
-            tel: string;
-            region: string;
-            picture: string;
-            id : string
-        };
-        room: {
-            _id: string;
-            hotel_id: string;
-            price: number;
-            roomtype: string;
-            bedtype: string;
-            picture: string;
-            roomcap: number;
-        };
-        totalPrice: number;
-        status: string;
-        createdAt: string;
-        __v: number;
-        sessionId: string;
-    };
-    image: string;
-    paytime : Date
+        image: string;
+        paytime : string
+}
 }
 

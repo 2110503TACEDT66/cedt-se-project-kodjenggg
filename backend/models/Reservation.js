@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const uuid = require('node-uuid');
 
 const ReservationSchema = new mongoose.Schema({
   sessionId:{

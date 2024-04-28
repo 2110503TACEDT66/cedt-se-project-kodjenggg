@@ -10,7 +10,7 @@ export default async function getReservation(token: string) {
     
     if(!response.ok){
         console.log(response.json)
-        throw new Error("Failed to get reservation")
+        throw new Error("Failed to get reservations")
     }
     return await response.json()
 }

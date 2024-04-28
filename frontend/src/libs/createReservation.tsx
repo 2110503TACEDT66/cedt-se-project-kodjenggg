@@ -12,7 +12,7 @@ export default async function createReservation(token: string,reserveItem: Reser
             nightNum: reserveItem.nightNum,
             status: 'unpaid',
             room: reserveItem.room,
-            price: reserveItem.price
+            totalPrice: reserveItem.price
         }),
     })
 

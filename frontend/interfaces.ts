@@ -20,6 +20,13 @@ export interface ReserveJson {
     data: Reservation[]
 }
 
+export interface ReserveOneJson {
+    success: boolean,
+    count: number,
+    pagination: Object,
+    data: Reservation
+}
+
 export interface ReviewJson {
     success: boolean,
     count: number,
@@ -33,6 +40,7 @@ export interface RoomJson {
     pagination: Object,
     data: Room[]
 }
+
 
 
 export interface Reservation{
@@ -51,6 +59,13 @@ export interface Reservation{
         picture: string,
         id: string
     },
+    room: {
+        _id: string,
+        roomtype: string,
+        bedtype: string,
+        roomcap: number
+    },
+    totalPrice: number,
     status: string,
     createdAt: Date,
     __v: number

@@ -223,11 +223,11 @@ exports.getPayment = async (req, res, next) => {
 
 // Define controller methods
 exports.createPayment = async (req, res) => {
-  const { reservid, image } = req.body;
+  const { reservid, image, paytime , paydate} = req.body;
 
   try {
     // Create a new payment record
-    const payment = await Payment.create({reservid : reservid ,image: image });
+    const payment = await Payment.create({reservid : reservid ,image: image, paytime : paytime  , paydate : paydate});
     res.send({ status: "ok"  , data : payment});
     
   } catch (error) {

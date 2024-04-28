@@ -102,7 +102,7 @@ exports.getReservation = async (req, res, next) => {
   try {
     const reservation = await Reservation.findById(req.params.id).populate({
       path: "hotel",
-      select: "name description tel",
+      select: "name description tel picture",
     });
 
     if (!reservation) {
@@ -210,15 +210,6 @@ exports.updateReservation = async (req, res, next) => {
       });
     }
 
-    if (req.user.role==='hotelmanager'){
-      if(reservation.hotel._id!==req.user.hotel){
-        return res.status(401).json({
-          success: false,
-          message: `User ${req.user.id} is not authorized to update this reservation`,
-        });
-      }
-    }
-
     //Checking nightNum
     if(reservation.nightNum!==req.body.nightNum && req.body.nightNum){
       //Check nightNum more than 3
@@ -276,7 +267,7 @@ exports.deleteReservation = async (req, res, next) => {
     //Make sure user is the reservation owner
     if (
       reservation.user.toString() !== req.user.id &&
-      req.user.role !== "admin"
+      req.user.role !== "admin" && req.user.role!=='hotelmanager'
     ) {
       return res.status(401).json({
         success: false,

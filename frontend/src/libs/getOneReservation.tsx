@@ -1,5 +1,5 @@
-export default async function getReservation(token: string) {
-    const response = await fetch (`http://localhost:5000/api/v1/reservations`,{
+export default async function getOneReservation(id:string, token: string) {
+    const response = await fetch (`http://localhost:5000/api/v1/reservations/${id}`,{
         next: {tags: ['reservations']},
         cache: 'no-store',
         method: "GET",
@@ -10,7 +10,7 @@ export default async function getReservation(token: string) {
     
     if(!response.ok){
         console.log(response.json)
-        throw new Error("Failed to get reservations")
+        throw new Error("Failed to get reservation")
     }
     return await response.json()
 }

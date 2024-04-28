@@ -200,7 +200,8 @@ export interface Payment {
             sessionId: string;
         };
         image: string;
-        paytime : string
+        paytime : string;
+        paydate : string;
 }
 }
 

@@ -30,10 +30,10 @@ export default async function RecieptApprove({ session , payment}: { session: an
         return
     }
 
-    var payTime = payment.data.paytime.substring(11, 19);
-    var hour = parseInt(payTime.substring(0, 2), 10); // Convert the first two characters (hours) to an integer
-    hour = ( hour + 7 ) % 24;
-    const realtime = hour + payTime.substring(2,19) ;
+    // var payTime = payment.data.paytime.substring(11, 19);
+    // var hour = parseInt(payTime.substring(0, 2), 10); // Convert the first two characters (hours) to an integer
+    // hour = ( hour + 7 ) % 24;
+    // const realtime = hour + payTime.substring(2,19) ;
 
 
     
@@ -59,7 +59,10 @@ export default async function RecieptApprove({ session , payment}: { session: an
                     province: '',
                     tel: '',
                     picture: '',
-                    id: ''
+                    id: '' ,
+                    paymentqr:'',
+                    paymentname:'',
+                    paymentnum:'',
                 },
                 room: {
                     _id: '',
@@ -93,7 +96,10 @@ export default async function RecieptApprove({ session , payment}: { session: an
                     province: '',
                     tel: '',
                     picture: '',
-                    id: ''
+                    id: '' ,
+                    paymentqr:'',
+                    paymentname:'',
+                    paymentnum:'',
                 },
                 room: {
                     _id: '',
@@ -123,14 +129,14 @@ export default async function RecieptApprove({ session , payment}: { session: an
                             <img src={payment.data.image} className="h-[100%]" alt="Hotel" />
                         </div>
                         <div className="w-[60%] bg-[#4D4C7D] h-[100%] rounded-r-md py-10 px-10 flex flex-col justify-around relative">
-                            <div className="italic text-[20px] flex">User: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment.data.reservid.user.name}</div></div>
-                            <div className="italic text-[20px] flex">Hotel: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment.data.reservid.hotel.name}</div></div>
-                            <div className="italic text-[20px] flex">Room Type: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment.data.reservid.room.roomtype}</div></div>
-                            <div className="italic text-[20px] flex">Reservation Date: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment.data.reservid.revDate.substring(0, 10)}</div></div>
-                            <div className="italic text-[20px] flex">Total Night: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment.data.reservid.nightNum}</div></div>
-                            <div className="italic text-[20px] flex">Total Deposit: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment.data.reservid.totalPrice} THB</div></div>
-                            <div className="italic text-[20px] flex">Payment Date: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment.data.paytime.substring(0,10)}</div></div>
-                            <div className="italic text-[20px] flex">Payment Time: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic"></div>{realtime}</div>
+                            <div className="italic text-[20px] flex">User: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment?.data.reservid.user.name}</div></div>
+                            <div className="italic text-[20px] flex">Hotel: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment?.data.reservid.hotel.name}</div></div>
+                            <div className="italic text-[20px] flex">Room Type: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment?.data.reservid.room.roomtype}</div></div>
+                            <div className="italic text-[20px] flex">Reservation Date: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment?.data.reservid.revDate.substring(0, 10)}</div></div>
+                            <div className="italic text-[20px] flex">Total Night: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment?.data.reservid.nightNum}</div></div>
+                            <div className="italic text-[20px] flex">Total Deposit: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment?.data.reservid.totalPrice} THB</div></div>
+                            <div className="italic text-[20px] flex">Payment Date: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment?.data.paydate}</div></div>
+                            <div className="italic text-[20px] flex">Payment Time: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic"></div>{payment?.data.paytime}</div>
                         </div>
                     </div>
                     <div className="m-5">

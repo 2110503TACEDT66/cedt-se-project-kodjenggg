@@ -10,7 +10,7 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { useState } from 'react';
 
-export default function TimePicking({onDateChange} : {onDateChange:Function}) {
+export default function TimePicking({onTimeChange} : {onTimeChange:Function}) {
     const [value, setValue] = useState<Dayjs | null>(null);
 
   return (
@@ -20,7 +20,7 @@ export default function TimePicking({onDateChange} : {onDateChange:Function}) {
           label="--:--"
           ampm={false}
           value={value}
-          onChange={(newValue) => setValue(newValue)}
+          onChange={(newValue) => {setValue(newValue); onTimeChange(newValue);}}
         />
     </LocalizationProvider>
   );

@@ -20,6 +20,11 @@ export interface ReserveJson {
     data: Reservation[]
 }
 
+export interface PaymentJson{
+    message: string,
+    id: string
+}
+
 export interface ReserveOneJson {
     success: boolean,
     count: number,

@@ -32,8 +32,8 @@ exports.cardPayment = async (req, res, next) => {
                 },
             ],
             mode: "payment",
-            success_url: `http://localhost:3000/mybooking`,
-            cancel_url: `http://localhost:3000/`,
+            success_url: `${process.env.FRONTEND_URL}/payment/${reservation._id}/success`,
+            cancel_url: `${process.env.FRONTEND_URL}/payment/${reservation._id}/failed`,
         });
 
         // const data = {
@@ -94,8 +94,8 @@ exports.promtpayPayment = async (req, res, next) => {
                 },
             ],
             mode: "payment",
-            success_url: `http://localhost:3000/mybooking`,
-            cancel_url: `http://localhost:3000/`,
+            success_url: `${process.env.FRONTEND_URL}/payment/${reservation._id}/success`,
+            cancel_url: `${process.env.FRONTEND_URL}/payment/${reservation._id}/failed`,
         });
 
         // const data = {

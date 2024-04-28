@@ -6,12 +6,19 @@ import dayjs, { Dayjs } from "dayjs";
 import getUserProfile from "@/libs/getUserProfile";
 import { useEffect } from "react";
 import { useState } from "react";
-import { ReserveJson, Reservation, ReserveOneJson } from "interfaces";
+import { ReserveJson, Reservation, ReserveOneJson, PaymentJson } from "interfaces";
 import router from "next/router";
 import { useRouter } from "next/navigation";
+import createCardPayment from "@/libs/createCardPayment";
+import createPromtpay from "@/libs/createPromtpay";
+import {loadStripe} from '@stripe/stripe-js';
+
+
+//import Stripe from "stripe";
+
 
 export default function SelectPayment({reserve}: {reserve:string}){
-    
+  
     const router = useRouter();
     const { data:session } = useSession()
     const [profile, setProfile] = useState<any>();
@@ -42,6 +49,52 @@ export default function SelectPayment({reserve}: {reserve:string}){
       // reserveDetail ?
       // console.log(reserveDetail.data) : null
       // console.log(profile)
+    
+    async function cardPayment() {
+      const stripe = await loadStripe('pk_test_51P6oXZHub7hok82f8hRRPD09HnSEtvidGSIY3RTjcjzncAKKsV5sOXL3F7IhvGS9cTmAaW75KuJuyqnr1LmkH9Fa00aLlfJ6tt');
+
+      console.log("request payment")
+
+      if(session && session.user.token && reserveDetail){
+        
+        const cardPaymentJson:Promise<PaymentJson> = await createCardPayment(session.user.token, reserveDetail.data._id);
+        const cardPaymentReady:PaymentJson = await cardPaymentJson;
+
+        console.log(cardPaymentReady)
+
+        //stripe.redirectToCheckout({ sessionId });
+
+        try{
+          stripe?.redirectToCheckout({
+            sessionId: cardPaymentReady.id
+          })
+        }
+        catch(err){
+          console.log(err);
+        }
+  
+      }    
+    }
+
+    async function PromtpayPayment() {
+
+      const stripe = await loadStripe('pk_test_51P6oXZHub7hok82f8hRRPD09HnSEtvidGSIY3RTjcjzncAKKsV5sOXL3F7IhvGS9cTmAaW75KuJuyqnr1LmkH9Fa00aLlfJ6tt');
+
+      if(session && session.user.token && reserveDetail){
+        const PromtpayPaymentJson:Promise<PaymentJson> = await createPromtpay(session.user.token, reserveDetail.data._id);
+        const PromtpayPaymentReady:PaymentJson = await PromtpayPaymentJson;
+
+        try{
+          stripe?.redirectToCheckout({
+            sessionId: PromtpayPaymentReady.id
+          })
+        }
+        catch(err){
+          console.log(err);
+        }
+  
+      }    
+    }
 
     
     return (
@@ -84,9 +137,9 @@ export default function SelectPayment({reserve}: {reserve:string}){
             </div>
             <div className="flex flex-row justify-center pt-6 w-full">
             <button className="block w-1/6 bg-[#F99417] text-[#363062] text-xl font-bold border-2 border-[#F99417] px-6 py-2 mx-3 rounded hover:bg-white hover:text-[#F99417]"
-            >Credit/Debit Card</button>
+            onClick={() => { cardPayment()}}>Credit/Debit Card</button>
             <button className="block w-1/6 bg-[#F99417] text-[#363062] text-xl font-bold border-2 border-[#F99417] px-6 py-2 mx-3 rounded hover:bg-white hover:text-[#F99417]"
-            onClick={() => { /*router.push(`${reserveDetail.data._id}/mobilebanking`);*/}}>Promptpay</button>
+            onClick={() => { PromtpayPayment()}}>Promptpay</button>
             <button className="block w-1/6 bg-[#F99417] text-[#363062] text-xl font-bold border-2 border-[#F99417] px-6 py-2 mx-3 rounded hover:bg-white hover:text-[#F99417]"
             onClick={() => { router.push(`${reserveDetail.data._id}/mobilebanking`);}}>QR Code</button>
             </div>

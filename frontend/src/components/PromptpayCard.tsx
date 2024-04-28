@@ -1,7 +1,6 @@
 'use client'
 import Image from "next/image";
 import InteractiveCard from './InteractiveCard'
-import React from 'react';
 import router from "next/router";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
@@ -63,9 +62,11 @@ export default function PromptpayCard({reserve}: {reserve:string}){
               //  onClick={()=>{router.push(/payment)}}
               >Back</button>
 
-              <button className="bg-[#339CFC] py-1 text-[#363062] font-semibold text-lg rounded-lg w-[10%] px-12"
-              onClick={() => { router.push('/mybooking'); }}
-              >Continue</button>
+            <button className="bg-[#339CFC] py-1 mr-3 text-[#363062] font-semibold text-lg rounded-lg w-[10%] ml-12"
+            onClick={() => { router.push(`/payment/${reserveDetail.data._id}/mobilebanking/insertslip`); }}
+            
+
+            >Continue</button>
 
               </div>
             </div>

@@ -202,6 +202,7 @@ export interface Payment {
         image: string;
         paytime : string;
         paydate : string;
+        paydep: string;
 }
 }
 

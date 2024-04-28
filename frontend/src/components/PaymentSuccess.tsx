@@ -30,7 +30,9 @@ export default function PaymentSuccess({reserve}: {reserve:string}){
                     getOneReservation(reserve,session.user.token)
                   ]);
                   setReserveDetails(revJson);
-                
+                // if(reserveDetail?.data.status!='reserved'){
+                //   router.push(`/payment/${reserve}/failed`)
+                // }
             }
             
           } catch (error) {

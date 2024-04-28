@@ -1,8 +1,12 @@
 'use client'
+import getOneReservation from "@/libs/getOneReservation";
 import getUserProfile from "@/libs/getUserProfile";
 import updateReservationStatus from "@/libs/updateReservationStatus";
-import { Payment, Reservation } from "interfaces";
+import dayjs from "dayjs";
+import { Payment, Reservation, ReserveOneJson } from "interfaces";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+
 export default async function RecieptApprove({ session , payment}: { session: any , payment : Payment }) {
     // const [id, setId] = useState('');
     // const [PaymentReady, setPaymentReady] = useState<Payment>();
@@ -30,14 +34,12 @@ export default async function RecieptApprove({ session , payment}: { session: an
         return
     }
 
+    console.log(payment)
+
     // var payTime = payment.data.paytime.substring(11, 19);
     // var hour = parseInt(payTime.substring(0, 2), 10); // Convert the first two characters (hours) to an integer
     // hour = ( hour + 7 ) % 24;
     // const realtime = hour + payTime.substring(2,19) ;
-
-
-    
-
 
     const profile = await getUserProfile(session.user.token);
     console.log(profile?.data?.role)
@@ -124,6 +126,7 @@ export default async function RecieptApprove({ session , payment}: { session: an
             {profile?.data?.role === "hotelmanager" ? (
                 <main className="w-[65%]  flex flex-col items-center justify-center">
                     <div className="text-[#363062] text-[30px] font-extrabold text-center underline decortion-[#363062] underline-offset-[4px] my-[20px]">Payment Confirmation</div>
+
                     <div className="flex flex-row w-[80%] mx-auto h-[410px] shadow-xl">
                         <div className="w-auto h-auto rounded-l-md text-black overflow-hidden">
                             <img src={payment.data.image} className="h-[100%]" alt="Hotel" />
@@ -135,6 +138,7 @@ export default async function RecieptApprove({ session , payment}: { session: an
                             <div className="italic text-[20px] flex">Reservation Date: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment?.data.reservid.revDate.substring(0, 10)}</div></div>
                             <div className="italic text-[20px] flex">Total Night: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment?.data.reservid.nightNum}</div></div>
                             <div className="italic text-[20px] flex">Total Deposit: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment?.data.reservid.totalPrice} THB</div></div>
+                            <div className="italic text-[20px] flex">Payment Deposit: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment?.data.paydep} THB</div></div>
                             <div className="italic text-[20px] flex">Payment Date: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment?.data.paydate}</div></div>
                             <div className="italic text-[20px] flex">Payment Time: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic"></div>{payment?.data.paytime}</div>
                         </div>

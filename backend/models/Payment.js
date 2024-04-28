@@ -8,6 +8,9 @@ const PaymentSchema = new mongoose.Schema({
     image : {
         type : String
     },
+    paydep:{
+        type: String
+    },
     paytime : {
         type: String
     } , 

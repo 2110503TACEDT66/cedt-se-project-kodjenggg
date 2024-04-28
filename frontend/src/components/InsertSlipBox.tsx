@@ -14,7 +14,7 @@ import { TimePicker } from "@mui/x-date-pickers";
 import TimePicking from "./TimePicking";
 import updateReservationStatus from "@/libs/updateReservationStatus";
 
-export default function SelectPayment({reserve}: {reserve:string}){
+export default function InsertSlipBox({reserve}: {reserve:string}){
 
 
 
@@ -25,6 +25,7 @@ export default function SelectPayment({reserve}: {reserve:string}){
     const [image , setImage ] = useState("") ;
     const [revDate, setRevDate] = useState<Dayjs|null>(null);
     const [revTime, setTime] = useState<Dayjs|null>(null);
+    const [revdep, setRevdep] = useState<string|null>(null);
     
     function convertToBase64(e: React.ChangeEvent<HTMLInputElement>) {
         var reader = new FileReader();
@@ -39,6 +40,22 @@ export default function SelectPayment({reserve}: {reserve:string}){
         };
       }
       function uploadImage() {
+        if(!image){
+            alert('Please insert your payment reciept image.')
+        }
+        if(!revDate){
+            alert('Please insert your payment date.')
+        }
+        if(!revdep){
+            alert('Please insert your payment deposit.')
+        }
+        if(!revTime){
+            alert('Please insert your payment time.')
+        }
+        if(!image || !revDate || !revTime || !revdep){
+            return;
+        }
+        
         fetch("http://localhost:5000/api/v1/payment", {
             method: "POST",
             headers: {
@@ -50,7 +67,8 @@ export default function SelectPayment({reserve}: {reserve:string}){
             reservid: reserve,
             image: image,
             paytime : dayjs(revTime).format("HH:mm") ,
-            paydate :dayjs(revDate).format("YYYY/MM/DD")
+            paydate :dayjs(revDate).format("YYYY/MM/DD"),
+            paydep: revdep
             }),
         })
             .then((res) => res.json())
@@ -58,6 +76,8 @@ export default function SelectPayment({reserve}: {reserve:string}){
             .catch((error) => console.error("Error uploading image:", error));
             console.log(dayjs(revTime).format("HH:mm") ) ;
             //console.log(revDate);
+            updateStatusAP();
+            router.push('/mybooking')
     }
 
     const updateStatusAP = async() => {
@@ -168,12 +188,14 @@ export default function SelectPayment({reserve}: {reserve:string}){
 
                 <div className="w-[90%] grid grid-cols-2 gap-4 justify-center ">
                     <div className="w-[100%] ">
-                        <div className="justify-left text-xl text-[#363062] w-[10%] mb-2" style={{ fontStyle: 'italic' }}> Total:</div>
-                        <input type="number" className="rounded-md px-3 py-4 w-[100%]" placeholder="0.00" />
+                        <div className="justify-left text-xl text-[#363062] w-[100%] mb-2" style={{ fontStyle: 'italic' }}>Payment Deposit:</div>
+                        <input type="number" min={0} className="rounded-md px-3 py-4 w-[100%]" placeholder="0.00" 
+                        onChange={(data) => setRevdep(data.target.value)}
+                        required/>
                     </div>
 
                     <div className="w-[100%]">
-                        <div className="justify-left text-xl text-[#363062] w-[10%] mb-2" style={{ fontStyle: 'italic' }}> Time:</div>
+                        <div className="justify-left text-xl text-[#363062] w-[100%] mb-2" style={{ fontStyle: 'italic' }}>Payment Time:</div>
                         <TimePicking onTimeChange={(value:Dayjs)=>{setTime(value)}}></TimePicking>
                         {/* <input type="number" className="rounded-md px-5 py-3 w-[100%]" placeholder="--:--" /> */}
                     </div>
@@ -197,8 +219,8 @@ export default function SelectPayment({reserve}: {reserve:string}){
                         hover:bg-white hover:text-[#F99417]'
                         onClick={() => {
                             uploadImage();
-                            updateStatusAP();
-                            router.push('/mybooking')
+                            // updateStatusAP();
+                            // router.push('/mybooking')
                             }}>
                         Submit
                     </button>

@@ -199,7 +199,7 @@ exports.webhooks = async (req, res) => {
 // @access  Public
 exports.getPayment = async (req, res, next) => {
   try {
-    const payment = await Payment.findOne({reservid : req.params.id})
+    const payment = await Payment.find({reservid : req.params.id})
       .populate({
         path: 'reservid',
         populate: [
@@ -215,7 +215,7 @@ exports.getPayment = async (req, res, next) => {
       return res.status(400).json({ success: false , P : "lhor"});
     }
 
-    res.status(200).json({ success: true, data: payment });
+    res.status(200).json({ success: true, data: payment[payment.length-1] });
   } catch (err) {
     res.status(400).json({ success: false , Dollar : "lhor" });
   }
@@ -223,11 +223,11 @@ exports.getPayment = async (req, res, next) => {
 
 // Define controller methods
 exports.createPayment = async (req, res) => {
-  const { reservid, image, paytime , paydate} = req.body;
+  const { reservid, image, paytime , paydate, paydep} = req.body;
 
   try {
     // Create a new payment record
-    const payment = await Payment.create({reservid : reservid ,image: image, paytime : paytime  , paydate : paydate});
+    const payment = await Payment.create({reservid : reservid ,image: image, paytime : paytime  , paydate : paydate, paydep: paydep});
     res.send({ status: "ok"  , data : payment});
     
   } catch (error) {

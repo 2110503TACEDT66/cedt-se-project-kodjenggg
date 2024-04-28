@@ -6,7 +6,7 @@ import dayjs, { Dayjs } from "dayjs";
 import getUserProfile from "@/libs/getUserProfile";
 import { useEffect } from "react";
 import { useState } from "react";
-import { ReserveJson, Reservation } from "interfaces";
+import { ReserveJson, Reservation, ReserveOneJson } from "interfaces";
 import router from "next/router";
 import { useRouter } from "next/navigation";
 
@@ -15,7 +15,7 @@ export default function PaymentFailed({reserve}: {reserve:string}){
     const router = useRouter();
     const { data:session } = useSession()
     const [profile, setProfile] = useState<any>();
-    const [reserveDetail,setReserveDetails] = useState<any>();
+    const [reserveDetail,setReserveDetails] = useState<ReserveOneJson>();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -29,7 +29,8 @@ export default function PaymentFailed({reserve}: {reserve:string}){
                 const [revJson] = await Promise.all([
                     getOneReservation(reserve,session.user.token)
                   ]);
-                  setReserveDetails(revJson);
+                setReserveDetails(revJson);
+                
             }
             
           } catch (error) {
@@ -44,16 +45,18 @@ export default function PaymentFailed({reserve}: {reserve:string}){
       console.log(reserveDetail.data) : null
       console.log(profile)
 
+      
+
     
     return (
         <main className="w-[100%] flex flex-col items-center space-y-4">
             <div className="text-5xl font-semibold text-[#4D4C7D] text-center mt-[10%]">❌
             Payment Failed</div>
             
-            <div className="bg-[#4D4C7D] mb-10 rounded-lg w-[77%] h-fit relative flex justify-between shadow-lg">
+            <div className="bg-[#4D4C7D] mb-10 rounded-lg w-[70%] h-fit relative flex justify-between shadow-lg">
             <div className="flex flex-col">
             <div className="w-full">
-            <div className="text-lg m-2 relative left-6 top-1 font-normal">
+            <div className="text-lg p-4 m-2 relative  font-normal">
                 {profile && (
                     <div>User: {profile.data.name}</div>
                 )}
@@ -69,7 +72,7 @@ export default function PaymentFailed({reserve}: {reserve:string}){
             </div>
             </div>
             </div> 
-            <div className="w-[35%] relative rounded-lg">
+            <div className="w-[40%] relative rounded-lg">
                 {reserveDetail && (
                 <Image src={reserveDetail.data.hotel.picture} alt='hosImg' fill={true} className="object-cover rounded-r-lg"/>
                 )} 

@@ -18,7 +18,8 @@ export default async function createReservation(token: string,reserveItem: Reser
 
     if(!response.ok){
         console.log(response.status)
-        throw new Error("Failed to create reservation")
+        //throw new Error("Failed to create reservation")
+        alert('One account can only made up to 3 nights reservation.')
     }
     return await response.json()
 }

@@ -168,11 +168,13 @@ exports.addReservation = async (req, res, next) => {
     }
 
     //Check for existed reservation
-    const existedReservations = await Reservation.find({ user: req.user.id });
+    const existedReservations = await Reservation.find({ user: req.user.id});
 
     let totalNight = 0;
     for(let reserve of existedReservations){
-      totalNight += reserve.nightNum;
+      if(reserve.status === "unpaid" || reserve.status === "pending" || reserve.status === "disapproved" || reserve.status === "reserved"){
+        totalNight += reserve.nightNum;
+      }
     }
     console.log(totalNight);
 
@@ -234,7 +236,9 @@ exports.updateReservation = async (req, res, next) => {
 
       let totalNight = 0;
       for(let reserve of existedReservations){
-        totalNight += reserve.nightNum;
+        if(reserve.status === "unpaid" || reserve.status === "pending" || reserve.status === "disapproved" || reserve.status === "reserved"){
+          totalNight += reserve.nightNum;
+        }
       }
       totalNight -= reservation.nightNum;
       

@@ -27,7 +27,7 @@ export default function BookingList ({session}:{session:any}) {
     const [profile, setProfile] = useState<any>();
 
     async function editStatus(token: string, rid:string,reserve:Reservation,status:string){
-        console.log(token);
+        //console.log(token);
         console.log(rid)
         console.log(reserve)
         console.log(status)

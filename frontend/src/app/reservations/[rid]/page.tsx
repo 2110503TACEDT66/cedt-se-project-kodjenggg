@@ -47,7 +47,7 @@ export default function Reservations({params}:{params:{rid:string}}){
         if(!room){
             alert("Please select room.")
         }
-    
+        
         if(params.rid && hid && revDate && nightNum && session?.user?.token && room && rooms){
             const item:ReservationItem = {
                 hotelId: hid,

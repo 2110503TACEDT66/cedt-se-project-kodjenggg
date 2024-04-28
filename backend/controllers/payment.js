@@ -32,7 +32,7 @@ exports.cardPayment = async (req, res, next) => {
                     price_data: {
                         currency: "thb",
                         product_data: {
-                            name: `Reservation ${reservation._id}`,
+                            name: `Hotel Reservation`,
                         },
                         unit_amount: reservation.totalPrice * 100,
                     },

@@ -28,7 +28,7 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/todsoft/page.jsx", "src/app/todsoft/page.jsx", "src/components/InsertSlipBox.jsx"],
   "exclude": ["node_modules"]
 
 

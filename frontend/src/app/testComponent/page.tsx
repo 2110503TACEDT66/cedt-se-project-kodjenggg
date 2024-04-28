@@ -9,6 +9,8 @@ import { Select, MenuItem, colors } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import ReviewCard from "@/components/ReviewCard";
+import InsertSlipBox from "@/components/InsertSlipBox";
+
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
     color: 'white',
@@ -23,7 +25,7 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-export default function testComponent(){
+export default function testComponent({params}:{params:{reserveid:string}}){
 
     const [cleanliness,setCleanliness] = useState(false);
     const [convenience,setConvenience] = useState(false);
@@ -70,11 +72,8 @@ export default function testComponent(){
             <div >
                 <h1 className="text-black"> {`${worthiness} ${service} ${food} ${facility} ${convenience} ${cleanliness}` }</h1>
             </div>
-            
+            <InsertSlipBox reserve={params.reserveid}/>
             </div>  
-
-            
-            
         </main>
         
     )

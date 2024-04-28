@@ -50,9 +50,9 @@ export default async function HospitalDetailPage({params}:{params:{hid:string}})
             <div className="flex justify-center">
             <RoomCatalog roomJson={roomDetail}/>
             </div>
-            <div className="text-center">
+            <div className="text-center w-[100%]">
                 <Link href={`/reservations?id=${params.hid}&name=${hosDetail.data.name}`}>
-                <button className="bg-[#F99417] text-white rounded-lg px-[40%] mb-10 py-2 text-lg">
+                <button className="bg-[#F99417] text-white rounded-lg w-[90%] mb-10 py-2 text-lg">
                     Reserve this Hotel</button>
                 </Link>
             </div>

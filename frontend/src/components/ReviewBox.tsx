@@ -8,6 +8,7 @@ import { ReviewItem } from "interfaces";
 import { useSession } from "next-auth/react";
 import addReview from "@/libs/addReview"
 import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 
 export default function ReviewBox(){
@@ -16,6 +17,7 @@ export default function ReviewBox(){
     const urlParams = useSearchParams();
     const hid = urlParams.get('hid');
     const name = urlParams.get('name')
+    const router = useRouter();
 
 
     const [cleanliness,setCleanliness] = useState(false);
@@ -55,7 +57,7 @@ export default function ReviewBox(){
             }
             const response = await addReview(session?.user?.token,item);
             console.log(response);
-
+            router.push(`/hotels/${hid}`)
         }
     }
 

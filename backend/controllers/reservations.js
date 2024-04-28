@@ -1,5 +1,6 @@
 const Reservation = require("../models/Reservation");
 const Hotel = require("../models/Hotel");
+const Room = require("../models/Room");
 
 //@desc     Get all reservations
 //@route    GET /api/v1/reservations
@@ -11,7 +12,11 @@ exports.getReservations = async (req, res, next) => {
     query = Reservation.find({ user: req.user.id }).populate([
     {
       path: "hotel",
-      select: "name province tel picture",
+      select: "name province tel picture ",
+    },
+    {
+      path: "room",
+      select: "roomtype bedtype roomcap"
     },
     {
       path: "user",
@@ -27,6 +32,10 @@ exports.getReservations = async (req, res, next) => {
           select: "name province tel picture",
         },
         {
+          path: "room",
+          select: "roomtype bedtype roomcap"
+        },
+        {
           path: "user",
           select: "name tel"
         }
@@ -36,6 +45,10 @@ exports.getReservations = async (req, res, next) => {
         {
           path: "hotel",
           select: "name province tel picture",
+        },
+        {
+          path: "room",
+          select: "roomtype bedtype roomcap"
         },
         {
           path: "user",
@@ -52,7 +65,11 @@ exports.getReservations = async (req, res, next) => {
       query = Reservation.find({ hotel: req.user.hotel }).populate([
         {
           path: "hotel",
-          select: "name province tel picture",
+          select: "name province tel picture"
+        },
+        {
+          path: "room",
+          select: "roomtype bedtype roomcap"
         },
         {
           path: "user",
@@ -83,10 +100,20 @@ exports.getReservations = async (req, res, next) => {
 // @access  Public
 exports.getReservation = async (req, res, next) => {
   try {
-    const reservation = await Reservation.findById(req.params.id).populate({
-      path: "hotel",
-      select: "name description tel",
-    });
+    const reservation = await Reservation.findById(req.params.id).populate([
+      {
+        path: "hotel",
+        select: "name province tel picture  paymentqr paymentname paymentnum",
+      },
+      {
+        path: "room",
+        select: "roomtype bedtype roomcap"
+      },
+      {
+        path: "user",
+        select: "name tel"
+      }
+    ]);
 
     if (!reservation) {
       return res.status(404).json({
@@ -116,6 +143,16 @@ exports.addReservation = async (req, res, next) => {
       return res.status(404).json({
         success: false,
         message: `No hotel with the id of ${req.params.hotelId}`,
+      });
+    }
+
+    //check room
+    const room = await Room.findById(req.body.room);
+
+    if (!room) {
+      return res.status(404).json({
+        success: false,
+        message: `No room with the id of ${req.body.room}`,
       });
     }
 
@@ -162,6 +199,7 @@ exports.addReservation = async (req, res, next) => {
 // @route   PUT /api/v1/reservations/:id
 // @access  Private
 exports.updateReservation = async (req, res, next) => {
+  
   try {
     let reservation = await Reservation.findById(req.params.id);
 
@@ -175,7 +213,7 @@ exports.updateReservation = async (req, res, next) => {
     //Make sure user is the reservation owner
     if (
       reservation.user.toString() !== req.user.id &&
-      req.user.role !== "admin"
+      req.user.role !== "admin" && req.user.role!=='hotelmanager'
     ) {
       return res.status(401).json({
         success: false,
@@ -240,7 +278,7 @@ exports.deleteReservation = async (req, res, next) => {
     //Make sure user is the reservation owner
     if (
       reservation.user.toString() !== req.user.id &&
-      req.user.role !== "admin"
+      req.user.role !== "admin" && req.user.role!=='hotelmanager'
     ) {
       return res.status(401).json({
         success: false,

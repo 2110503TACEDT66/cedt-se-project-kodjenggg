@@ -4,7 +4,7 @@ import Image from "next/image";
 export default async function RoomCatalog({roomJson}:{roomJson:Promise<RoomJson>}) {
     const roomReady = await roomJson;
     return(
-        <div className="grid grid-cols-2 gap-8 justify-items-center place-content-center w-[90%] mb-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 justify-items-center place-content-center w-[90%] mb-6">
             {
                 roomReady.data.map((room:Room)=>(
                     <div className="bg-[rgb(77,76,125)] relative flex flex-row rounded-lg w-full h-[250px]">

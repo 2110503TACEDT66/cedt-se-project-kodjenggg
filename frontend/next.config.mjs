@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: ['drive.usercontent.google.com']
+        domains: ['drive.usercontent.google.com'],
+        
     },
     experimental: {
         serverActions: true

@@ -2,6 +2,8 @@ export interface ReservationItem {
     hotelId: string,
     revDate: string,
     nightNum: number,
+    room: string,
+    price: number
 }
 
 export interface HotelJson {
@@ -16,6 +18,18 @@ export interface ReserveJson {
     count: number,
     pagination: Object,
     data: Reservation[]
+}
+
+export interface PaymentJson{
+    message: string,
+    id: string
+}
+
+export interface ReserveOneJson {
+    success: boolean,
+    count: number,
+    pagination: Object,
+    data: Reservation
 }
 
 export interface ReviewJson {
@@ -33,9 +47,10 @@ export interface RoomJson {
 }
 
 
+
 export interface Reservation{
     _id: string,
-    revDate : Date,
+    revDate : string,
     nightNum: number,
     user: {
         _id: string,
@@ -47,8 +62,18 @@ export interface Reservation{
         province: string,
         tel: string,
         picture: string,
-        id: string
+        id: string,
+        paymentqr:string,
+        paymentname:string,
+        paymentnum:string,
     },
+    room: {
+        _id: string,
+        roomtype: string,
+        bedtype: string,
+        roomcap: number
+    },
+    totalPrice: number,
     status: string,
     createdAt: Date,
     __v: number
@@ -131,3 +156,51 @@ export interface Room{
     picture: string,
     roomcap: number
 }
+
+export interface Payment {
+    data : {
+
+    
+        reservid: {
+            _id: string;
+            revDate: string;
+            nightNum: number;
+            user: {
+                _id: string;
+                name: string;
+                tel: string;
+                email: string;
+                role: string;
+            };
+            hotel: {
+                _id: string;
+                name: string;
+                address: string;
+                district: string;
+                province: string;
+                postalcode: string;
+                tel: string;
+                region: string;
+                picture: string;
+                id : string
+            };
+            room: {
+                _id: string;
+                hotel_id: string;
+                price: number;
+                roomtype: string;
+                bedtype: string;
+                picture: string;
+                roomcap: number;
+            };
+            totalPrice: number;
+            status: string;
+            createdAt: string;
+            __v: number;
+            sessionId: string;
+        };
+        image: string;
+        paytime : string
+}
+}
+

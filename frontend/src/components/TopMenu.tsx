@@ -21,7 +21,7 @@ export default async function TopMenu(){
                 <div className='z-30 flex flex-row w-[100%]'>
                     <div className='flex justify-start items-center h-full mx-2'>
                     <TopMenuItem title='View Hotels' pageRef='/hotels'/>
-                    <TopMenuItem title='My Booking' pageRef='/mybooking'/>
+                    <TopMenuItem title='My Reservation' pageRef='/mybooking'/>
                     </div>
                     
                     <Link href="/mybooking">

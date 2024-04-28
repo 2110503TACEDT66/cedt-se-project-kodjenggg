@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
+const uuid = require('node-uuid');
 
 const ReservationSchema = new mongoose.Schema({
+  sessionId:{
+    type: String,
+  },
   revDate: {
     type: Date,
     require: true,
@@ -19,13 +23,22 @@ const ReservationSchema = new mongoose.Schema({
     ref: "Hotel",
     required: true,
   },
+  room: {
+    type: mongoose.Schema.ObjectId,
+    ref: "Room",
+    required: true,
+  },
+  totalPrice: {
+    type: Number,
+    require: true,
+  },
   createdAt: {
     type: Date,
     default: Date.now,
   },
   status: {
     type: String,
-    enum: ["unpaid", "pending" , "reserved", "completed" ],
+    enum: ["unpaid", "pending", "disapproved", "reserved", "completed", "reviewed" ],
     default: "unpaid",
   }
 });

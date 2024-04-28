@@ -9,7 +9,7 @@ export default async function deleteReservation(token: string, reserveId : strin
     })
 
     if(!response.ok){
-        console.log(response.status)
+        console.log(response)
         throw new Error("Failed to delete reservation")
     }
     return await response.json()

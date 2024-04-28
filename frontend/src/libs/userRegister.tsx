@@ -13,8 +13,14 @@ export default async function userRegister(userName:string, userEmail:string, us
         }),
     })
 
+    // if(!response.ok){
+    //     console.log(response)
+    //     console.error(response.body.errors)
+    //     alert(response.body)
+    // }
+
     if(!response.ok){
-        throw new Error("Failed to register")
+        throw new Error("Failed to register. Please check that this email and telephone number aren't already used.")
     }
     return await response.json()
 }

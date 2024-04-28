@@ -12,7 +12,7 @@ exports.getReservations = async (req, res, next) => {
     query = Reservation.find({ user: req.user.id }).populate([
     {
       path: "hotel",
-      select: "name province tel picture",
+      select: "name province tel picture ",
     },
     {
       path: "room",
@@ -65,7 +65,7 @@ exports.getReservations = async (req, res, next) => {
       query = Reservation.find({ hotel: req.user.hotel }).populate([
         {
           path: "hotel",
-          select: "name province tel picture",
+          select: "name province tel picture"
         },
         {
           path: "room",
@@ -103,7 +103,7 @@ exports.getReservation = async (req, res, next) => {
     const reservation = await Reservation.findById(req.params.id).populate([
       {
         path: "hotel",
-        select: "name province tel picture",
+        select: "name province tel picture  paymentqr paymentname paymentnum",
       },
       {
         path: "room",

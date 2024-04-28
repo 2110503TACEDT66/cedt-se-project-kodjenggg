@@ -37,7 +37,16 @@ const HotelSchema = new mongoose.Schema(
     picture: {
       type: String,
       require: [true, "Please add image URI"],
-    }
+    },
+    paymentqr:{
+      type: String,
+    },
+    paymentname:{
+      type: String,
+    },
+    paymentnum:{
+      type: String,
+    },
   },
   {
     toJSON: { virtuals: true },

@@ -44,31 +44,35 @@ export default function PromptpayCard({reserve}: {reserve:string}){
             {
             (profile && reserveDetail) ?
           <div>
-            <div className="w-[80vw] h-[80vh] px-3 py-6 mx-auto mt-30 flex flex-col justify-center bg-white border border-gray-300 rounded-3xl shadow-xl ">
-              <div className="w-full">
-                <h1 className="text-[#363062] text-center mb-4 text-3xl font-bold mt-3" style={{ textDecoration: 'underline' }}>Promptpay QR code</h1>
+            <div className="w-full mt-10">
+                <h1 className="text-[#363062] text-center mb-4 text-3xl font-bold mt-3" style={{ textDecoration: 'underline' }}>{reserveDetail.data.hotel.name}'s bank account detail</h1>
                 <div className=" text-3xl text-center text-[#F99417] font-bold mt-7">{reserveDetail.data.totalPrice} Baht</div> 
               </div>
+            <div className="w-[40vw] h-[60vh] mt-4 px-3 py-6 mx-auto mt-30 flex flex-col justify-center bg-white border border-gray-300 rounded-3xl shadow-xl ">
+              <div className="ml-[10%] h-[80%] w-[80%] relative ">
+                <Image src={reserveDetail.data.hotel.paymentqr} alt='hosImg' fill={true} className="object-contain rounded-lg"/>
+                
+              </div>
+              <div className="text-center text-2xl font-semibold mb-2 text-[#939393]"> Scan to pay</div>
+              <div className="text-center text-xl text-[#363062]"> {reserveDetail.data.hotel.paymentname} </div>
+              <div className="text-center text-xl mb-2 text-[#363062] "> xxx-x-x{reserveDetail.data.hotel.paymentnum}-x</div>
+
               
-              <div className="ml-[10%] h-[60%] w-[80%] relative ">
-                <Image src={reserveDetail.data.hotel.picture} alt='hosImg' fill={true} className="object-cover rounded-lg"/>
-              </div>
-
-              <div className="text-center mb-4 text-xl text-[#B5B5B5] mt-7"> Scan to pay</div>
             
 
-              <div className="w-[100%] flex justify-center left-0 ">
-              <button className="bg-[#FFA940] py-1 text-[#363062] text-lg font-semibold rounded-lg w-[10%] px-12"
-              //  onClick={()=>{router.push(/payment)}}
-              >Back</button>
+              
+            </div>
+            <div className="flex justify-center">
+              <div className="w-[40%] grid grid-cols-2 gap-3 justify-center left-0 mt-6">
+                <button className="bg-[#FFA940] py-2 px-2 text-[#363062] text-lg font-semibold rounded-lg w-[100%]"
+                onClick={()=>{router.push(`/payment/${reserveDetail.data._id}`)}}
+                >Back</button>
 
-            <button className="bg-[#339CFC] py-1 mr-3 text-[#363062] font-semibold text-lg rounded-lg w-[10%] ml-12"
-            onClick={() => { router.push(`/payment/${reserveDetail.data._id}/mobilebanking/insertslip`); }}
-            
+              <button className="bg-[#363062] py-2 px-2 text-white font-semibold text-lg rounded-lg w-[100%] "
+              onClick={() => { router.push(`/payment/${reserveDetail.data._id}/mobilebanking/insertslip`); }}
+              >Continue</button>
+                </div>
 
-            >Continue</button>
-
-              </div>
             </div>
 
             

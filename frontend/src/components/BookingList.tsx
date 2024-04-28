@@ -42,7 +42,10 @@ export default function BookingList ({session}:{session:any}) {
                     province: reserve.hotel.province,
                     tel: reserve.hotel.tel,
                     picture: reserve.hotel.picture,
-                    id: reserve.hotel.id
+                    id: reserve.hotel.id,
+                    paymentqr: reserve.hotel.paymentqr,
+                    paymentname: reserve.hotel.paymentname,
+                    paymentnum: reserve.hotel.paymentnum,
                 },
                 room: {
                     _id: reserve.room._id,
@@ -110,44 +113,39 @@ export default function BookingList ({session}:{session:any}) {
                                     <div>User: {reserve.user.name}</div>
                                     <div>Reservation Date: {dayjs(reserve.revDate).format("YYYY/MM/DD")}</div>
                                     <div>Total Night: {reserve.nightNum}</div>
+                                    <div>Room type: {reserve.room.roomtype}</div>
+                                    <div>Total Price: {reserve.totalPrice}</div>
                                 </div>
                             </div>
                         
                             <MoreOptionMyReservation reserve={reserve} session={session}/>
-                            {/* {reserve.status === 'unpaid'&& (
-                            <Link  href={`/reservations/${reserve._id}?hid=${reserve.hotel.id}&name=${reserve.hotel.name}`}>
-                            <button className="px-3 py-1 text-white shadow-sm rounded-xl bg-[#F99417] absolute h-[40px] w-[80px] right-[100px] top-2"
-                            >Edit</button></Link> )}
-                            {reserve.status === 'unpaid'&& (
-                            <button className="px-3 py-1 text-white shadow-sm rounded-xl bg-red-600 absolute h-[40px] w-[80px] right-4 top-2"
-                            onClick={()=>{deleteReservations(session.user.token, reserve._id)}}>Delete</button>)}
-                            */}
+                            
                             {reserve.status === 'unpaid'&& (
                                 <div className="text-[#CC382E] text-md absolute right-12 top-5">
                                     <CircleIcon sx={{ fontSize: 8 }} className="mx-1"/>
-                                    unpaid...
+                                    unpaid
                                 </div>
                             )}
                             {(reserve.status === 'unpaid' && profile?.data.role!=="hotelmanager")&& (
                                <Link href={`/payment/${reserve._id}`}>
-                               <button className="px-3 py-1 text-white shadow-sm rounded-xl bg-green-600 absolute h-[40px] w-[80px] right-4 bottom-3"
+                               <button className="px-3 py-1 text-white shadow-sm rounded-xl bg-green-600 absolute h-[40px] w-fit right-4 bottom-3"
                                onClick={() => {}}>Pay</button>
                                </Link>
                             )}
                             {reserve.status === 'pending'&& (
                                 <div className="text-[#F99417] text-md absolute right-8 top-2">
                                     <CircleIcon sx={{ fontSize: 8 }} className="mx-1"/>
-                                    pending...
+                                    pending
                                 </div>
                             )}
                             {reserve.status === 'pending'&& profile?.data.role === 'admin' &&(
                                 <Link href={`/payment/${reserve._id}`}>
-                                    <button className="px-3 py-1 text-white shadow-sm rounded-xl bg-[#F99417] absolute h-[40px] w-[80px] right-4 bottom-3">Upload</button>
+                                    <button className="px-3 py-1 text-white shadow-sm rounded-xl bg-[#F99417] absolute h-[40px] w-fit right-4 bottom-3">Upload</button>
                                 </Link>
                             )}
                             {reserve.status === 'pending'&& profile?.data.role === 'hotelmanager' &&(
                                 <Link href={`/mybooking/approve/${reserve._id}`}>
-                                    <button className="px-3 py-1 text-white shadow-sm rounded-xl bg-[#F99417] absolute h-[40px] w-[80px] right-4 bottom-3" onClick={() => {}}>
+                                    <button className="px-3 py-1 text-white shadow-sm rounded-xl bg-[#F99417] absolute h-[40px] w-fit right-4 bottom-3" onClick={() => {}}>
                                         Check</button>
                                 </Link>
                             )}
@@ -160,27 +158,31 @@ export default function BookingList ({session}:{session:any}) {
                             {(reserve.status === 'reserved' && profile?.data.role!=="hotelmanager")&&(
                                 <CancelRevPopUp rid={reserve._id} session={session}/>
                             )}
+                            {(reserve.status === 'reserved' && profile.data.role==="hotelmanager")&&(
+                                <button className="px-3 py-1 text-white shadow-sm rounded-xl bg-[#1EB012] absolute h-[40px] w-fit right-4 bottom-3 text-center"
+                                onClick={()=>editStatus(session?.user.token,reserve._id,reserve,'completed')}>Complete</button>
+                            )}
                             {reserve.status === 'completed'&&(
                                 <div className="text-[#339CFC] text-md absolute right-8  top-2">
                                 <CircleIcon sx={{ fontSize: 8 }} className="mx-1"/>
                                 completed
                                 </div>
                             )}
-                            {reserve.status === 'completed'&&(
+                            {(reserve.status === 'completed'&&profile.data.role==='user')&&(
                                 <Link href={`/review?hid=${reserve.hotel.id}&name=${reserve.hotel.name}`}>
-                                <button className="px-3 py-1 text-white shadow-sm rounded-xl bg-[#339CFC] absolute h-[40px] w-[80px] right-4 bottom-3"
-                                >Review</button>
+                                <button className="px-3 py-1 text-white shadow-sm rounded-xl bg-[#339CFC] absolute h-[40px] w-fit right-4 bottom-3"
+                                onClick={()=>editStatus(session?.user.token,reserve._id,reserve,'reviewed')}>Review</button>
                                 </Link>
                             )}
                             {reserve.status === 'disapproved'&& (
                                 <div className="text-[#CC382E] text-md absolute right-8 top-2">
                                     <CircleIcon sx={{ fontSize: 8 }} className="mx-1"/>
-                                    disapproved...
+                                    disapproved
                                 </div>
                             )}
                             {(reserve.status === 'disapproved' && profile?.data.role==='hotelmanager')&&(
-                                <button className="px-3 py-1 text-white shadow-sm rounded-xl bg-[#CC382E] absolute h-[40px] w-[80px] right-4 bottom-3"
-                                onClick={()=>editStatus(session?.user.token,reserve._id,reserve,'reserved')}>Approve</button>
+                                <Link href={`/mybooking/approve/${reserve._id}`}><button className="px-3 py-1 text-white shadow-sm rounded-xl bg-[#CC382E] absolute h-[40px] w-fit right-4 bottom-3"
+                                >Recheck</button></Link>
                             )}
                             {(reserve.status === 'disapproved' && profile?.data.role!=='hotelmanager')&&(
                                 <ContactPopUp rid={reserve._id} session={session} tel={reserve.hotel.tel}/>     

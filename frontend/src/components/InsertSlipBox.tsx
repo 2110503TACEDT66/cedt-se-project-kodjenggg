@@ -10,6 +10,8 @@ import router from "next/router";
 import { useRouter } from "next/navigation";
 import dayjs, { Dayjs } from "dayjs";
 import DateReservenoBG from "./DateReservenoBG";
+import { TimePicker } from "@mui/x-date-pickers";
+import TimePicking from "./TimePicking";
 
 export default function SelectPayment({reserve}: {reserve:string}){
 
@@ -59,9 +61,7 @@ export default function SelectPayment({reserve}: {reserve:string}){
     const [profile, setProfile] = useState<any>();
     const [reserveDetail,setReserveDetails] = useState<ReserveOneJson>();
     const [revDate, setRevDate] = useState<Dayjs|null>(null);
-    const [time , setTime ] = useState<Dayjs | null>(null) ;
-    //const [deposit , setDeposit] = useState<>
-
+    const [revTime, setTime] = useState<Dayjs|null>(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -120,11 +120,13 @@ export default function SelectPayment({reserve}: {reserve:string}){
             </div>
 
             {/* grey card content */}
-            <div className="text-[#363062] justify-center border border-gray-300 rounded-3xl shadow-xl mx-auto mt-10 mb-20 w-[77%] bg-[#D9D9D9]">
+            <div className="text-[#363062] justify-center border border-gray-300 rounded-3xl shadow-xl mx-auto py-2 pb-6 mb-20 w-[77%] bg-[#D9D9D9]">
                 
-                <div className="mx-5 px-6 py-4 ">
-                <div className="text-xl mt-2 py-2 text-[#363062] rounded-lg " style={{ fontStyle: 'italic' }}>Payment Date:</div>
-                <DateReservenoBG onDateChange={(value:Dayjs)=>{setRevDate(value)}}/>
+                <div className="w-[100%] flex flex-row justify-center my-6 ">
+                    <div className="w-[90%]">
+                        <div className="text-xl mt-2 py-2 text-[#363062] rounded-lg " style={{ fontStyle: 'italic' }}>Payment Date:</div>
+                        <DateReservenoBG onDateChange={(value:Dayjs)=>{setRevDate(value)}}/>
+                    </div>
                 </div>
                 
                 <div className="w-[100%] flex flex-row justify-center">
@@ -132,12 +134,13 @@ export default function SelectPayment({reserve}: {reserve:string}){
                 <div className="w-[90%] grid grid-cols-2 gap-4 justify-center ">
                     <div className="w-[100%] ">
                         <div className="justify-left text-xl text-[#363062] w-[10%] mb-2" style={{ fontStyle: 'italic' }}> Total:</div>
-                        <input type="text" className="rounded-md px-3 py-3 w-[100%]" placeholder="0.00" />
+                        <input type="number" className="rounded-md px-3 py-4 w-[100%]" placeholder="0.00" />
                     </div>
 
                     <div className="w-[100%]">
                         <div className="justify-left text-xl text-[#363062] w-[10%] mb-2" style={{ fontStyle: 'italic' }}> Time:</div>
-                        <input type="text" className="rounded-md px-5 py-3 w-[100%]" placeholder="--:--" />
+                        <TimePicking onDateChange={(value:Dayjs)=>{setTime(value)}}></TimePicking>
+                        {/* <input type="number" className="rounded-md px-5 py-3 w-[100%]" placeholder="--:--" /> */}
                     </div>
               
                 </div>
@@ -151,12 +154,15 @@ export default function SelectPayment({reserve}: {reserve:string}){
                             hover:bg-white hover:text-[#F99417]' accept='image/*' type="file" onChange={(e) => {convertToBase64(e)}}/>
                     </div>
                 
-                    <div className="mb-4">
-                        <button className='w-[100%] bg-[#339CFC] text-[#363062] border-2 border-[#339CFC] font-bold py-1 px-5  mt-7 rounded-xl 
-                            hover:bg-white hover:text-[#F99417]' onClick={() => {uploadImage()}}>
-                            Submit
-                        </button>
-                    </div>
+                    
+                </div>
+
+                <div className="flex justify-center mb-4 w-[100%] ">
+                    <button className='w-[95%] bg-[#363062] text-white text-xl border-2 border-[#363062] font-semibold py-2 px-5  mt-7 rounded-xl 
+                        hover:bg-white hover:text-[#F99417]'
+                        onClick={() => {uploadImage()}}>
+                        Submit
+                    </button>
                 </div>
 
 

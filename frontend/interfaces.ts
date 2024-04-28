@@ -62,7 +62,10 @@ export interface Reservation{
         province: string,
         tel: string,
         picture: string,
-        id: string
+        id: string,
+        paymentqr:string,
+        paymentname:string,
+        paymentnum:string,
     },
     room: {
         _id: string,

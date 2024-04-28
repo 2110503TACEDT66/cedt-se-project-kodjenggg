@@ -17,9 +17,14 @@ export default function SelectPayment({reserve}: {reserve:string}){
 
 
 
-
+    const router = useRouter();
+    const { data:session } = useSession()
+    const [profile, setProfile] = useState<any>();
+    const [reserveDetail,setReserveDetails] = useState<ReserveOneJson>();
     const [image , setImage ] = useState("") ;
-
+    const [revDate, setRevDate] = useState<Dayjs|null>(null);
+    const [revTime, setTime] = useState<Dayjs|null>(null);
+    
     function convertToBase64(e: React.ChangeEvent<HTMLInputElement>) {
         var reader = new FileReader();
         if ( e.target.files ) {
@@ -43,11 +48,16 @@ export default function SelectPayment({reserve}: {reserve:string}){
             body: JSON.stringify({
             reservid: reserve,
             image: image,
+            paytime : dayjs(revTime).format("HH:mm") ,
+            paydate :dayjs(revDate).format("YYYY/MM/DD")
             }),
         })
             .then((res) => res.json())
             .then((data) => console.log(data))
             .catch((error) => console.error("Error uploading image:", error));
+            console.log(dayjs(revTime).format("HH:mm") ) ;
+            //console.log(revDate);
+        router.push('/mybooking')
     }
 
 
@@ -56,13 +66,8 @@ export default function SelectPayment({reserve}: {reserve:string}){
 
 
 
-    const router = useRouter();
-    const { data:session } = useSession()
-    const [profile, setProfile] = useState<any>();
-    const [reserveDetail,setReserveDetails] = useState<ReserveOneJson>();
-    const [revDate, setRevDate] = useState<Dayjs|null>(null);
-    const [revTime, setTime] = useState<Dayjs|null>(null);
-
+    
+    
     useEffect(() => {
         const fetchData = async () => {
           if(session && session.user.token){
@@ -139,7 +144,7 @@ export default function SelectPayment({reserve}: {reserve:string}){
 
                     <div className="w-[100%]">
                         <div className="justify-left text-xl text-[#363062] w-[10%] mb-2" style={{ fontStyle: 'italic' }}> Time:</div>
-                        <TimePicking onDateChange={(value:Dayjs)=>{setTime(value)}}></TimePicking>
+                        <TimePicking onTimeChange={(value:Dayjs)=>{setTime(value)}}></TimePicking>
                         {/* <input type="number" className="rounded-md px-5 py-3 w-[100%]" placeholder="--:--" /> */}
                     </div>
               

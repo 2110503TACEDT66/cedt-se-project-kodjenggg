@@ -65,7 +65,12 @@ export default function BookingList ({session}:{session:any}) {
             }
             const response = await updateReservationStatus(token, rid, item)
             console.log(response);
-            window.location.reload();
+            if(status=="reviewed"){
+                router.push(`/review?hid=${reserve.hotel.id}&name=${reserve.hotel.name}`);
+            }
+            else{
+                window.location.reload();
+            }
         }
     }
     
@@ -174,7 +179,7 @@ export default function BookingList ({session}:{session:any}) {
                             )}
                             {(reserve.status === 'completed'&&profile.data.role==='user')&&(
                                 <button className="px-3 py-1 text-white shadow-sm rounded-xl bg-[#339CFC] absolute h-[40px] w-fit right-4 bottom-3"
-                                onClick={()=>{editStatus(session?.user.token,reserve._id,reserve,'reviewed'); router.push(`/review?hid=${reserve.hotel.id}&name=${reserve.hotel.name}`);}}>Review</button>
+                                onClick={()=>{editStatus(session?.user.token,reserve._id,reserve,'reviewed'); }}>Review</button>
                             )}
                             {reserve.status === 'disapproved'&& (
                                 <div className="text-[#CC382E] text-md absolute right-8 top-2">

@@ -12,6 +12,7 @@ import dayjs, { Dayjs } from "dayjs";
 import DateReservenoBG from "./DateReservenoBG";
 import { TimePicker } from "@mui/x-date-pickers";
 import TimePicking from "./TimePicking";
+import updateReservationStatus from "@/libs/updateReservationStatus";
 
 export default function SelectPayment({reserve}: {reserve:string}){
 
@@ -57,16 +58,45 @@ export default function SelectPayment({reserve}: {reserve:string}){
             .catch((error) => console.error("Error uploading image:", error));
             console.log(dayjs(revTime).format("HH:mm") ) ;
             //console.log(revDate);
-        router.push('/mybooking')
     }
 
-
-
-
-
-
-
-    
+    const updateStatusAP = async() => {
+        if ( reserveDetail && session?.user?.token ) {
+            const reserveItem:Reservation= {
+                _id: '',
+                revDate : '',
+                nightNum: 0,
+                user: {
+                    _id: '',
+                    name: ''
+                },
+                hotel: {
+                    _id: '',
+                    name: '',
+                    province: '',
+                    tel: '',
+                    picture: '',
+                    id: '' ,
+                    paymentqr:'',
+                    paymentname:'',
+                    paymentnum:'',
+                },
+                room: {
+                    _id: '',
+                    roomtype: '',
+                    bedtype: '',
+                    roomcap: 0
+                },
+                totalPrice : 0 ,
+                status: "pending",
+                createdAt: new Date(Date.now()),
+                __v: 0
+            }
+            const res = await updateReservationStatus(session?.user.token , reserve ,reserveItem )
+            console.log(res) ;
+        }
+        
+    }
     
     useEffect(() => {
         const fetchData = async () => {
@@ -165,7 +195,11 @@ export default function SelectPayment({reserve}: {reserve:string}){
                 <div className="flex justify-center mb-4 w-[100%] ">
                     <button className='w-[95%] bg-[#363062] text-white text-xl border-2 border-[#363062] font-semibold py-2 px-5  mt-7 rounded-xl 
                         hover:bg-white hover:text-[#F99417]'
-                        onClick={() => {uploadImage()}}>
+                        onClick={() => {
+                            uploadImage();
+                            updateStatusAP();
+                            router.push('/mybooking')
+                            }}>
                         Submit
                     </button>
                 </div>

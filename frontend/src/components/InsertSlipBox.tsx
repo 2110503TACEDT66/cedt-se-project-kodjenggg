@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import ReviewTags from "@/components/ReviewTags";
 import { RatingStar } from "./RatingStar";
 import { Rating } from '@mui/material';
@@ -9,19 +9,51 @@ import { useSession } from "next-auth/react";
 import addReview from "@/libs/addReview"
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
-import { Dayjs } from "dayjs";
+import dayjs,{ Dayjs } from "dayjs";
 import DateReservenoBG from "./DateReservenoBG";
+import Image from "next/image";
+import getUserProfile from "@/libs/getUserProfile";
+import getOneReservation from "@/libs/getOneReservation";
 
-export default function InsertSlipBox(){
+export default function InsertSlipBox({reserve}: {reserve:string}){
 
     const { data: session } = useSession();
     const [profile, setProfile] = useState<any>();
-    const [reserveDetail,setReserveDetails] = useState<any>();
+    const [revDetail,setReserveDetails] = useState<any>();
     const [revDate, setRevDate] = useState<Dayjs|null>(null)
+
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            if (session && session.user.token){
+                console.log('lol');
+              const userProfile = await getUserProfile(session.user.token);
+              setProfile(userProfile);
+            }
+            if(session && session.user.token){
+                const [revJson] = await Promise.all([
+                    getOneReservation(reserve,session.user.token)
+                  ]);
+                  setReserveDetails(revJson);
+            }
+            
+          } catch (error) {
+            console.error("Error fetching data:", error);
+          }
+        };
+    
+        fetchData();
+      }, []);
+      console.log('nowlhor')
+      revDetail ?
+      console.log(revDetail.data) : null
+      console.log(profile)
+
 
     return(
         <main>
             {/* header from NOW */}
+
 
             <div className="bg-[#4D4C7D] mb-10 rounded-lg w-[77%] h-[200px] relative flex flex-row shadow-lg justify-center items-center">
             <div className="flex flex-col">
@@ -29,21 +61,21 @@ export default function InsertSlipBox(){
                 {profile && (
                     <div>User: {profile.data.name}</div>
                 )}
-                {reserveDetail && (
+                {revDetail && (
                     <div>
-                        <div>Hotel: {reserveDetail.data.hotel.name}</div>
-                        <div>Room Type: {}</div>
-                        <div>Reservation date: {dayjs(reserveDetail.data.revDate).format("YYYY/MM/DD")}</div>
-                        <div>Total nights: {reserveDetail.data.nightNum}</div>
-                        <div>Total payment: {}</div>
+                        <div>Hotel: {revDetail.data.hotel.name}</div>
+                        <div>Room Type: {revDetail.data.roomType}</div>
+                        <div>Reservation date: {dayjs(revDetail.data.revDate).format("YYYY/MM/DD")}</div>
+                        <div>Total nights: {revDetail.data.nightNum}</div>
+                        <div>Total payment: {revDetail.data.totalPayment}</div>
                     </div>
                 )}
                 </div>
             </div>
                 
                 <div className="h-full w-[30%] relative rounded-lg">
-                    {reserveDetail && (
-                    <Image src={reserveDetail.data.hotel.picture} alt='hosImg' fill={true} className="object-cover rounded-l-lg"/>
+                    {revDetail && (
+                    <Image src={revDetail.data.hotel.picture} alt='hosImg' fill={true} className="object-cover rounded-l-lg"/>
                     )} 
                 </div>              
             </div>

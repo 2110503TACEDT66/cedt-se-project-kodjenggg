@@ -25,7 +25,7 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-export default function testComponent(){
+export default function testComponent({params}:{params:{reserveid:string}}){
 
     const [cleanliness,setCleanliness] = useState(false);
     const [convenience,setConvenience] = useState(false);
@@ -72,7 +72,7 @@ export default function testComponent(){
             <div >
                 <h1 className="text-black"> {`${worthiness} ${service} ${food} ${facility} ${convenience} ${cleanliness}` }</h1>
             </div>
-            <InsertSlipBox/>
+            <InsertSlipBox reserve={params.reserveid}/>
             </div>  
         </main>
         

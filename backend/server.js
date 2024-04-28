@@ -8,33 +8,38 @@ const {xss} = require('express-xss-sanitizer') ;
 const rateLimit = require('express-rate-limit') ;
 const hpp = require('hpp') ;
 const cors = require('cors') ;
-const multer = require('multer');
-const path = require('path');
-
-const app = express();
-
-
-require("./models/Payment")
-
-
+const bodyParser = require('body-parser')
+require('./models/Payment')
 //Load env vars
 dotenv.config({ path: "./config/config.env" });
 
+const stripe = require("stripe")("sk_test_51P6oXZHub7hok82f2kcmDah67GmCZC4ovavsgkWANdHtxVxD6hQNIYiKA2J4ljsJVsP86QEisF4tHiAIpFXQIYtF00ZxqAqjEI");
+const endpointSecret = "whsec_1bc1e8c6cdb4ffb49d967af0ce7be7cb2b8f7601c0ec99304218a81ebf3a6b1e";
 //Connect to database
 connectDB();
 
+const app = express();
+
+app.use(express.json({
+  limit: "25mb",
+  verify: function(req, res, buf) {
+    req.rawBody = buf;
+  }
+}));
+
+
 //Body parser
-app.use(express.json({limit: "25mb"}));
-app.use(express.urlencoded({limit:"25mb"}))
+app.use(express.urlencoded({limit : "25mb"})) ;
 
 //Sanitize data
 app.use(mongoSanitize()) ;
 
 //Set security headers
 app.use(helmet()) ;
-
 //Prevent XSS attacks
 app.use(xss()) ;
+
+
 
 //Rate Limiting 
 const limiter = rateLimit ({
@@ -45,6 +50,8 @@ app.use(limiter) ;
 
 //Prevent http param pollutions 
 app.use(hpp()) ;
+
+//const endpointSecret = "whsec_1bc1e8c6cdb4ffb49d967af0ce7be7cb2b8f7601c0ec99304218a81ebf3a6b1e";
 
 //Enable CORS
 app.use(cors()) ;
@@ -61,13 +68,14 @@ const reservations = require("./routes/reservations");
 const reviews = require('./routes/reviews');
 const rooms = require("./routes/rooms");
 const payment = require("./routes/payments")
+
 //Mount routers
 app.use("/api/v1/hotels", hotels);
 app.use("/api/v1/auth", auth);
 app.use("/api/v1/reservations", reservations);
 app.use("/api/v1/reviews", reviews);
 app.use("/api/v1/rooms", rooms);
-app.use("/api/v1/payments", payment) ;
+app.use("/api/v1/payment", payment);
 
 const PORT = process.env.PORT || 5000;
 const server = app.listen(

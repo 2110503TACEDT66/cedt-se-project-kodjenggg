@@ -43,7 +43,7 @@ export default async function RecieptApprove({ session , payment}: { session: an
     console.log(profile?.data?.role)
 
 
-    const updateStatus = async() => {
+    const updateStatusAP = async() => {
         if ( payment.data.reservid && session?.user?.token ) {
             const reserveItem:Reservation= {
                 _id: '',
@@ -61,7 +61,48 @@ export default async function RecieptApprove({ session , payment}: { session: an
                     picture: '',
                     id: ''
                 },
+                room: {
+                    _id: '',
+                    roomtype: '',
+                    bedtype: '',
+                    roomcap: 0
+                },
+                totalPrice : 0 ,
                 status: "reserved",
+                createdAt: new Date(Date.now()),
+                __v: 0
+            }
+            const res = await updateReservationStatus(session?.user.token , payment.data.reservid._id ,reserveItem )
+            console.log(res) ;
+        }
+        
+    }
+    const updateStatusDAP = async() => {
+        if ( payment.data.reservid && session?.user?.token ) {
+            const reserveItem:Reservation= {
+                _id: '',
+                revDate : '',
+                nightNum: 0,
+                user: {
+                    _id: '',
+                    name: ''
+                },
+                hotel: {
+                    _id: '',
+                    name: '',
+                    province: '',
+                    tel: '',
+                    picture: '',
+                    id: ''
+                },
+                room: {
+                    _id: '',
+                    roomtype: '',
+                    bedtype: '',
+                    roomcap: 0
+                },
+                totalPrice : 0 ,
+                status: "disapproved",
                 createdAt: new Date(Date.now()),
                 __v: 0
             }
@@ -87,14 +128,14 @@ export default async function RecieptApprove({ session , payment}: { session: an
                             <div className="italic text-[20px] flex">Room Type: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment.data.reservid.room.roomtype}</div></div>
                             <div className="italic text-[20px] flex">Reservation Date: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment.data.reservid.revDate.substring(0, 10)}</div></div>
                             <div className="italic text-[20px] flex">Total Night: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment.data.reservid.nightNum}</div></div>
-                            <div className="italic text-[20px] flex">Total Deposit: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment.data.reservid.totalPrice}</div></div>
+                            <div className="italic text-[20px] flex">Total Deposit: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment.data.reservid.totalPrice} THB</div></div>
                             <div className="italic text-[20px] flex">Payment Date: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment.data.paytime.substring(0,10)}</div></div>
                             <div className="italic text-[20px] flex">Payment Time: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic"></div>{realtime}</div>
                         </div>
                     </div>
                     <div className="m-5">
-                        <button className="bg-[#CC382E] p-3 rounded-xl w-[150px] font-semibold mr-8 text-xl">Disapprove</button>
-                        <Link href={"/mybooking"}><button className="bg-[#1EB012] p-3 rounded-xl w-[150px] font-semibold ml-8 text-xl" onClick={updateStatus}>Approve</button></Link>
+                        <Link href={"/mybooking"}><button className="bg-[#CC382E] p-3 rounded-xl w-[150px] font-semibold mr-8 text-xl"  onClick={updateStatusDAP}>Disapprove</button></Link>
+                        <Link href={"/mybooking"}><button className="bg-[#1EB012] p-3 rounded-xl w-[150px] font-semibold ml-8 text-xl" onClick={updateStatusAP}>Approve</button></Link>
                     </div>
                 </main>
             ) : (

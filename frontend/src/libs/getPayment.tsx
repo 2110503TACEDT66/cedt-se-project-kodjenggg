@@ -1,7 +1,7 @@
 import { resolve } from "path"
 
 export default async function getPayment(reservid:string) {
-    const response = await fetch(`http://localhost:5000/api/v1/payments/${reservid}`)
+    const response = await fetch(`http://localhost:5000/api/v1/payment/${reservid}`)
     if(!response.ok){
         //console.log(response.json);
         console.log(reservid)

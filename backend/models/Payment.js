@@ -9,8 +9,7 @@ const PaymentSchema = new mongoose.Schema({
         type : String
     },
     paytime : {
-        type: Date,
-        default: Date.now
+        type: Date
     }
 
 });

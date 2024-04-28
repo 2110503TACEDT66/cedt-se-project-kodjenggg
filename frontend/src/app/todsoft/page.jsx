@@ -13,11 +13,11 @@ export default function Todsoft({reservid : string}) {
         setImage(reader.result) ;
       } ;
       reader.onerror = error => {
-        console.log("Eoor: " , error) ;
+        console.log("Error: " , error) ;
       } ;
     }
     function uploadImage() {
-      fetch("http://localhost:5000/api/v1/payments" , {
+      fetch("http://localhost:5000/api/v1/payment" , {
         method : "POST" ,
         crossDomain : true ,
         headers : {

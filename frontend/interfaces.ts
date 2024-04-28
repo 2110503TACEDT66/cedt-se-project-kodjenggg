@@ -2,7 +2,8 @@ export interface ReservationItem {
     hotelId: string,
     revDate: string,
     nightNum: number,
-    payment : string 
+    room: string,
+    price: number
 }
 
 export interface HotelJson {
@@ -19,6 +20,18 @@ export interface ReserveJson {
     data: Reservation[]
 }
 
+export interface PaymentJson{
+    message: string,
+    id: string
+}
+
+export interface ReserveOneJson {
+    success: boolean,
+    count: number,
+    pagination: Object,
+    data: Reservation
+}
+
 export interface ReviewJson {
     success: boolean,
     count: number,
@@ -33,7 +46,8 @@ export interface RoomJson {
     data: Room[]
 }
 
-//dont forget to แก้
+
+
 export interface Reservation{
     _id: string,
     revDate : string,
@@ -50,6 +64,13 @@ export interface Reservation{
         picture: string,
         id: string
     },
+    room: {
+        _id: string,
+        roomtype: string,
+        bedtype: string,
+        roomcap: number
+    },
+    totalPrice: number,
     status: string,
     createdAt: Date,
     __v: number

@@ -20,7 +20,7 @@ import updateReservationStatus from "@/libs/updateReservationStatus";
 
 export default function BookingList ({session}:{session:any}) {
     const [showOptions, setShowOptions] = useState(false);
-    const [profile, setProfile] = useState<any>();3
+    const [profile, setProfile] = useState<any>();
 
     async function editStatus(token: string, rid:string,reserve:Reservation,status:string){
         console.log(token);
@@ -44,7 +44,13 @@ export default function BookingList ({session}:{session:any}) {
                     picture: reserve.hotel.picture,
                     id: reserve.hotel.id
                 },
-
+                room: {
+                    _id: reserve.room._id,
+                    roomtype: reserve.room.roomtype,
+                    bedtype: reserve.room.bedtype,
+                    roomcap: reserve.room.roomcap
+                },
+                totalPrice: reserve.totalPrice,
                 status: status,
                 createdAt: new Date(Date.now()),
                 __v: reserve.__v
@@ -88,8 +94,11 @@ export default function BookingList ({session}:{session:any}) {
             <div className="text-[#363062] flex flex-col items-center justify-center my-10 mr-[20%]">
             <div className="font-semibold text-5xl m-10">Your Reservations</div>
 
-            { (reservations && reservations.count > 0) ?
-            (
+            { (!reservations ) ?
+            (<div className="absolute inset-0 flex justify-center items-center text-gray-500 mr-[20%]">Loading...</div>)
+            : (reservations.data.length == 0) ?
+            (<div className="absolute inset-0 flex justify-center items-center text-gray-500 mr-[20%]">No reservation</div>)
+            :(
                 reservations.data.map((reserve:Reservation) => (
                     <div className="bg-white mb-10 rounded-lg w-[77%] h-[200px] relative flex flex-row shadow-lg" key={reserve._id}>
                             <div className="h-full w-[30%] relative rounded-lg">
@@ -132,7 +141,7 @@ export default function BookingList ({session}:{session:any}) {
                                 </div>
                             )}
                             {reserve.status === 'pending'&& profile?.data.role === 'admin' &&(
-                                <Link href={`/todsoft`}>
+                                <Link href={`/payment/${reserve._id}`}>
                                     <button className="px-3 py-1 text-white shadow-sm rounded-xl bg-[#F99417] absolute h-[40px] w-[80px] right-4 bottom-3">Upload</button>
                                 </Link>
                             )}
@@ -163,23 +172,22 @@ export default function BookingList ({session}:{session:any}) {
                                 >Review</button>
                                 </Link>
                             )}
-                            {reserve.status === 'disapprove'&& (
+                            {reserve.status === 'disapproved'&& (
                                 <div className="text-[#CC382E] text-md absolute right-8 top-2">
                                     <CircleIcon sx={{ fontSize: 8 }} className="mx-1"/>
-                                    disapprove...
+                                    disapproved...
                                 </div>
                             )}
-                            {(reserve.status === 'disapprove' && profile?.data.role==='hotelmanager')&&(
-                                <button className="px-3 py-1 text-white shadow-sm rounded-xl bg-[#CC382E] absolute h-[40px] w-[80px] right-4 bottom-3 text-center"
+                            {(reserve.status === 'disapproved' && profile?.data.role==='hotelmanager')&&(
+                                <button className="px-3 py-1 text-white shadow-sm rounded-xl bg-[#CC382E] absolute h-[40px] w-[80px] right-4 bottom-3"
                                 onClick={()=>editStatus(session?.user.token,reserve._id,reserve,'reserved')}>Approve</button>
                             )}
-                            {(reserve.status === 'disapprove' && profile?.data.role!=='hotelmanager')&&(
+                            {(reserve.status === 'disapproved' && profile?.data.role!=='hotelmanager')&&(
                                 <ContactPopUp rid={reserve._id} session={session} tel={reserve.hotel.tel}/>     
                             )}
                     </div>
                 ))
             )
-            :(<div className="absolute inset-0 flex justify-center items-center text-gray-500 mr-[20%]">No reservation</div>)
             }
             </div>
 

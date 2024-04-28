@@ -1,12 +1,9 @@
 const mongoose = require("mongoose");
+const uuid = require('node-uuid');
 
 const ReservationSchema = new mongoose.Schema({
   sessionId:{
     type: String,
-    default: function genUUID() {
-      return uuid.v1()
-    },
-    require: true,
   },
   revDate: {
     type: Date,
@@ -41,7 +38,7 @@ const ReservationSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ["unpaid", "pending", "disapprove", "reserved", "completed", "reviewed" ],
+    enum: ["unpaid", "pending", "disapproved", "reserved", "completed", "reviewed" ],
     default: "unpaid",
   }
 });

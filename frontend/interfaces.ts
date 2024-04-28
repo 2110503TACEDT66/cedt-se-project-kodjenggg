@@ -138,15 +138,41 @@ export interface Payment {
         _id: string;
         revDate: string;
         nightNum: number;
-        user: string;
-        hotel: string;
-        room: string;
+        user: {
+            _id: string;
+            name: string;
+            tel: string;
+            email: string;
+            role: string;
+        };
+        hotel: {
+            _id: string;
+            name: string;
+            address: string;
+            district: string;
+            province: string;
+            postalcode: string;
+            tel: string;
+            region: string;
+            picture: string;
+            id : string
+        };
+        room: {
+            _id: string;
+            hotel_id: string;
+            price: number;
+            roomtype: string;
+            bedtype: string;
+            picture: string;
+            roomcap: number;
+        };
         totalPrice: number;
         status: string;
         createdAt: string;
         __v: number;
         sessionId: string;
-        
-    },
+    };
     image: string;
+    paytime : Date
 }
+

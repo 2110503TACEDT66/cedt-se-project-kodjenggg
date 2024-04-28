@@ -14,7 +14,6 @@ export default async function ManageReservations(){
         <main>
             <Suspense fallback={<p>Loading...<LinearProgress/></p>}>
             <RecieptApprove session={sessionReady}/>
-            <User/>
             </Suspense>
         </main>
     )

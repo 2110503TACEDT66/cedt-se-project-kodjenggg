@@ -12,7 +12,15 @@ dotenv.config({ path: "./config/config.env" });
 exports.getPayment = async (req, res, next) => {
   try {
     const payment = await Payment.findById(req.params.id)
-    .populate("reservid");
+      .populate({
+        path: 'reservid',
+        populate: [
+          { path: 'hotel', select: 'name address district province postalcode tel region picture' },
+          { path: 'user', select: 'name tel email role' },
+          { path: 'room' }
+        ]
+      });
+
 
     console.log(payment)
     if (!payment) {

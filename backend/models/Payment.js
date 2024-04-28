@@ -7,6 +7,10 @@ const PaymentSchema = new mongoose.Schema({
     },
     image : {
         type : String
+    },
+    paytime : {
+        type: Date,
+        default: Date.now
     }
 
 });

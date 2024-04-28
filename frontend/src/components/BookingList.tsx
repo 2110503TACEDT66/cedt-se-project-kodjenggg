@@ -10,10 +10,51 @@ import CircleIcon from '@mui/icons-material/Circle';
 import MoreOptionMyReservation from "./MoreOptionMyReservation";
 import { pink } from "@mui/material/colors";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import CancelRevPopUp from "./CancelRevPopUp";
+import { useSession } from "next-auth/react";
+import ContactPopUp from "./ContactPopUp";
+import getUserProfile from "@/libs/getUserProfile";
+import { ReservationItem } from "interfaces";
+import updateReservationStatus from "@/libs/updateReservationStatus";
 
 
 export default function BookingList ({session}:{session:any}) {
     const [showOptions, setShowOptions] = useState(false);
+    const [profile, setProfile] = useState<any>();3
+
+    async function editStatus(token: string, rid:string,reserve:Reservation,status:string){
+        console.log(token);
+        console.log(rid)
+        console.log(reserve)
+        console.log(status)
+        if(rid && session?.user?.token){
+            const item:Reservation = {
+                _id: reserve._id,
+                revDate : reserve.revDate,
+                nightNum: reserve.nightNum,
+                user: {
+                    _id: reserve.user._id,
+                    name: reserve.user.name
+                },
+                hotel: {
+                    _id: reserve.hotel._id,
+                    name: reserve.hotel.name,
+                    province: reserve.hotel.province,
+                    tel: reserve.hotel.tel,
+                    picture: reserve.hotel.picture,
+                    id: reserve.hotel.id
+                },
+
+                status: status,
+                createdAt: new Date(Date.now()),
+                __v: reserve.__v
+                
+            }
+            const response = await updateReservationStatus(token, rid, item)
+            console.log(response);
+            window.location.reload();
+        }
+    }
     
     async function data() {
         await new Promise((resolve) => setTimeout(resolve,500))
@@ -22,10 +63,24 @@ export default function BookingList ({session}:{session:any}) {
         setReservations(reserveJsonReady)
     }
 
+    
+
     const [reservations, setReservations] = useState<ReserveJson>()
 
     useEffect(() => {
         data()
+        const fetchData = async () => {
+            try {
+              if (session && session.user.token){
+                const userProfile = await getUserProfile(session.user.token);
+                setProfile(userProfile);
+              } 
+            } catch (error) {
+              console.error("Error fetching data:", error);
+            }
+          };
+      
+          fetchData();
     }, []);
 
     return (
@@ -58,7 +113,12 @@ export default function BookingList ({session}:{session:any}) {
                             <button className="px-3 py-1 text-white shadow-sm rounded-xl bg-red-600 absolute h-[40px] w-[80px] right-4 top-2"
                             onClick={()=>{deleteReservations(session.user.token, reserve._id)}}>Delete</button>)}
                             */}
-
+                            {reserve.status === 'unpaid'&& (
+                                <div className="text-[#CC382E] text-md absolute right-12 top-5">
+                                    <CircleIcon sx={{ fontSize: 8 }} className="mx-1"/>
+                                    unpaid...
+                                </div>
+                            )}
                             {reserve.status === 'unpaid'&& (
                                 <button className="px-3 py-1 text-white shadow-sm rounded-xl bg-green-600 absolute h-[40px] w-[80px] right-4 bottom-3"
                                 onClick={() => { alert("GO PAY") }}>Pay</button>
@@ -75,6 +135,9 @@ export default function BookingList ({session}:{session:any}) {
                                 reserved
                                 </div>
                             )}
+                            {(reserve.status === 'reserved' && profile.data.role!=="hotelmanager")&&(
+                                <CancelRevPopUp rid={reserve._id} session={session}/>
+                            )}
                             {reserve.status === 'completed'&&(
                                 <div className="text-[#339CFC] text-md absolute right-8  top-2">
                                 <CircleIcon sx={{ fontSize: 8 }} className="mx-1"/>
@@ -86,6 +149,19 @@ export default function BookingList ({session}:{session:any}) {
                                 <button className="px-3 py-1 text-white shadow-sm rounded-xl bg-[#339CFC] absolute h-[40px] w-[80px] right-4 bottom-3"
                                 >Review</button>
                                 </Link>
+                            )}
+                            {reserve.status === 'disapprove'&& (
+                                <div className="text-[#CC382E] text-md absolute right-8 top-2">
+                                    <CircleIcon sx={{ fontSize: 8 }} className="mx-1"/>
+                                    disapprove...
+                                </div>
+                            )}
+                            {(reserve.status === 'disapprove' && profile.data.role==='hotelmanager')&&(
+                                <button className="px-3 py-1 text-white shadow-sm rounded-xl bg-[#CC382E] absolute h-[40px] w-[80px] right-4 bottom-3 text-center"
+                                onClick={()=>editStatus(session?.user.token,reserve._id,reserve,'reserved')}>Approve</button>
+                            )}
+                            {(reserve.status === 'disapprove' && profile.data.role!=='hotelmanager')&&(
+                                <ContactPopUp rid={reserve._id} session={session} tel={reserve.hotel.tel}/>     
                             )}
                     </div>
                 ))

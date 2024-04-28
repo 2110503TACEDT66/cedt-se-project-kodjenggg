@@ -20,7 +20,7 @@ router
 router
   .route("/:id")
   .get(protect, getReservation)
-  .put(protect, authorize("admin", "user"), updateReservation)
+  .put(protect, authorize("admin", "user","hotelmanager"), updateReservation)
   .delete(protect, authorize("admin", "user"), deleteReservation);
 
 module.exports = router;

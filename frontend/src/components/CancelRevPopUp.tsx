@@ -10,7 +10,7 @@ export default function CancelRevPopUp({rid,session}:{rid:string,session:any}){
         setCheckboxChecked(event.target.checked);
     };
 
-    async function deleteReservations(token:string, rid:string){
+    async function deleteReserve(token:string, rid:string){
         if(token && rid){
             await deleteReservation(token , rid)
             window.location.reload()
@@ -39,7 +39,7 @@ export default function CancelRevPopUp({rid,session}:{rid:string,session:any}){
                             No
                         </button>
                         <button className={`px-12 py-2 bg-[#CC382E] rounded-md text-white ml-7 ${!isCheckboxChecked && "opacity-50 cursor-not-allowed"}`} disabled={!isCheckboxChecked}
-                        onClick={()=>{setVisible(false);setCheckboxChecked(false);deleteReservation(session?.user.token,rid)}}>
+                        onClick={()=>{setVisible(false);setCheckboxChecked(false);deleteReserve(session?.user.token,rid)}}>
                             Yes
                         </button>
                     </div>
@@ -47,7 +47,7 @@ export default function CancelRevPopUp({rid,session}:{rid:string,session:any}){
                 </div>
             </div>
             )}
-        <button className="px-3 py-1 text-white shadow-sm rounded-xl bg-[#CC382E] absolute h-[40px] w-[80px] right-4 bottom-3"
+        <button className="px-3 py-1 text-white shadow-sm rounded-xl bg-[#908EA5] absolute h-[40px] w-fit right-4 bottom-3"
         onClick={()=>setVisible(true)}>Cancel</button>
         </div>
     );

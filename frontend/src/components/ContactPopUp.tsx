@@ -20,7 +20,7 @@ export default function CancelRevPopUp({rid,session,tel}:{rid:string,session:any
                 </div>
             </div>
             )}
-        <button className="px-3 py-1 text-white shadow-sm rounded-xl bg-[#CC382E] absolute h-[40px] w-[80px] right-4 bottom-3"
+        <button className="px-3 py-1 text-white shadow-sm rounded-xl bg-[#CC382E] absolute h-[40px] w-fit right-4 bottom-3"
         onClick={()=>setVisible(true)}>Contact</button>
         </div>
     );

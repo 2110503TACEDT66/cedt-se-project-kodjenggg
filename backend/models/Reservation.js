@@ -4,10 +4,6 @@ const uuid = require('node-uuid');
 const ReservationSchema = new mongoose.Schema({
   sessionId:{
     type: String,
-    default: function genUUID() {
-      return uuid.v1()
-    },
-    require: true,
   },
   revDate: {
     type: Date,

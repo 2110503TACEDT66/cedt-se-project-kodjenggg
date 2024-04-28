@@ -9,7 +9,7 @@ import { useSession } from "next-auth/react";
 import addReview from "@/libs/addReview"
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
-import { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import DateReservenoBG from "./DateReservenoBG";
 
 export default function InsertSlipBox(){
@@ -41,11 +41,11 @@ export default function InsertSlipBox(){
                 </div>
             </div>
                 
-                <div className="h-full w-[30%] relative rounded-lg">
+                {/* <div className="h-full w-[30%] relative rounded-lg">
                     {reserveDetail && (
                     <Image src={reserveDetail.data.hotel.picture} alt='hosImg' fill={true} className="object-cover rounded-l-lg"/>
                     )} 
-                </div>              
+                </div>               */}
             </div>
 
             {/* grey card content */}

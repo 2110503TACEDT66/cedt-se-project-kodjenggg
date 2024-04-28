@@ -35,6 +35,12 @@ export default function ReviewBox(){
         console.log(comment);
         console.log(session);
         console.log(hid);
+        if(!title){
+            alert('Please add some reviw title.')
+        }
+        if(!comment){
+            alert('Please add some comment.')
+        }
         if(session && title && comment && hid){
             const item:ReviewItem = {
                 hotelid: hid,

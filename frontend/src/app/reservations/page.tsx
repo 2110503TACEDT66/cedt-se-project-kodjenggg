@@ -45,18 +45,17 @@ export default function Reservations(){
                 alert("Please select new date.")
             }
         }
+        if(dayjs().isAfter(dayjs(revDate))){
+            alert("Please select new date.")
+        }
         if(!nightNum){
             alert("Please select number of nights.")
         }
         if(!room){
             alert("Please select room.")
         }
-        if(dayjs().isAfter(dayjs(revDate))){
-            alert("Please select new date.")
-            return;
-        }
     
-        if(hid && revDate && nightNum && session?.user?.token && room && rooms){
+        if(hid && revDate && nightNum && session?.user?.token && room && rooms && !dayjs().isAfter(dayjs(revDate))){
             const item:ReservationItem = {
                 hotelId: hid,
                 revDate: dayjs(revDate).format("YYYY/MM/DD"),

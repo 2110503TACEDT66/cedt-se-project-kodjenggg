@@ -28,10 +28,10 @@ export default async function User() {
             <div className="m-5">Member Since: {dayjs(profile.data.createdAt).format("YYYY/MM/DD")}</div>
             <div className="absolute bottom-[10%] w-full flex flex-col justify-center items-center">
             {
-                profile.data.role=='admin'? 
-                <Link href='/hotels/add'>
-                <button className="text-xl italic text-center bg-[#F99417] rounded-lg px-10 py-2 mb-4">Add Hotel</button>                
-                </Link>: null
+                // profile.data.role=='admin'? 
+                // <Link href='/hotels/add'>
+                // <button className="text-xl italic text-center bg-[#F99417] rounded-lg px-10 py-2 mb-4">Add Hotel</button>                
+                // </Link>: null
             } 
                 <Link href="/api/auth/signout">
                     <button className="text-xl italic text-center bg-[#F99417] rounded-lg px-10 py-2">Sign-Out</button>

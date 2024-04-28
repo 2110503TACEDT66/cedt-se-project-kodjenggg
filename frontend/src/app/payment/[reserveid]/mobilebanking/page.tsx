@@ -11,8 +11,8 @@ import { useSession } from "next-auth/react";
 import SelectPayment from "@/components/SelectPayment";
 import PromptpayCard from "@/components/PromptpayCard";
 
-export default async function MobileBanking(){
+export default async function MobileBanking({params}:{params:{reserveid:string}}){
     return (
-        <PromptpayCard/>
+        <PromptpayCard reserve={params.reserveid}/>
     )
 }

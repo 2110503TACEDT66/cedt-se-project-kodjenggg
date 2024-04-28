@@ -59,7 +59,7 @@ export default function PromptpayCard({reserve}: {reserve:string}){
             >Back</button>
 
             <button className="bg-[#339CFC] py-1 mr-3 text-[#363062] font-semibold text-lg rounded-lg w-[10%] ml-12"
-            onClick={() => { router.push(`${reserveDetail.data._id}/mobilebanking/insertslip`); }}
+            onClick={() => { router.push(`/payment/${reserveDetail.data._id}/mobilebanking/insertslip`); }}
             
 
             >Continue</button>

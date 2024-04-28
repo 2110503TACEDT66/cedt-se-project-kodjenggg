@@ -20,7 +20,7 @@ import updateReservationStatus from "@/libs/updateReservationStatus";
 
 export default function BookingList ({session}:{session:any}) {
     const [showOptions, setShowOptions] = useState(false);
-    const [profile, setProfile] = useState<any>();3
+    const [profile, setProfile] = useState<any>();
 
     async function editStatus(token: string, rid:string,reserve:Reservation,status:string){
         console.log(token);
@@ -44,7 +44,13 @@ export default function BookingList ({session}:{session:any}) {
                     picture: reserve.hotel.picture,
                     id: reserve.hotel.id
                 },
-
+                room: {
+                    _id: reserve.room._id,
+                    roomtype: reserve.room.roomtype,
+                    bedtype: reserve.room.bedtype,
+                    roomcap: reserve.room.roomcap
+                },
+                totalPrice: reserve.totalPrice,
                 status: status,
                 createdAt: new Date(Date.now()),
                 __v: reserve.__v

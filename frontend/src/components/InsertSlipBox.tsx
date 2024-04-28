@@ -2,13 +2,13 @@
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import getOneReservation from "@/libs/getOneReservation";
-import dayjs, { Dayjs } from "dayjs";
 import getUserProfile from "@/libs/getUserProfile";
 import { useEffect } from "react";
 import { useState } from "react";
-import { ReserveJson, Reservation } from "interfaces";
+import { ReserveJson, Reservation, ReserveOneJson } from "interfaces";
 import router from "next/router";
 import { useRouter } from "next/navigation";
+import dayjs, { Dayjs } from "dayjs";
 import DateReservenoBG from "./DateReservenoBG";
 
 export default function SelectPayment({reserve}: {reserve:string}){
@@ -16,35 +16,30 @@ export default function SelectPayment({reserve}: {reserve:string}){
     const router = useRouter();
     const { data:session } = useSession()
     const [profile, setProfile] = useState<any>();
-    const [reserveDetail,setReserveDetails] = useState<any>();
-    const [revDate, setRevDate] = useState<Dayjs|null>(null)
+    const [reserveDetail,setReserveDetails] = useState<ReserveOneJson>();
+    const [revDate, setRevDate] = useState<Dayjs|null>(null);
 
     useEffect(() => {
         const fetchData = async () => {
-          try {
-            if (session && session.user.token){
-                console.log('lol');
+          if(session && session.user.token){
+            try {
+              console.log('lol');
               const userProfile = await getUserProfile(session.user.token);
               setProfile(userProfile);
+
+              const revJson:Promise<ReserveOneJson> = await getOneReservation(reserve,session.user.token);
+              const revReady:ReserveOneJson = await revJson;
+              setReserveDetails(revReady);
+
+            } catch (error) {
+              console.error("Error fetching data:", error);
             }
-            // if(session && session.user.token){
-            //     const [revJson] = await Promise.all([
-            //         getOneReservation(reserve,session.user.token)
-            //       ]);
-            //       setReserveDetails(revJson);
-            // }
-            
-          } catch (error) {
-            console.error("Error fetching data:", error);
+
           }
         };
-    
+
         fetchData();
       }, []);
-    //   console.log('nowlhor')
-    //   reserveDetail ?
-    //   console.log(reserveDetail.data) : null
-      console.log(profile)
 
 
     return(
@@ -53,50 +48,55 @@ export default function SelectPayment({reserve}: {reserve:string}){
             {/* header from NOW */}
 
 
-            <div className="bg-[#4D4C7D] mb-10 rounded-lg w-[77%] h-[200px] relative flex flex-row shadow-lg ">
+            <div className="bg-[#4D4C7D] my-10 rounded-lg w-[77%] h-fit relative flex justify-between shadow-lg">
             <div className="flex flex-col">
-            <div className="text-lg m-2 relative left-6 top-1 font-normal">
+            <div className="w-full">
+            <div className="text-lg mx-2 my-4 relative left-6  font-normal">
                 {profile && (
                     <div>User: {profile.data.name}</div>
                 )}
-                {/* {reserveDetail && (
+                {reserveDetail && (
                     <div>
                         <div>Hotel: {reserveDetail.data.hotel.name}</div>
-                        <div>Room Type: {reserveDetail.data.roomType}</div>
+                        <div>Room Type: {reserveDetail.data.room.roomtype}</div>
                         <div>Reservation date: {dayjs(reserveDetail.data.revDate).format("YYYY/MM/DD")}</div>
                         <div>Total nights: {reserveDetail.data.nightNum}</div>
-                        <div>Total payment: {reserveDetail.data.totalPayment}</div>
+                        <div>Total payment: {reserveDetail.data.totalPrice}</div>
                     </div>
-                )} */}
+                )}
                 </div>
             </div>
+            </div>
                 
-                {/* <div className="h-full w-[30%] relative rounded-lg">
-                    {reserveDetail && (
-                    <Image src={reserveDetail.data.hotel.picture} alt='hosImg' fill={true} className="object-cover rounded-l-lg"/>
-                    )} 
-                </div>               */}
+            <div className="w-[35%] relative rounded-lg">
+                {reserveDetail && (
+                <Image src={reserveDetail.data.hotel.picture} alt='hosImg' fill={true} className="object-cover rounded-r-lg"/>
+                )} 
+            </div>               
             </div>
 
             {/* grey card content */}
             <div className="text-[#363062] justify-center border border-gray-300 rounded-3xl shadow-xl mx-auto mt-10 mb-20 w-[77%] bg-[#D9D9D9]">
                 
-                <div className="mx-5 px-3 py-2">
-                <div className="text-xl mt-2 py-2 text-[#363062] rounded-lg" style={{ fontStyle: 'italic' }}>Payment Date:</div>
+                <div className="mx-5 px-6 py-4 ">
+                <div className="text-xl mt-2 py-2 text-[#363062] rounded-lg " style={{ fontStyle: 'italic' }}>Payment Date:</div>
                 <DateReservenoBG onDateChange={(value:Dayjs)=>{setRevDate(value)}}/>
                 </div>
                 
-                <div className="w-[100%] mx-5 px-3 py-2 flex justify-left ">
-                    <div className="w-[50%]">
-                        <div className="justify-left text-xl text-[#363062] w-[100%] mb-2" style={{ fontStyle: 'italic' }}> Total:</div>
-                        <input type="text" className="rounded-md px-3 py-3 w-[90%]" placeholder="0.00" />
+                <div className="w-[100%] flex flex-row justify-center">
+
+                <div className="w-[90%] grid grid-cols-2 gap-4 justify-center ">
+                    <div className="w-[100%] ">
+                        <div className="justify-left text-xl text-[#363062] w-[10%] mb-2" style={{ fontStyle: 'italic' }}> Total:</div>
+                        <input type="text" className="rounded-md px-3 py-3 w-[100%]" placeholder="0.00" />
                     </div>
 
-                    <div className="w-[50%]">
-                        <div className="justify-left text-xl text-[#363062] w-[100%] mb-2" style={{ fontStyle: 'italic' }}> Time:</div>
-                        <input type="text" className="rounded-md px-5 py-3 w-[90%]" placeholder="--:--" />
+                    <div className="w-[100%]">
+                        <div className="justify-left text-xl text-[#363062] w-[10%] mb-2" style={{ fontStyle: 'italic' }}> Time:</div>
+                        <input type="text" className="rounded-md px-5 py-3 w-[100%]" placeholder="--:--" />
                     </div>
               
+                </div>
                 </div>
                 
 

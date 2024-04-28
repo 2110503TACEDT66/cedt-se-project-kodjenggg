@@ -26,7 +26,7 @@ export default function PromptpayCard(){
         >Back</button>
 
         <button className="bg-[#339CFC] py-1 mr-3 text-[#363062] font-semibold text-lg rounded-lg w-[10%] ml-12"
-        onClick={() => { router.push('/mybooking'); }}
+        onClick={() => { router.push('/'); }}
 
         >Continue</button>
 

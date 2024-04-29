@@ -167,7 +167,7 @@ export default function BookingList ({session}:{session:any}) {
                             {(reserve.status === 'reserved' && profile?.data.role!=="hotelmanager")&&(
                                 <CancelRevPopUp rid={reserve._id} session={session}/>
                             )}
-                            {(reserve.status === 'reserved' && profile.data.role==="hotelmanager")&&(
+                            {(reserve.status === 'reserved' && profile?.data.role==="hotelmanager")&&(
                                 <button className="px-3 py-1 text-white shadow-sm rounded-xl bg-[#1EB012] absolute h-[40px] w-fit right-4 bottom-3 text-center"
                                 onClick={()=>editStatus(session?.user.token,reserve._id,reserve,'completed')}>Complete</button>
                             )}
@@ -177,7 +177,7 @@ export default function BookingList ({session}:{session:any}) {
                                 completed
                                 </div>
                             )}
-                            {(reserve.status === 'completed'&&profile.data.role==='user')&&(
+                            {(reserve.status === 'completed'&&profile?.data.role==='user')&&(
                                 <button className="px-3 py-1 text-white shadow-sm rounded-xl bg-[#339CFC] absolute h-[40px] w-fit right-4 bottom-3"
                                 onClick={()=>{editStatus(session?.user.token,reserve._id,reserve,'reviewed'); }}>Review</button>
                             )}

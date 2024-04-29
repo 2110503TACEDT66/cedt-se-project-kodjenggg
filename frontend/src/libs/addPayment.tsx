@@ -1,7 +1,7 @@
 import { ReservationItem } from "interfaces"
 
 export default async function createReservation(token: string,reserveItem: ReservationItem) {
-    const response = await fetch(`http://localhost:5000/api/v1/hotels/${reserveItem.hotelId}/reservations/`,{
+    const response = await fetch(`${process.env.BACKEND_URL}/api/v1/hotels/${reserveItem.hotelId}/reservations/`,{
         method : "POST",
         headers: {
             authorization : `Bearer ${token}`,

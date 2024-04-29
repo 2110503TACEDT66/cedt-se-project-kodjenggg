@@ -211,7 +211,7 @@ exports.getPayment = async (req, res, next) => {
 
 
     console.log(payment)
-    if (!payment) {
+    if (!payment || payment.length == 0) {
       return res.status(400).json({ success: false , P : "lhor"});
     }
 

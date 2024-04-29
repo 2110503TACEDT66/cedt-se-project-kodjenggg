@@ -77,7 +77,7 @@ module.exports = router;
  * @swagger
  * /payment/{id}:
  *   get:
- *     summary: Get the payment by id
+ *     summary: Get the payment by reservation id
  *     tags: [Payment]
  *     parameters:
  *       - in: path
@@ -85,7 +85,7 @@ module.exports = router;
  *         schema:
  *           type: string
  *         required: true
- *         description: The payment id
+ *         description: The reservation id
  *     responses:
  *       200:
  *         description: The hospital description by id
@@ -126,6 +126,8 @@ module.exports = router;
  *   put:
  *     summary: Update the payment by the id
  *     tags: [Payment]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -133,15 +135,11 @@ module.exports = router;
  *           type: string
  *         required: true
  *         description: The payment id
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/Reservation'
  *     responses:
  *       message:
  *          description: Chechout success
+ *       400:
+ *          description: Error payment
  */
 
 /**
@@ -150,6 +148,8 @@ module.exports = router;
  *   put:
  *     summary: Update the payment by the id
  *     tags: [Payment]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -157,13 +157,9 @@ module.exports = router;
  *           type: string
  *         required: true
  *         description: The payment id
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/Reservation'
  *     responses:
  *       message:
  *          description: Chechout success
+ *       400:
+ *         description: Error payment
  */

@@ -135,7 +135,7 @@ module.exports = router;
  *         schema:
  *           type: string
  *         required: true
- *         description: The payment id
+ *         description: The reservation id
  *     responses:
  *       message:
  *          description: Chechout success
@@ -147,7 +147,7 @@ module.exports = router;
  * @swagger
  * /payment/promtpay/{id}:
  *   put:
- *     summary: Update the payment by the id
+ *     summary: Update the payment by the reservation id
  *     tags: [Payment]
  *     security:
  *       - bearerAuth: []
@@ -157,7 +157,7 @@ module.exports = router;
  *         schema:
  *           type: string
  *         required: true
- *         description: The payment id
+ *         description: The reservation id
  *     responses:
  *       message:
  *          description: Chechout success

@@ -102,6 +102,8 @@ module.exports = router;
  *   post:
  *     summary: Create a new payment
  *     tags: [Payment]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:

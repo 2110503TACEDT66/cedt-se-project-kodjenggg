@@ -34,14 +34,14 @@ export default async function RecieptApprove({ session , payment}: { session: an
         return
     }
 
-    //console.log(payment)
+    console.log(payment)
 
     // var payTime = payment.data.paytime.substring(11, 19);
     // var hour = parseInt(payTime.substring(0, 2), 10); // Convert the first two characters (hours) to an integer
     // hour = ( hour + 7 ) % 24;
     // const realtime = hour + payTime.substring(2,19) ;
 
-    const profile = await getUserProfile(session.user.token);
+    //const profile = await getUserProfile(session.user.token);
     //console.log(profile?.data?.role)
 
 
@@ -123,7 +123,7 @@ export default async function RecieptApprove({ session , payment}: { session: an
 
     return (
         <div className="flex justify-center items-center">
-            {profile?.data?.role === "hotelmanager" ? (
+            {session.user.role == "hotelmanager" ? (
                 <main className="w-[50%]  flex flex-col items-center justify-center">
                     <div className="text-[#363062] text-[30px] font-extrabold text-center underline decortion-[#363062] underline-offset-[4px] my-[30px]">Payment Confirmation</div>
 

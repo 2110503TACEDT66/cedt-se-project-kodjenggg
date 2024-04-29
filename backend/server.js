@@ -10,6 +10,10 @@ const hpp = require('hpp') ;
 const cors = require('cors') ;
 const bodyParser = require('body-parser')
 require('./models/Payment')
+const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerUI = require('swagger-ui-express');
+const authRoutes = require('./routes/auth');
+
 //Load env vars
 dotenv.config({ path: "./config/config.env" });
 
@@ -38,7 +42,7 @@ app.use(mongoSanitize()) ;
 app.use(helmet()) ;
 //Prevent XSS attacks
 app.use(xss()) ;
-
+app.use('/api/v1/auth', authRoutes);
 
 
 //Rate Limiting 
@@ -94,3 +98,23 @@ process.on("unhandledRejection", (err, promise) => {
   //Close server & Exit process
   server.close(() => process.exit(1));
 });
+
+const swaggerOptions = {
+  swaggerDefinition:{
+    openapi: '3.0.0',
+    info: {
+      title: 'Library API',
+      version: '1.0.0',
+      description: 'A simple Express KodJeng API'
+    },
+    servers: [
+      {
+        url: 'http://localhost:5000/api/v1'
+      }
+    ]
+  },
+  apis:['./routes/*.js'],
+}
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));

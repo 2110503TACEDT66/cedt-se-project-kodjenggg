@@ -4,7 +4,6 @@ const Payment = require("../models/Payment"); // Assuming Payment model is defin
 
 //import { buffer } from "micro";
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY); // Import Stripe
-const { v4: uuidv4 } = require('uuid'); // Import UUID
 //const conn = require('../db/connection'); // Import database connection
 const Reservation = require("../models/Reservation");
 
@@ -70,7 +69,7 @@ exports.cardPayment = async (req, res, next) => {
 
     } catch (error) {
         console.error("Error creating user:", error.message);
-        res.status(400).json({ error: "Error payment" });
+        res.status(400).json({ error: "Error payment", errorMssg: error.message });
     }
 };
 

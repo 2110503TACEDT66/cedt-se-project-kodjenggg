@@ -21,16 +21,16 @@ export default function SelectPayment({reserve}: {reserve:string}){
   
     const router = useRouter();
     const { data:session } = useSession()
-    const [profile, setProfile] = useState<any>();
+    //const [profile, setProfile] = useState<any>();
     const [reserveDetail,setReserveDetails] = useState<ReserveOneJson>();
 
     useEffect(() => {
         const fetchData = async () => {
           if(session && session.user.token){
             try {
-              console.log('lol');
-              const userProfile = await getUserProfile(session.user.token);
-              setProfile(userProfile);
+              // console.log('lol');
+              // const userProfile = await getUserProfile(session.user.token);
+              // setProfile(userProfile);
 
               const revJson:Promise<ReserveOneJson> = await getOneReservation(reserve,session.user.token);
               const revReady:ReserveOneJson = await revJson;
@@ -51,7 +51,7 @@ export default function SelectPayment({reserve}: {reserve:string}){
       // console.log(profile)
     
     async function cardPayment() {
-      const stripe = await loadStripe('pk_test_51P6oXZHub7hok82f8hRRPD09HnSEtvidGSIY3RTjcjzncAKKsV5sOXL3F7IhvGS9cTmAaW75KuJuyqnr1LmkH9Fa00aLlfJ6tt');
+      const stripe = await loadStripe(`${process.env.STRIPE_PUBLIC_KEY}`);
 
       console.log("request payment")
 
@@ -78,7 +78,7 @@ export default function SelectPayment({reserve}: {reserve:string}){
 
     async function PromtpayPayment() {
 
-      const stripe = await loadStripe('pk_test_51P6oXZHub7hok82f8hRRPD09HnSEtvidGSIY3RTjcjzncAKKsV5sOXL3F7IhvGS9cTmAaW75KuJuyqnr1LmkH9Fa00aLlfJ6tt');
+      const stripe = await loadStripe(`${process.env.STRIPE_PUBLIC_KEY}`);
 
       if(session && session.user.token && reserveDetail){
         const PromtpayPaymentJson:Promise<PaymentJson> = await createPromtpay(session.user.token, reserveDetail.data._id);
@@ -101,7 +101,7 @@ export default function SelectPayment({reserve}: {reserve:string}){
         
         <main >
           {
-            (profile && reserveDetail) ?
+            (reserveDetail) ?
             <div className="w-[100%] flex flex-col items-center space-y-4">
               <div className="text-4xl font-semibold text-[#4D4C7D] underline mt-10">Payment Information</div>
               <div className="text-3xl font-bold text-[#F99417] py-5">Your Deposit: {reserveDetail.data.totalPrice} Baht</div>
@@ -110,11 +110,9 @@ export default function SelectPayment({reserve}: {reserve:string}){
             <div className="flex flex-col">
             <div className="w-full">
             <div className="text-lg mx-2 my-4 relative left-6  font-normal">
-                {profile && (
-                    <div>User: {profile.data.name}</div>
-                )}
                 {reserveDetail && (
                     <div>
+                        <div>User: {reserveDetail.data.user.name}</div>
                         <div>Hotel: {reserveDetail.data.hotel.name}</div>
                         <div>Room Type: {reserveDetail.data.room.roomtype}</div>
                         <div>Reservation date: {dayjs(reserveDetail.data.revDate).format("YYYY/MM/DD")}</div>

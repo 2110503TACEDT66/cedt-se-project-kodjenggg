@@ -1,7 +1,7 @@
 import { ReviewItem } from "interfaces";
 
 export default async function addReview(token:string, reviewItem: ReviewItem){
-    const response = await fetch(`http://localhost:5000/api/v1/reviews`,{
+    const response = await fetch(`${process.env.BACKEND_URL}/api/v1/reviews`,{
         method : "POST",
         headers: {
             authorization : `Bearer ${token}`,

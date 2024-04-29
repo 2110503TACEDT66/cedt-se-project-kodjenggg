@@ -13,7 +13,7 @@ export default async function getReviews(tags: Tags, hid: string, stars?: number
     }
 
     try {
-        const response = await fetch(`http://localhost:5000/api/v1/reviews?hotelid=${hid}${query}`, {
+        const response = await fetch(`${process.env.BACKEND_URL}/api/v1/reviews?hotelid=${hid}${query}`, {
             cache: 'no-store',
             method: "GET",
         });

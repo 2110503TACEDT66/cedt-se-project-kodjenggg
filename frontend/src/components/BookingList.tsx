@@ -106,7 +106,7 @@ export default function BookingList ({session}:{session:any}) {
             <div className="text-[#363062] flex flex-col items-center justify-center my-10 mr-[20%]">
             <div className="font-semibold text-5xl m-10">Your Reservations</div>
 
-            { (!reservations ) ?
+            { (!reservations || !profile) ?
             (<div className="absolute inset-0 flex justify-center items-center text-gray-500 mr-[20%]">Loading...</div>)
             : (reservations.data.length == 0) ?
             (<div className="absolute inset-0 flex justify-center items-center text-gray-500 mr-[20%]">No reservation</div>)
@@ -167,7 +167,7 @@ export default function BookingList ({session}:{session:any}) {
                             {(reserve.status === 'reserved' && profile?.data.role!=="hotelmanager")&&(
                                 <CancelRevPopUp rid={reserve._id} session={session}/>
                             )}
-                            {(reserve.status === 'reserved' && profile.data.role==="hotelmanager")&&(
+                            {(reserve.status === 'reserved' && profile?.data.role==="hotelmanager")&&(
                                 <button className="px-3 py-1 text-white shadow-sm rounded-xl bg-[#1EB012] absolute h-[40px] w-fit right-4 bottom-3 text-center"
                                 onClick={()=>editStatus(session?.user.token,reserve._id,reserve,'completed')}>Complete</button>
                             )}
@@ -177,7 +177,7 @@ export default function BookingList ({session}:{session:any}) {
                                 completed
                                 </div>
                             )}
-                            {(reserve.status === 'completed'&&profile.data.role==='user')&&(
+                            {(reserve.status === 'completed'&&profile?.data.role==='user')&&(
                                 <button className="px-3 py-1 text-white shadow-sm rounded-xl bg-[#339CFC] absolute h-[40px] w-fit right-4 bottom-3"
                                 onClick={()=>{editStatus(session?.user.token,reserve._id,reserve,'reviewed'); }}>Review</button>
                             )}

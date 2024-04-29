@@ -61,9 +61,10 @@ export default function InsertSlipBox({reserve}: {reserve:string}){
         }
 
         if(session && session.user.token){
-            fetch("http://localhost:5000/api/v1/payment", {
+            fetch(`${process.env.BACKEND_URL}/api/v1/payment`,{
                 method: "POST",
                 headers: {
+                authorization : `Bearer ${session.user.token}`,
                 "Content-Type": "application/json",
                 Accept: "application/json",
                 "Access-Control-Allow-Origin": "*",
@@ -220,16 +221,17 @@ export default function InsertSlipBox({reserve}: {reserve:string}){
                 </div>
 
                 <div className="flex justify-center mb-4 w-[100%] ">
-                    <button className='w-[95%] bg-[#363062] text-white text-xl border-2 border-[#363062] font-semibold py-2 px-5  mt-7 rounded-xl 
+                    <button className='w-[90%] bg-[#363062] text-white text-xl border-2 border-[#363062] font-semibold py-2 px-5  mt-5 rounded-xl 
                         hover:bg-white hover:text-[#F99417]'
                         onClick={() => {
                             uploadImage();
                             // updateStatusAP();
                             // router.push('/mybooking')
-                            }}>
+                        }}>
                         Submit
                     </button>
                 </div>
+                <div className="text-center mt-2">*Please recheck all your information. You can only submit once.*</div>
 
 
             </div>

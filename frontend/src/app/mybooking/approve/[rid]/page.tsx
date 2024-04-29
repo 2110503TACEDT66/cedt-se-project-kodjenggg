@@ -8,13 +8,13 @@ import getPayment from "@/libs/getPayment";
 export default async function ManageReservations({params}:{params:{rid:string}}){
     const sessionReady = await getServerSession(authOptions) ;
     
-    const payment = await getPayment(params.rid) ;
     if ( !sessionReady || !sessionReady.user.token) return null
+    const payment = await getPayment(params.rid,sessionReady.user.token) ;
 
 
     return(
         <main>
-            <Suspense fallback={<p>Loading...<LinearProgress/></p>}>
+            <Suspense fallback={<p className="mt-10 text-[#363062] text-center">Loading...<LinearProgress/></p>}>
             <RecieptApprove session={sessionReady} payment={payment}/>
             </Suspense>
         </main>

@@ -39,6 +39,7 @@ export default function InsertSlipBox({reserve}: {reserve:string}){
           console.error("Error: ", error);
         };
       }
+
       function uploadImage() {
         if(!image){
             alert('Please insert your payment reciept image.')
@@ -52,32 +53,38 @@ export default function InsertSlipBox({reserve}: {reserve:string}){
         if(!revTime){
             alert('Please insert your payment time.')
         }
-        if(!image || !revDate || !revTime || !revdep){
+        if(!dayjs().isAfter(dayjs(revDate))){
+            alert("Please select new date.")
+        }
+        if(!image || !revDate || !revTime || !revdep || !dayjs().isAfter(dayjs(revDate))){
             return;
         }
+
+        if(session && session.user.token){
+            fetch("http://localhost:5000/api/v1/payment", {
+                method: "POST",
+                headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                "Access-Control-Allow-Origin": "*",
+                },
+                body: JSON.stringify({
+                reservid: reserve,
+                image: image,
+                paytime : dayjs(revTime).format("HH:mm") ,
+                paydate :dayjs(revDate).format("YYYY/MM/DD"),
+                paydep: revdep
+                }),
+            })
+                .then((res) => res.json())
+                .then((data) => console.log(data))
+                .catch((error) => console.error("Error uploading image:", error));
+                console.log(dayjs(revTime).format("HH:mm") ) ;
+                //console.log(revDate);
+                updateStatusAP();
+                router.push('/mybooking')
+        }
         
-        fetch("http://localhost:5000/api/v1/payment", {
-            method: "POST",
-            headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            "Access-Control-Allow-Origin": "*",
-            },
-            body: JSON.stringify({
-            reservid: reserve,
-            image: image,
-            paytime : dayjs(revTime).format("HH:mm") ,
-            paydate :dayjs(revDate).format("YYYY/MM/DD"),
-            paydep: revdep
-            }),
-        })
-            .then((res) => res.json())
-            .then((data) => console.log(data))
-            .catch((error) => console.error("Error uploading image:", error));
-            console.log(dayjs(revTime).format("HH:mm") ) ;
-            //console.log(revDate);
-            updateStatusAP();
-            router.push('/mybooking')
     }
 
     const updateStatusAP = async() => {
@@ -175,9 +182,9 @@ export default function InsertSlipBox({reserve}: {reserve:string}){
             </div>
 
             {/* grey card content */}
-            <div className="text-[#363062] justify-center border border-gray-300 rounded-3xl shadow-xl mx-auto py-2 pb-6 mb-20 w-[77%] bg-[#D9D9D9]">
+            <div className="text-[#363062] justify-center border border-gray-300 rounded-3xl shadow-xl mx-auto py-2 pb-6 mb-2 w-[77%] bg-[#D9D9D9]">
                 
-                <div className="w-[100%] flex flex-row justify-center my-6 ">
+                <div className="w-[100%] flex flex-row justify-center my-4 ">
                     <div className="w-[90%]">
                         <div className="text-xl mt-2 py-2 text-[#363062] rounded-lg " style={{ fontStyle: 'italic' }}>Payment Date:</div>
                         <DateReservenoBG onDateChange={(value:Dayjs)=>{setRevDate(value)}}/>

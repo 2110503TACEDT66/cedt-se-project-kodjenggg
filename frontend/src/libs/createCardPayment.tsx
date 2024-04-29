@@ -3,7 +3,7 @@ import Stripe from "stripe";
 export default async function createCardPayment(token: string, reserveId : string) {
     try{
         //const stripe = new Stripe("...");
-        const response = await fetch(`http://localhost:5000/api/v1/payment/card/${reserveId}`,{
+        const response = await fetch(`${process.env.BACKEND_URL}/api/v1/payment/card/${reserveId}`,{
             method : "PUT",
             headers: {
                 authorization : `Bearer ${token}`,

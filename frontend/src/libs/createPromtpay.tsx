@@ -3,7 +3,7 @@
 export default async function createPromtpay(token: string, reserveId : string) {
     try{
         //const stripe = new Stripe("...");
-        const response = await fetch(`http://localhost:5000/api/v1/payment/promtpay/${reserveId}`,{
+        const response = await fetch(`${process.env.BACKEND_URL}/api/v1/payment/promtpay/${reserveId}`,{
             method : "PUT",
             headers: {
                 authorization : `Bearer ${token}`,

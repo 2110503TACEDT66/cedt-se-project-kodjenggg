@@ -55,12 +55,12 @@ exports.cardPayment = async (req, res, next) => {
 
           // Update the reservation with payment session ID and status
         //const updateReservation = await Reservation.findByIdAndUpdate(req.params.id, {sessionId: session.id})
-          //reservation.status = session.status == "succeeded" ? "reserves" : "unpaid"; // Update status as needed
+        //reservation.status = session.status == "succeeded" ? "reserves" : "unpaid"; // Update status as needed
         reservation.sessionId = session.id;
         await reservation.save();
         
         //const [result] = await conn.query("INSERT INTO orders SET ?", data); //update
-
+        console.log(reservation.status)
         res.json({
             message: "Checkout success.",
             id: session.id,
@@ -117,7 +117,7 @@ exports.promtpayPayment = async (req, res, next) => {
 
           // Update the reservation with payment session ID and status
         //const updateReservation = await Reservation.findByIdAndUpdate(req.params.id, {sessionId: session.id})
-          //reservation.status = session.status == "succeeded" ? "reserves" : "unpaid"; // Update status as needed
+        //reservation.status = session.status == "succeeded" ? "reserves" : "unpaid"; // Update status as needed
         reservation.sessionId = session.id;
         await reservation.save();
         

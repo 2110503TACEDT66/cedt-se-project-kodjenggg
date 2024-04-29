@@ -12,6 +12,8 @@ const bodyParser = require('body-parser')
 require('./models/Payment')
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUI = require('swagger-ui-express');
+const authRoutes = require('./routes/auth');
+
 //Load env vars
 dotenv.config({ path: "./config/config.env" });
 
@@ -40,7 +42,7 @@ app.use(mongoSanitize()) ;
 app.use(helmet()) ;
 //Prevent XSS attacks
 app.use(xss()) ;
-
+app.use('/api/v1/auth', authRoutes);
 
 
 //Rate Limiting 

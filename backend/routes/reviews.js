@@ -100,7 +100,7 @@ module.exports = router;
 
 /**
  * @swagger
- * /api/v1/reviews:
+ * /reviews:
  *   get:
  *     summary: Get all reviews
  *     tags: [Reviews]
@@ -131,7 +131,7 @@ module.exports = router;
 
 /**
  * @swagger
- * /api/v1/reviews/{id}:
+ * /reviews/{id}:
  *   put:
  *     summary: Update a review
  *     tags: [Reviews]
@@ -172,7 +172,7 @@ module.exports = router;
 
 /**
  * @swagger
- * /api/v1/reviews/reply/{id}:
+ * /reviews/reply/{id}:
  *   put:
  *     summary: Update reply to a review
  *     tags: [Reviews]
@@ -201,7 +201,7 @@ module.exports = router;
 
 /**
  * @swagger
- * /api/v1/reviews/report/{id}:
+ * /reviews/report/{id}:
  *   put:
  *     summary: Report a review
  *     tags: [Reviews]
@@ -221,7 +221,7 @@ module.exports = router;
 
 /**
  * @swagger
- * /api/v1/reviews:
+ * /reviews:
  *   post:
  *     summary: Add a new review
  *     tags: [Reviews]
@@ -240,7 +240,7 @@ module.exports = router;
 
 /**
  * @swagger
- * /api/v1/reviews/{id}:
+ * /reviews/{id}:
  *   delete:
  *     summary: Delete a review
  *     tags: [Reviews]

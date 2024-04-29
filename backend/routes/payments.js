@@ -102,6 +102,8 @@ module.exports = router;
  *   post:
  *     summary: Create a new payment
  *     tags: [Payment]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -123,7 +125,7 @@ module.exports = router;
  * @swagger
  * /payment/card/{id}:
  *   put:
- *     summary: Update the payment by the id
+ *     summary: Update the payment by the reservation id and Credit card stripe
  *     tags: [Payment]
  *     security:
  *       - bearerAuth: []
@@ -133,10 +135,10 @@ module.exports = router;
  *         schema:
  *           type: string
  *         required: true
- *         description: The payment id
+ *         description: The reservation id
  *     responses:
  *       message:
- *          description: Chechout success
+ *          description: Checkout success
  *       400:
  *          description: Error payment
  */
@@ -145,7 +147,7 @@ module.exports = router;
  * @swagger
  * /payment/promtpay/{id}:
  *   put:
- *     summary: Update the payment by the id
+ *     summary: Update the payment by the reservation id and Promtpay stripe
  *     tags: [Payment]
  *     security:
  *       - bearerAuth: []
@@ -155,10 +157,10 @@ module.exports = router;
  *         schema:
  *           type: string
  *         required: true
- *         description: The payment id
+ *         description: The reservation id
  *     responses:
  *       message:
- *          description: Chechout success
+ *          description: Checkout success
  *       400:
  *         description: Error payment
  */

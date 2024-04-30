@@ -110,7 +110,7 @@ describe('reviewController.addReview', () => {
     });
   });
 
-  describe('when creating outbound review', () => {
+  describe('when creating review which inputs disturb the constraint', () => {
     it('should return a 500 status code', async () => {
      
       const req = {
@@ -142,7 +142,7 @@ describe('reviewController.addReview', () => {
     });
   });
 
-  describe('when creating a review with no hotel', () => {
+  describe('when creating a review with does not exist hotel', () => {
     it('should return a 404 status code', async () => {
       
       const req = {
@@ -182,7 +182,7 @@ describe('reviewController.addReview', () => {
 
  //deleting
 
-  describe('when deleting a hotel with no hotelid in the database', () => {
+  describe('when deleting a hotel that does not exist', () => {
     it('should return 404 response', async () => {
      
       const req = {

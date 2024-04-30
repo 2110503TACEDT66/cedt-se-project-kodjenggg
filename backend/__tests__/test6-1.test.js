@@ -137,7 +137,7 @@ await mockReview.save();
 
 
 
-  describe('NO review', () => {
+  describe('when editing a review that does not exist', () => {
     it('should return a 400 status code', async () => {
       // Mock the request and response objects
       const req = {
@@ -174,8 +174,8 @@ await mockReview.save();
     });
   });
 
-  describe('when editing a review successfully', () => {
-    it('should return a 200 status code', async () => {
+  describe('when editing a other review or does not authorize', () => {
+    it('should return a 403 status code', async () => {
       // Mock the request and response objects
       const req = {
         body: {
@@ -212,8 +212,8 @@ await mockReview.save();
   });
 
 
-  describe('when editing a review successfully', () => {
-    it('should return a 200 status code', async () => {
+  describe('when editing a review that disturb the constraint', () => {
+    it('should return a 400 status code', async () => {
       // Mock the request and response objects
       const req = {
         body: {
@@ -250,7 +250,7 @@ await mockReview.save();
   });
 //deleting
 
-describe('when deleting a hotel with no hotelid in the database', () => {
+describe('when deleting a hotel that does not exist', () => {
   it('should return 404 response', async () => {
    
     const req = {

@@ -78,6 +78,8 @@ module.exports = router;
  *   get:
  *     summary: Get the payment by reservation id
  *     tags: [Payment]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -87,7 +89,7 @@ module.exports = router;
  *         description: The reservation id
  *     responses:
  *       200:
- *         description: The hospital description by id
+ *         description: The payment description by id
  *         content:
  *           application/json:
  *             schema:

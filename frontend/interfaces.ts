@@ -159,8 +159,6 @@ export interface Room{
 
 export interface Payment {
     data : {
-
-    
         reservid: {
             _id: string;
             revDate: string;

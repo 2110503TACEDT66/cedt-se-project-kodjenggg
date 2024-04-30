@@ -8,28 +8,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default async function RecieptApprove({ session , payment}: { session: any , payment : Payment }) {
-    // const [id, setId] = useState('');
-    // const [PaymentReady, setPaymentReady] = useState<Payment>();
-    // const urlParams = useSearchParams()
-
-    // useEffect(() => {
-    //     // Extract id parameter client-side
-    //     const idParam = urlParams.get('id');
-    //     // Fetch payment data only if idParam is available
-    //     if (idParam) {
-    //         setId(idParam);
-    //          const fetchData = async () =>  {
-    //             const [paymentData] = await Promise.all([getPayment(id)]);
-    //             setPaymentReady(paymentData);
-    //         }
-    //         fetchData();
-    //     }
-    // }, [urlParams]);
-
-
-
-    //console.log(id) ;
-    //console.log(PaymentReady);
+  
     if ( !payment ) {
         return
     }
@@ -140,7 +119,6 @@ export default async function RecieptApprove({ session , payment}: { session: an
                             <div className="italic text-[20px] flex">Payment Date: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment?.data.paydate}</div></div>
                             <div className="italic text-[20px] flex">Payment Time: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic"></div>{payment?.data.paytime}</div>
                         </div>
-
                     </div>
 
                     <div className="m-4 mt-8">

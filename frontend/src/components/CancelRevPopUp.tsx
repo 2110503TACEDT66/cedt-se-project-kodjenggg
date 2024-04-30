@@ -20,7 +20,7 @@ export default function CancelRevPopUp({rid,session}:{rid:string,session:any}){
     return(
         <div>
             {isVisible && (
-            <div className="fixed top-0 right-0 left-0 z-30 w-full h-full bg-slate-800/50">
+            <div className="fixed top-0 right-0 left-0 z-30 w-full h-full bg-slate-800/50" >
                 <div className="text-[#363062] border border-gray-300 rounded-3xl shadow-xl px-6 py-3 mx-auto mt-20 w-[37%] bg-white">
                 <div className="flex flex-col justify-center items-center">
                     <div className="font-extrabold text-[#363062] text-[28px] underline py-3">Cancellation Policy</div>

@@ -26,7 +26,7 @@ export default function ReportPopup({rid}:{rid:string}) {
   return (
     <>
     {isVisible && (
-      <div className="fixed top-0 right-0 left-0 z-30 w-full h-full bg-slate-800/50">
+      <div className="fixed top-0 right-0 left-0 z-30 w-full h-full bg-slate-800/50" data-testid = "reportpopup">
         <div className="text-[#363062] border border-gray-300 rounded-3xl shadow-xl px-3 py-6 mx-auto mt-20 w-[37%] bg-white">
           <h1 className="text-center mb-4 text-2xl" style={{ textDecoration: 'underline' }}>Report</h1>
           <div className="flex flex-col items-start justify-start relative top-6">
@@ -53,7 +53,7 @@ export default function ReportPopup({rid}:{rid:string}) {
           </div>
           <div className="text-[#363062] flex justify-end space-x-6 mt-8 mr-5">
             <button onClick={()=>setIsVisible(false)}>Cancel</button>
-            <button onClick={editReport}>Report</button>
+            <button onClick={editReport} data-testid="reportbutton">Report</button>
           </div>
         </div>
       </div>

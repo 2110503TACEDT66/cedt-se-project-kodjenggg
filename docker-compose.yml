@@ -1,0 +1,40 @@
+version: "3.8"
+services:
+  backend:
+    container_name: backend
+    build: 
+      context: ./backend
+    ports:
+      - "5000:5000"
+    environment:
+      - MONGODB_URI=mongodb://localhost:27017/HotelBooking/KODJENG
+    depends_on:
+      - mongo
+    # networks:
+    #   - kodjeng3
+    # network_mode:
+    #   - host
+  frontend:
+    container_name: frontend
+    depends_on:
+      - backend
+    build: 
+      context: ./frontend
+    ports:
+      - "3000:3000"
+    # network_mode: "host"
+    # networks:
+    #   - kodjeng3
+  mongo:
+    container_name: db
+    image: mongo
+    ports:
+      - "27017:27017"
+    # networks:
+    #   - kodjeng3
+networks:
+  default:
+    name: nenesuaymakmak
+# networks:
+#   kodjeng3:
+#     external: true

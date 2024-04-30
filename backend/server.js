@@ -58,7 +58,13 @@ app.use(hpp()) ;
 //const endpointSecret = "whsec_1bc1e8c6cdb4ffb49d967af0ce7be7cb2b8f7601c0ec99304218a81ebf3a6b1e";
 
 //Enable CORS
-app.use(cors()) ;
+// const corsOptions = {
+//   origin: process.env.FRONTEND_URL,
+//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS'],
+//   allowedHeaders: ['Content-Type', 'Origin', 'X-Requested-With', 'Accept', 'x-client-key', 'x-client-token', 'x-client-secret', 'Authorization'],
+//   credentials: true
+//};
+app.use(cors());
 
 
 //Cookie parser
@@ -87,8 +93,7 @@ const server = app.listen(
   console.log(
     "Server running in ",
     process.env.NODE_ENV,
-    " mode on port ",
-    PORT
+    "on" + process.env.HOST + ':' + PORT
   )
 );
 

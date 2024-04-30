@@ -8,8 +8,9 @@ import getPayment from "@/libs/getPayment";
 export default async function ManageReservations({params}:{params:{rid:string}}){
     const sessionReady = await getServerSession(authOptions) ;
     
-    if ( !sessionReady || !sessionReady.user.token) return null
+    if ( !sessionReady || !sessionReady.user.token || !sessionReady.user.role) return null
     const payment = await getPayment(params.rid,sessionReady.user.token) ;
+    console.log(sessionReady)
 
 
     return(

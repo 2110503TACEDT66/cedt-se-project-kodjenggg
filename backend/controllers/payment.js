@@ -4,7 +4,6 @@ const Payment = require("../models/Payment"); // Assuming Payment model is defin
 
 //import { buffer } from "micro";
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY); // Import Stripe
-const { v4: uuidv4 } = require('uuid'); // Import UUID
 //const conn = require('../db/connection'); // Import database connection
 const Reservation = require("../models/Reservation");
 
@@ -56,12 +55,12 @@ exports.cardPayment = async (req, res, next) => {
 
           // Update the reservation with payment session ID and status
         //const updateReservation = await Reservation.findByIdAndUpdate(req.params.id, {sessionId: session.id})
-          //reservation.status = session.status == "succeeded" ? "reserves" : "unpaid"; // Update status as needed
+        //reservation.status = session.status == "succeeded" ? "reserves" : "unpaid"; // Update status as needed
         reservation.sessionId = session.id;
         await reservation.save();
         
         //const [result] = await conn.query("INSERT INTO orders SET ?", data); //update
-
+        console.log(reservation.status)
         res.json({
             message: "Checkout success.",
             id: session.id,
@@ -70,7 +69,7 @@ exports.cardPayment = async (req, res, next) => {
 
     } catch (error) {
         console.error("Error creating user:", error.message);
-        res.status(400).json({ error: "Error payment" });
+        res.status(400).json({ error: "Error payment", errorMssg: error.message });
     }
 };
 
@@ -118,7 +117,7 @@ exports.promtpayPayment = async (req, res, next) => {
 
           // Update the reservation with payment session ID and status
         //const updateReservation = await Reservation.findByIdAndUpdate(req.params.id, {sessionId: session.id})
-          //reservation.status = session.status == "succeeded" ? "reserves" : "unpaid"; // Update status as needed
+        //reservation.status = session.status == "succeeded" ? "reserves" : "unpaid"; // Update status as needed
         reservation.sessionId = session.id;
         await reservation.save();
         

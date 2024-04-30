@@ -20,7 +20,7 @@ export default function InsertSlipBox({reserve}: {reserve:string}){
 
     const router = useRouter();
     const { data:session } = useSession()
-    const [profile, setProfile] = useState<any>();
+    //const [profile, setProfile] = useState<any>();
     const [reserveDetail,setReserveDetails] = useState<ReserveOneJson>();
     const [image , setImage ] = useState("") ;
     const [revDate, setRevDate] = useState<Dayjs|null>(null);
@@ -61,9 +61,10 @@ export default function InsertSlipBox({reserve}: {reserve:string}){
         }
 
         if(session && session.user.token){
-            fetch("http://localhost:5000/api/v1/payment", {
+            fetch(`${process.env.BACKEND_URL}/api/v1/payment`,{
                 method: "POST",
                 headers: {
+                authorization : `Bearer ${session.user.token}`,
                 "Content-Type": "application/json",
                 Accept: "application/json",
                 "Access-Control-Allow-Origin": "*",
@@ -129,9 +130,9 @@ export default function InsertSlipBox({reserve}: {reserve:string}){
         const fetchData = async () => {
           if(session && session.user.token){
             try {
-              console.log('lol');
-              const userProfile = await getUserProfile(session.user.token);
-              setProfile(userProfile);
+            //   console.log('lol');
+            //   const userProfile = await getUserProfile(session.user.token);
+            //   setProfile(userProfile);
 
               const revJson:Promise<ReserveOneJson> = await getOneReservation(reserve,session.user.token);
               const revReady:ReserveOneJson = await revJson;
@@ -158,11 +159,9 @@ export default function InsertSlipBox({reserve}: {reserve:string}){
             <div className="flex flex-col">
             <div className="w-full">
             <div className="text-lg mx-2 my-4 relative left-6  font-normal">
-                {profile && (
-                    <div>User: {profile.data.name}</div>
-                )}
                 {reserveDetail && (
                     <div>
+                        <div>User: {reserveDetail.data.user.name}</div>
                         <div>Hotel: {reserveDetail.data.hotel.name}</div>
                         <div>Room Type: {reserveDetail.data.room.roomtype}</div>
                         <div>Reservation date: {dayjs(reserveDetail.data.revDate).format("YYYY/MM/DD")}</div>
@@ -222,16 +221,17 @@ export default function InsertSlipBox({reserve}: {reserve:string}){
                 </div>
 
                 <div className="flex justify-center mb-4 w-[100%] ">
-                    <button className='w-[95%] bg-[#363062] text-white text-xl border-2 border-[#363062] font-semibold py-2 px-5  mt-7 rounded-xl 
+                    <button className='w-[90%] bg-[#363062] text-white text-xl border-2 border-[#363062] font-semibold py-2 px-5  mt-5 rounded-xl 
                         hover:bg-white hover:text-[#F99417]'
                         onClick={() => {
                             uploadImage();
                             // updateStatusAP();
                             // router.push('/mybooking')
-                            }}>
+                        }}>
                         Submit
                     </button>
                 </div>
+                <div className="text-center mt-2">*Please recheck all your information. You can only submit once.*</div>
 
 
             </div>

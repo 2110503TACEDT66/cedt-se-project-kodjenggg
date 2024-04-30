@@ -25,9 +25,26 @@ router
 
 module.exports = router;
 
+
+
+/**
+ * @swagger
+ * tags:
+ *   name: Reservations
+ *   description: API endpoints for managing reservations
+ */
+
 /**
  * @swagger
  * components:
+ *   parameters:
+ *     reservationId:
+ *       name: id
+ *       in: path
+ *       required: true
+ *       description: ID of the reservation
+ *       schema:
+ *         type: string
  *   schemas:
  *     Reservation:
  *       type: object
@@ -38,41 +55,212 @@ module.exports = router;
  *         - room
  *         - totalPrice
  *       properties:
- *         id:
- *           type: String
- *           format: uuid
- *           description: The auto-generated id of the reservation
+ *         sessionId:
+ *           type: string
+ *           description: Session ID
  *         revDate:
- *           type: Date
+ *           type: string
+ *           format: date-time
+ *           description: Date of reservation
  *         nightNum:
- *           type: Number
- *         user:  
- *           type: String
- *           format: uuid
- *           description: The auto-generated id of the user
+ *           type: number
+ *           default: 1
+ *           description: Number of nights for the reservation
+ *         user:
+ *           type: string
+ *           format: ObjectId
+ *           description: Reference to the user making the reservation
  *         hotel:
- *           type: String
- *           format: uuid
- *           description: The auto-generated id of the hotel
+ *           type: string
+ *           format: ObjectId
+ *           description: Reference to the hotel where the reservation is made
  *         room:
- *           type: String
- *           format: uuid
- *           description: The auto-generated id of the reservation
+ *           type: string
+ *           format: ObjectId
+ *           description: Reference to the room reserved
  *         totalPrice:
- *           type: Number
+ *           type: number
+ *           description: Total price of the reservation
  *         createdAt:
- *           type: Date
+ *           type: string
+ *           format: date-time
+ *           description: Date and time when the reservation was created
  *         status:
- *           type: String
- *       example:
- *         id: 662ccb895b75a24a10d4fed7
- *         revDate: 2024-04-28T17:00:00.000+00:00
- *         nightNum: 1
- *         user: 6600e781f268d57e0b6a87de
- *         hotel: 6600ebf5f52ff909aed4c210
- *         room: 661acfc7c15463157a951569
- *         totalPrice: 8000
- *         status: pending
- *         sessionId: f7bbc980-0462-11ef-9d72-5db911bdfd38
- *         createdAt: 2024-04-27T06:54:18.136+00:00
+ *           type: string
+ *           enum:
+ *             - unpaid
+ *             - pending
+ *             - disapproved
+ *             - reserved
+ *             - completed
+ *             - reviewed
+ *           default: unpaid
+ *           description: Current status of the reservation
+ */
+
+/**
+ * @swagger
+ * /reservations:
+ *   get:
+ *     summary: Get all reservations
+ *     tags: [Reservations]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 count:
+ *                   type: number
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Reservation'
+ *       500:
+ *         description: Server error
+ */
+
+/**
+ * @swagger
+ * /reservations/{id}:
+ *   get:
+ *     summary: Get a single reservation by ID
+ *     tags: [Reservations]
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: ID of the reservation
+ *         schema:
+ *           type: string
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Reservation'
+ *       404:
+ *         description: Reservation not found
+ *       500:
+ *         description: Server error
+ */
+
+/**
+ * 
+ * /reservations/{hotelId}/reservation:
+ *   post:
+ *     summary: Add a new reservation
+ *     tags: [Reservations]
+ *     parameters:
+ *       - name: hotelId
+ *         in: path
+ *         required: true
+ *         description: ID of the hotel where the reservation is made
+ *         schema:
+ *           type: string
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Reservation'
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Reservation'
+ *       400:
+ *         description: Bad request
+ *       401:
+ *         description: Unauthorized
+ *       404:
+ *         description: Hotel or Room not found
+ *       500:
+ *         description: Server error
+ */
+
+/**
+ * 
+ * /reservations/{id}:
+ *   put:
+ *     summary: Update a reservation
+ *     tags: [Reservations]
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: ID of the reservation to update
+ *         schema:
+ *           type: string
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Reservation'
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Reservation'
+ *       400:
+ *         description: Bad request
+ *       401:
+ *         description: Unauthorized
+ *       404:
+ *         description: Reservation not found
+ *       500:
+ *         description: Server error
+ */
+
+/**
+ * 
+ * /reservations/{id}:
+ *   delete:
+ *     summary: Delete a reservation
+ *     tags: [Reservations]
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: ID of the reservation to delete
+ *         schema:
+ *           type: string
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 data:
+ *                   type: object
+ *       401:
+ *         description: Unauthorized
+ *       404:
+ *         description: Reservation not found
+ *       500:
+ *         description: Server error
  */

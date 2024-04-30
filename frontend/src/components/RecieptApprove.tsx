@@ -140,20 +140,6 @@ export default async function RecieptApprove({ session , payment}: { session: an
                             <div className="italic text-[20px] flex">Payment Date: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment?.data.paydate}</div></div>
                             <div className="italic text-[20px] flex">Payment Time: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic"></div>{payment?.data.paytime}</div>
                         </div>
-                        {/* <div className="w-[60%] bg-[#4D4C7D] h-[100%] rounded-r-md flex justify-center  content-center">
-                            <div className="w-[95%] h-[100%] content-center grid grid-cols-2 justify-center relative ">
-                                <div className="italic text-[20px] flex">User: </div> <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment?.data.reservid.user.name}</div>
-                                <div className="italic text-[20px] flex">Hotel: </div> <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment?.data.reservid.hotel.name}</div>
-                                <div className="italic text-[20px] flex">Room Type: </div> <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment?.data.reservid.room.roomtype}</div>
-                                <div className="italic text-[20px] flex">Reservation Date: </div> <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment?.data.reservid.revDate.substring(0, 10)}</div>
-                                <div className="italic text-[20px] flex">Total Night: </div> <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment?.data.reservid.nightNum}</div>
-                                <div className="italic text-[20px] flex">Total Deposit: </div> <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment?.data.reservid.totalPrice} Baht</div>
-                                <div className="italic text-[20px] flex">Payment Deposit: </div> <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment?.data.paydep} Baht</div>
-                                <div className="italic text-[20px] flex">Payment Date: </div> <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment?.data.paydate}</div>
-                                <div className="italic text-[20px] flex">Payment Time: </div> <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment?.data.paytime}</div>
-                            </div>
-
-                        </div> */}
 
                     </div>
 

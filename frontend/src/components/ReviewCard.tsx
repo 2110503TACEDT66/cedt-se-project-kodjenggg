@@ -60,7 +60,7 @@ export default function ReviewCard({tags,hid,profile}:{tags:Tags,hid:string, pro
             <div className="flex flex-col justify-around">
         {reviews && reviews.data.map((review: ShowReviewItem) => (
             ((review.report.length<10 && !checkReport(review)) || profile?.data.role=="admin" )? (
-            <div className="mb-[0px]">
+            <div className="mb-[0px]" data-testid = "reviewcard">
             
             <div className={(review.report.length>=10)? 
             ("h-fit w-[70%] rounded-2xl mx-auto bg-red-100 border-2 border-red-600 shadow-lg relative px-6 pt-10 pb-4 mt-10"):

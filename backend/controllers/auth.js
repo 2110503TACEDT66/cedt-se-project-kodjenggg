@@ -5,19 +5,7 @@ const User = require("../models/User");
 // @access  Public
 exports.register = async (req, res, next) => {
   try {
-    const { name, tel, email, password, role, hotel } = req.body;
-
-    if(role==="hotelmanager"&&!hotel){
-      return res
-      .status(400)
-      .json({ success: false, msg: "Please enter the hotel's id you manage." });
-    }
-    else if(role==="user"&&hotel){
-      return res
-      .status(400)
-      .json({ success: false, msg: "User can't manage hotel." });
-    }
-
+    const { name, tel, email, password, role } = req.body;
     //Create user
     const user = await User.create({
       name,
@@ -25,7 +13,6 @@ exports.register = async (req, res, next) => {
       email,
       password,
       role,
-      hotel
     });
 
     //Create token
@@ -33,12 +20,46 @@ exports.register = async (req, res, next) => {
     //res.status(200).json({ success: true, token });
     sendTokenResponse(user, 200, res);
   } catch (err) {
-    res.status(400).json({ 
-      success: false , 
-      errors: err.message});
     console.log(err.stack);
+    res.status(400).json({ success: false , mssa:err.message});
   }
 };
+// exports.register = async (req, res, next) => {
+//   try {
+//     const { name, tel, email, password, role, hotel } = req.body;
+
+//     if(role==="hotelmanager"&&!hotel){
+//       return res
+//       .status(400)
+//       .json({ success: false, msg: "Please enter the hotel's id you manage." });
+//     }
+//     else if(role==="user"&&hotel){
+//       return res
+//       .status(400)
+//       .json({ success: false, msg: "User can't manage hotel." });
+//     }
+
+//     //Create user
+//     const user = await User.create({
+//       name,
+//       tel,
+//       email,
+//       password,
+//       role,
+//       hotel
+//     });
+
+//     //Create token
+//     //const token = user.getSignedJwtToken();
+//     //res.status(200).json({ success: true, token });
+//     sendTokenResponse(user, 200, res);
+//   } catch (err) {
+//     res.status(400).json({ 
+//       success: false , 
+//       errors: err.message});
+//     console.log(err.stack);
+//   }
+// };
 
 // @desc    Login user
 // @route   POST /api/v1/auth/login

@@ -9,25 +9,10 @@ export default function Resgister(){
     const router = useRouter()
 
     async function register() {
-        //console.log({userName,userEmail,userTel,userPassword})
-        let tel = /^\(?([0-9]{3})\)?[-]([0-9]{3})[-]([0-9]{4})$/;
-        let email = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            
-        if(userName == ""){ alert("Please enter username.") }
-        if(userTel=="" || !tel.test(userTel)){ alert("Please add a telephone number in xxx-xxx-xxxx form.") }
-        if(userEmail == "" || !email.test(userEmail)){ alert("Please enter valid email.") }
-        if(userPassword == ""){ alert("Please enter password.") }
-
+        console.log({userName,userEmail,userTel,userPassword})
         if(userName !== "" && userEmail !== "" && userTel !== "" && userPassword !== ""){
-            
-            try{
-                await userRegister(userName, userEmail, userTel, userPassword)
-                router.push('/')
-            }
-            catch(err){
-                alert(err)
-                //console.error(err)         
-            }
+            await userRegister(userName, userEmail, userTel, userPassword)
+            router.push('/')
         }
     }
 
@@ -75,4 +60,11 @@ export default function Resgister(){
     
         </main>
     )
-}
+}    
+// }/ let tel = /^\(?([0-9]{3})\)?[-]([0-9]{3})[-]([0-9]{4})$/;
+//         // let email = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            
+//         // if(userName == ""){ alert("Please enter username.") }
+//         // if(userTel=="" || !tel.test(userTel)){ alert("Please add a telephone number in xxx-xxx-xxxx form.") }
+//         // if(userEmail == "" || !email.test(userEmail)){ alert("Please enter valid email.") }
+//         // if(userPassword == ""){ alert("Please enter password.") }

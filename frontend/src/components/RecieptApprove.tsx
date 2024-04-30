@@ -8,7 +8,28 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default async function RecieptApprove({ session , payment}: { session: any , payment : Payment }) {
-  
+    // const [id, setId] = useState('');
+    // const [PaymentReady, setPaymentReady] = useState<Payment>();
+    // const urlParams = useSearchParams()
+
+    // useEffect(() => {
+    //     // Extract id parameter client-side
+    //     const idParam = urlParams.get('id');
+    //     // Fetch payment data only if idParam is available
+    //     if (idParam) {
+    //         setId(idParam);
+    //          const fetchData = async () =>  {
+    //             const [paymentData] = await Promise.all([getPayment(id)]);
+    //             setPaymentReady(paymentData);
+    //         }
+    //         fetchData();
+    //     }
+    // }, [urlParams]);
+
+
+
+    //console.log(id) ;
+    //console.log(PaymentReady);
     if ( !payment ) {
         return
     }
@@ -103,7 +124,7 @@ export default async function RecieptApprove({ session , payment}: { session: an
     return (
         <div className="flex justify-center items-center">
            
-                <main className="w-[50%] h-[100%] flex flex-col items-center justify-center">
+                <main className="w-[50%]  flex flex-col items-center justify-center">
                     <div className="text-[#363062] text-[30px] font-extrabold text-center underline decortion-[#363062] underline-offset-[4px] my-[30px]">Payment Confirmation</div>
 
                     <div className="flex flex-row w-[100%] mx-auto h-[410px] shadow-xl rounded-lg bg-[#4D4C7D]">
@@ -114,11 +135,14 @@ export default async function RecieptApprove({ session , payment}: { session: an
                             <div className="italic text-[20px] flex">User: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment?.data.reservid.user.name}</div></div>
                             <div className="italic text-[20px] flex">Hotel: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment?.data.reservid.hotel.name}</div></div>
                             <div className="italic text-[20px] flex">Room Type: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment?.data.reservid.room.roomtype}</div></div>
-                            <div className="italic text-[20px] flex">Total Deposit: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment?.data.reservid.totalPrice} THB</div></div>
-                            <div className="italic text-[20px] flex">Payment Deposit: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment?.data.paydep} THB</div></div>
+                            <div className="italic text-[20px] flex">Reservation Date: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment?.data.reservid.revDate.substring(0, 10)}</div></div>
+                            <div className="italic text-[20px] flex">Total Night: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment?.data.reservid.nightNum}</div></div>
+                            <div className="italic text-[20px] flex">Total Deposit: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment?.data.reservid.totalPrice} Baht</div></div>
+                            <div className="italic text-[20px] flex">Payment Deposit: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment?.data.paydep} Baht</div></div>
                             <div className="italic text-[20px] flex">Payment Date: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment?.data.paydate}</div></div>
-                            <div className="italic text-[20px] flex">Payment Time: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic"></div>{payment?.data.paytime}</div>
+                            <div className="italic text-[20px] flex">Payment Time: <div className="text-[20px] text-[#D9D9D9] pl-[10px] not-italic">{payment?.data.paytime}</div></div>
                         </div>
+
                     </div>
 
                     <div className="m-4 mt-8">

@@ -1,4 +1,4 @@
-describe('Test epic 1 : reviewing function', () => {
+describe('Test epic 2 : reviewing function', () => {
   it('Go to hotel page', () => {
     cy.visit('http://localhost:3000/hotels/6600ebf5f52ff909aed4c210')
   })
@@ -55,6 +55,7 @@ describe('Test epic 1 : reviewing function', () => {
       cy.get('[id^=input-email-]').type('now@gmail.com') 
       cy.get('[id^=input-password-]').type('123456789')
       cy.get('button').click()
+      cy.wait(500)
       cy.visit('http://localhost:3000/hotels/6600ebf5f52ff909aed4c210')
       cy.wait(500)
       cy.get('[class="bg-white text-slate-500 hover:text-red-500 rounded-xl"]').should('be.visible')

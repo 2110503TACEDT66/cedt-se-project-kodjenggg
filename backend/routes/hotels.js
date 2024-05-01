@@ -142,18 +142,41 @@ module.exports = router;
  *                     $ref: '#/components/schemas/Hotel'
  *       400:
  *         description: Bad request
- *
+ *   post:
+ *     summary: Create a new hotel
+ *     tags: [Hotels]
+ *     description: Create a new hotel record in the database.
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Hotel'
+ *     responses:
+ *       201:
+ *         description: The newly created hotel
+ *       400:
+ *         description: Bad request
+ *       401:
+ *         description: Unauthorized
+ */
+
+/**
+ * @swagger
  * /hotels/{id}:
  *   get:
- *     summary: Get a single hotel by ID
+ *     summary: Get a hotel by ID
  *     tags: [Hotels]
+ *     description: Retrieve a hotel from the database by its ID.
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: string
  *         required: true
- *         description: ID of the hotel to retrieve
+ *         description: ID of the hotel
  *     responses:
  *       200:
  *         description: Success
@@ -163,4 +186,63 @@ module.exports = router;
  *               $ref: '#/components/schemas/Hotel'
  *       400:
  *         description: Bad request
+ *       404:
+ *         description: Hotel not found
+ *   put:
+ *     summary: Update a hotel
+ *     tags: [Hotels]
+ *     description: Update a hotel record in the database.
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: ID of the hotel
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Hotel'
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Hotel'
+ *       400:
+ *         description: Bad request
+ *       401:
+ *         description: Unauthorized
+ *   delete:
+ *     summary: Delete a hotel
+ *     tags: [Hotels]
+ *     description: Delete a hotel record from the database.
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: ID of the hotel
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *       400:
+ *         description: Bad request
+ *       401:
+ *         description: Unauthorized
  */

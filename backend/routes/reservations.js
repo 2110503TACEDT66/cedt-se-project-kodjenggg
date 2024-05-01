@@ -155,20 +155,21 @@ module.exports = router;
  */
 
 /**
- * 
- * /reservations/{hotelId}/reservation:
+ * @swagger
+ * /hotels/{hotelId}/reservations:
  *   post:
  *     summary: Add a new reservation
  *     tags: [Reservations]
- *     parameters:
- *       - name: hotelId
- *         in: path
- *         required: true
- *         description: ID of the hotel where the reservation is made
- *         schema:
- *           type: string
+ *     description: Add a new reservation for a specific hotel.
  *     security:
  *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: hotelId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: ID of the hotel
  *     requestBody:
  *       required: true
  *       content:
@@ -177,74 +178,29 @@ module.exports = router;
  *             $ref: '#/components/schemas/Reservation'
  *     responses:
  *       200:
- *         description: Success
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Reservation'
+ *         description: The newly created reservation
  *       400:
  *         description: Bad request
  *       401:
  *         description: Unauthorized
- *       404:
- *         description: Hotel or Room not found
- *       500:
- *         description: Server error
  */
 
 /**
- * 
- * /reservations/{id}:
- *   put:
- *     summary: Update a reservation
- *     tags: [Reservations]
- *     parameters:
- *       - name: id
- *         in: path
- *         required: true
- *         description: ID of the reservation to update
- *         schema:
- *           type: string
- *     security:
- *       - bearerAuth: []
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/Reservation'
- *     responses:
- *       200:
- *         description: Success
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Reservation'
- *       400:
- *         description: Bad request
- *       401:
- *         description: Unauthorized
- *       404:
- *         description: Reservation not found
- *       500:
- *         description: Server error
- */
-
-/**
- * 
+ * @swagger
  * /reservations/{id}:
  *   delete:
  *     summary: Delete a reservation
  *     tags: [Reservations]
- *     parameters:
- *       - name: id
- *         in: path
- *         required: true
- *         description: ID of the reservation to delete
- *         schema:
- *           type: string
+ *     description: Delete a reservation record from the database.
  *     security:
  *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: ID of the reservation
  *     responses:
  *       200:
  *         description: Success
@@ -255,12 +211,43 @@ module.exports = router;
  *               properties:
  *                 success:
  *                   type: boolean
- *                 data:
- *                   type: object
+ *       400:
+ *         description: Bad request
  *       401:
  *         description: Unauthorized
- *       404:
- *         description: Reservation not found
- *       500:
- *         description: Server error
+ */
+
+/**
+ * @swagger
+ * /reservations/{id}:
+ *   put:
+ *     summary: Update a reservation
+ *     tags: [Reservations]
+ *     description: Update a reservation record in the database.
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: ID of the reservation
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Reservation'
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Reservation'
+ *       400:
+ *         description: Bad request
+ *       401:
+ *         description: Unauthorized
  */

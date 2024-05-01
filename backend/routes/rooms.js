@@ -12,9 +12,9 @@ router
   .route("/:id")
   .get(getRooms);
 
-// router
-//   .route("/")
-//   .post(protect, authorize("admin", "hotelmanager"), addRoom);
+router
+  .route("/")
+  .post(protect, authorize("admin", "hotelmanager"), addRoom);
 
 router.route("/").post(protect, authorize("admin", "hotelmanager"), addRoom);
 
@@ -69,6 +69,12 @@ module.exports = router;
 
 /**
  * @swagger
+ * tags:
+ *   name: Rooms
+ */
+
+/**
+ * @swagger
  * /rooms/{id}:
  *   get:
  *     summary: Get rooms by hotel ID
@@ -98,5 +104,28 @@ module.exports = router;
  *                     $ref: '#/components/schemas/Room'
  *       500:
  *         description: Internal server error
- *
+ */
+
+/**
+ * @swagger
+ * /rooms:
+ *   post:
+ *     summary: Add a new room
+ *     description: Add a new room to the database.
+ *     tags: [Rooms]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Room'
+ *     responses:
+ *       200:
+ *         description: The newly created room
+ *       400:
+ *         description: Bad request
+ *       401:
+ *         description: Unauthorized
  */

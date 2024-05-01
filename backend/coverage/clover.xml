@@ -1,37 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1714472481190" clover="3.2.0">
-  <project timestamp="1714472481190" name="All files">
-    <metrics statements="36" coveredstatements="36" conditionals="8" coveredconditionals="8" methods="3" coveredmethods="3" elements="47" coveredelements="47" complexity="0" loc="36" ncloc="36" packages="2" files="4" classes="4"/>
+<coverage generated="1714533619914" clover="3.2.0">
+  <project timestamp="1714533619914" name="All files">
+    <metrics statements="37" coveredstatements="37" conditionals="4" coveredconditionals="4" methods="3" coveredmethods="3" elements="44" coveredelements="44" complexity="0" loc="37" ncloc="37" packages="2" files="4" classes="4"/>
     <package name="api_test">
-      <metrics statements="21" coveredstatements="21" conditionals="8" coveredconditionals="8" methods="2" coveredmethods="2"/>
-      <file name="reviewsController2.js" path="D:\CEDT\SWEngLab\cedt-se-project-kodjenggg\backend\api_test\reviewsController2.js">
-        <metrics statements="21" coveredstatements="21" conditionals="8" coveredconditionals="8" methods="2" coveredmethods="2"/>
+      <metrics statements="22" coveredstatements="22" conditionals="4" coveredconditionals="4" methods="2" coveredmethods="2"/>
+      <file name="reviewsController.js" path="C:\Users\JOKe\Documents\codingmymate\SOFTENG\RealProject\cedt-se-project-kodjenggg\backend\api_test\reviewsController.js">
+        <metrics statements="22" coveredstatements="22" conditionals="4" coveredconditionals="4" methods="2" coveredmethods="2"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
         <line num="5" count="1" type="stmt"/>
-        <line num="7" count="4" type="stmt"/>
-        <line num="8" count="4" type="stmt"/>
-        <line num="12" count="3" type="cond" truecount="2" falsecount="0"/>
-        <line num="13" count="1" type="stmt"/>
-        <line num="16" count="2" type="cond" truecount="4" falsecount="0"/>
-        <line num="17" count="1" type="stmt"/>
+        <line num="6" count="3" type="stmt"/>
+        <line num="7" count="3" type="stmt"/>
+        <line num="8" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="15" count="2" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="18" count="2" type="stmt"/>
         <line num="19" count="1" type="stmt"/>
-        <line num="21" count="1" type="stmt"/>
         <line num="22" count="1" type="stmt"/>
-        <line num="26" count="1" type="stmt"/>
-        <line num="27" count="3" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
         <line num="28" count="3" type="stmt"/>
-        <line num="30" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="31" count="1" type="stmt"/>
-        <line num="34" count="1" type="stmt"/>
+        <line num="29" count="3" type="stmt"/>
+        <line num="31" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="32" count="1" type="stmt"/>
         <line num="35" count="1" type="stmt"/>
-        <line num="37" count="1" type="stmt"/>
+        <line num="36" count="1" type="stmt"/>
+        <line num="38" count="1" type="stmt"/>
       </file>
     </package>
     <package name="models">
       <metrics statements="15" coveredstatements="15" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-      <file name="Hotel.js" path="D:\CEDT\SWEngLab\cedt-se-project-kodjenggg\backend\models\Hotel.js">
+      <file name="Hotel.js" path="C:\Users\JOKe\Documents\codingmymate\SOFTENG\RealProject\cedt-se-project-kodjenggg\backend\models\Hotel.js">
         <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -42,14 +43,14 @@
         <line num="65" count="1" type="stmt"/>
         <line num="72" count="1" type="stmt"/>
       </file>
-      <file name="Reservation.js" path="D:\CEDT\SWEngLab\cedt-se-project-kodjenggg\backend\models\Reservation.js">
+      <file name="Reservation.js" path="C:\Users\JOKe\Documents\codingmymate\SOFTENG\RealProject\cedt-se-project-kodjenggg\backend\models\Reservation.js">
         <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
         <line num="46" count="1" type="stmt"/>
       </file>
-      <file name="Review.js" path="D:\CEDT\SWEngLab\cedt-se-project-kodjenggg\backend\models\Review.js">
+      <file name="Review.js" path="C:\Users\JOKe\Documents\codingmymate\SOFTENG\RealProject\cedt-se-project-kodjenggg\backend\models\Review.js">
         <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
